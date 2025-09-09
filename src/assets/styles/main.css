@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS Custom Properties for theming */
+:root {
+    --color-primary: #3b82f6;
+    --color-primary-hover: #2563eb;
+    --color-primary-focus: #1d4ed8;
+    --color-accent: #10b981;
+    --color-surface: #ffffff;
+    --color-surface-variant: #f3f4f6;
+    --color-on-surface: #111827;
+    --color-on-surface-variant: #6b7280;
+    --border-radius-sm: 0.125rem;
+    --border-radius-base: 0.25rem;
+    --border-radius-md: 0.375rem;
+    --border-radius-lg: 0.5rem;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-surface: #111827;
+        --color-surface-variant: #1f2937;
+        --color-on-surface: #f9fafb;
+        --color-on-surface-variant: #d1d5db;
+    }
+}
+
+/* Base component styles */
+@layer components {
+    .ui-focus-ring {
+        @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+    }
+
+    .ui-transition {
+        @apply transition-all duration-200 ease-in-out;
+    }
+}
