@@ -31,10 +31,18 @@
     }
 }
 
+/* Class-based dark mode */
+.dark {
+    --color-surface: #111827;
+    --color-surface-variant: #1f2937;
+    --color-on-surface: #f9fafb;
+    --color-on-surface-variant: #d1d5db;
+}
+
 /* Base component styles */
 @layer components {
     .ui-focus-ring {
-        @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+        @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800;
     }
 
     .ui-transition {

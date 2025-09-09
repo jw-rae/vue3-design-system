@@ -70,6 +70,12 @@ const buttonClasses = computed(() => {
       'hover:bg-primary-600',
       'hover:border-primary-600',
       'active:bg-primary-700',
+      // Dark mode - slightly lighter for better contrast
+      'dark:bg-primary-400',
+      'dark:border-primary-400',
+      'dark:hover:bg-primary-500',
+      'dark:hover:border-primary-500',
+      'dark:active:bg-primary-600',
     ],
     secondary: [
       'bg-gray-500',
@@ -78,6 +84,12 @@ const buttonClasses = computed(() => {
       'hover:bg-gray-600',
       'hover:border-gray-600',
       'active:bg-gray-700',
+      // Dark mode
+      'dark:bg-gray-600',
+      'dark:border-gray-600',
+      'dark:hover:bg-gray-500',
+      'dark:hover:border-gray-500',
+      'dark:active:bg-gray-400',
     ],
     outline: [
       'bg-transparent',
@@ -86,6 +98,12 @@ const buttonClasses = computed(() => {
       'hover:bg-primary-50',
       'hover:text-primary-600',
       'active:bg-primary-100',
+      // Dark mode
+      'dark:border-primary-400',
+      'dark:text-primary-400',
+      'dark:hover:bg-primary-900/20',
+      'dark:hover:text-primary-300',
+      'dark:active:bg-primary-900/40',
     ],
     ghost: [
       'bg-transparent',
@@ -94,6 +112,11 @@ const buttonClasses = computed(() => {
       'hover:bg-primary-50',
       'hover:text-primary-600',
       'active:bg-primary-100',
+      // Dark mode
+      'dark:text-primary-400',
+      'dark:hover:bg-primary-900/20',
+      'dark:hover:text-primary-300',
+      'dark:active:bg-primary-900/40',
     ],
     danger: [
       'bg-error-500',
@@ -102,6 +125,12 @@ const buttonClasses = computed(() => {
       'hover:bg-error-600',
       'hover:border-error-600',
       'active:bg-error-700',
+      // Dark mode
+      'dark:bg-error-600',
+      'dark:border-error-600',
+      'dark:hover:bg-error-500',
+      'dark:hover:border-error-500',
+      'dark:active:bg-error-400',
     ],
   }
 

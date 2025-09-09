@@ -34,16 +34,35 @@ const props = withDefaults(defineProps<CardProps>(), {
 const cardClasses = computed(() => {
   const baseClasses = [
     'bg-white',
+    'dark:bg-gray-800',
     'overflow-hidden',
     'ui-transition',
   ]
 
   // Variant classes
   const variantClasses = {
-    default: ['border', 'border-gray-200'],
-    outlined: ['border-2', 'border-gray-300'],
-    elevated: ['shadow-md', 'border-0'],
-    filled: ['bg-gray-50', 'border', 'border-gray-200'],
+    default: [
+      'border', 
+      'border-gray-200', 
+      'dark:border-gray-700'
+    ],
+    outlined: [
+      'border-2', 
+      'border-gray-300', 
+      'dark:border-gray-600'
+    ],
+    elevated: [
+      'shadow-md', 
+      'border-0',
+      'dark:shadow-gray-900/20'
+    ],
+    filled: [
+      'bg-gray-50', 
+      'dark:bg-gray-700',
+      'border', 
+      'border-gray-200',
+      'dark:border-gray-600'
+    ],
   }
 
   // Rounded classes
@@ -74,7 +93,9 @@ const headerClasses = computed(() => {
   return [
     'border-b',
     'border-gray-200',
+    'dark:border-gray-700',
     'bg-gray-50',
+    'dark:bg-gray-700',
     ...paddingClasses[props.padding],
   ]
 })
@@ -103,7 +124,9 @@ const footerClasses = computed(() => {
   return [
     'border-t',
     'border-gray-200',
+    'dark:border-gray-700',
     'bg-gray-50',
+    'dark:bg-gray-700',
     ...paddingClasses[props.padding],
   ]
 })

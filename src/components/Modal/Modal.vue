@@ -10,7 +10,7 @@
         leave-from="opacity-100"
         leave-to="opacity-0"
       >
-        <div class="fixed inset-0 bg-black bg-opacity-25" />
+        <div class="fixed inset-0 bg-black bg-opacity-25 dark:bg-black dark:bg-opacity-50" />
       </TransitionChild>
 
       <div class="fixed inset-0 overflow-y-auto">
@@ -26,13 +26,13 @@
           >
             <DialogPanel :class="modalClasses">
               <div v-if="$slots.header" class="flex items-center justify-between mb-4">
-                <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
+                <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
                   <slot name="header" />
                 </DialogTitle>
                 <button
                   v-if="showCloseButton"
                   @click="closeModal"
-                  class="rounded-md text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  class="rounded-md text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500"
                 >
                   <XMarkIcon class="h-6 w-6" />
                 </button>
@@ -88,10 +88,12 @@ const modalClasses = computed(() => {
     'overflow-hidden',
     'rounded-2xl',
     'bg-white',
+    'dark:bg-gray-800',
     'p-6',
     'text-left',
     'align-middle',
     'shadow-xl',
+    'dark:shadow-gray-900/50',
     'transition-all',
   ]
 

@@ -7,6 +7,7 @@ export default {
         './src/**/*.{vue,js,ts,jsx,tsx}',
         './stories/**/*.{js,ts,jsx,tsx,mdx}',
     ],
+    darkMode: 'class', // Enable class-based dark mode
     theme: {
         extend: {
             colors: tokens.colors,

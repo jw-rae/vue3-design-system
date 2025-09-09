@@ -10,12 +10,16 @@ import Badge from './components/Badge/Badge.vue'
 import Alert from './components/Alert/Alert.vue'
 import Select from './components/Select/Select.vue'
 import Spinner from './components/Spinner/Spinner.vue'
+import ThemeToggle from './components/ThemeToggle/ThemeToggle.vue'
+
+// Composables
+export { useTheme } from './composables/useTheme'
 
 // Styles
 import './assets/styles/main.css'
 
 // Export individual components
-export { Button, Card, Modal, Input, Badge, Alert, Select, Spinner }
+export { Button, Card, Modal, Input, Badge, Alert, Select, Spinner, ThemeToggle }
 
 // Export types
 export type { ButtonProps } from './components/Button/Button.vue'
@@ -41,6 +45,7 @@ export const DesignSystem = {
         app.component('UiAlert', Alert)
         app.component('UiSelect', Select)
         app.component('UiSpinner', Spinner)
+        app.component('UiThemeToggle', ThemeToggle)
     },
 }
 

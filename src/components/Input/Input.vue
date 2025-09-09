@@ -29,11 +29,11 @@
       </div>
     </div>
     
-    <p v-if="error" class="mt-1 text-sm text-error-500">
+    <p v-if="error" class="mt-1 text-sm text-error-500 dark:text-error-400">
       {{ error }}
     </p>
     
-    <p v-else-if="hint" class="mt-1 text-sm text-gray-500">
+    <p v-else-if="hint" class="mt-1 text-sm text-gray-500 dark:text-gray-400">
       {{ hint }}
     </p>
   </div>
@@ -79,6 +79,7 @@ const labelClasses = computed(() => [
   'text-sm',
   'font-medium',
   'text-gray-700',
+  'dark:text-gray-300',
   'mb-1',
 ])
 
@@ -90,9 +91,15 @@ const inputClasses = computed(() => {
     'rounded-md',
     'shadow-sm',
     'placeholder-gray-400',
+    'dark:placeholder-gray-500',
+    'bg-white',
+    'dark:bg-gray-800',
+    'text-gray-900',
+    'dark:text-white',
     'disabled:opacity-50',
     'disabled:cursor-not-allowed',
     'disabled:bg-gray-50',
+    'dark:disabled:bg-gray-700',
     'ui-transition',
   ]
 
@@ -105,8 +112,18 @@ const inputClasses = computed(() => {
 
   // State classes
   const stateClasses = props.error
-    ? ['border-error-300', 'focus:border-error-500', 'focus:ring-error-500']
-    : ['border-gray-300', 'focus:border-primary-500', 'focus:ring-primary-500']
+    ? [
+        'border-error-300', 
+        'dark:border-error-500',
+        'focus:border-error-500', 
+        'focus:ring-error-500'
+      ]
+    : [
+        'border-gray-300', 
+        'dark:border-gray-600',
+        'focus:border-primary-500', 
+        'focus:ring-primary-500'
+      ]
 
   // Prefix/suffix padding
   const prefixClasses = slots.prefix ? ['pl-10'] : []

@@ -1,6 +1,24 @@
 // Design tokens for the design system
 export const tokens = {
     colors: {
+        // Light/Dark aware semantic colors
+        background: {
+            primary: '#ffffff',
+            secondary: '#f9fafb',
+            tertiary: '#f3f4f6',
+        },
+        text: {
+            primary: '#111827',
+            secondary: '#6b7280',
+            tertiary: '#9ca3af',
+            inverse: '#ffffff',
+        },
+        border: {
+            primary: '#e5e7eb',
+            secondary: '#d1d5db',
+            tertiary: '#9ca3af',
+        },
+        // Brand colors (theme-independent)
         primary: {
             50: '#eff6ff',
             100: '#dbeafe',

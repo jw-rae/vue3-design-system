@@ -1,18 +1,28 @@
 <template>
-  <div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8 transition-colors">
     <div class="max-w-4xl mx-auto">
+      <!-- Theme Toggle -->
+      <div class="flex justify-end mb-8">
+        <UiThemeToggle />
+      </div>
+      
       <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold text-gray-900 mb-4">
+        <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
           Vue 3 Design System
         </h1>
-        <p class="text-xl text-gray-600">
+        <p class="text-xl text-gray-600 dark:text-gray-300">
           A responsive component library built with Vue 3, Tailwind CSS, and TypeScript
         </p>
+        <div class="mt-4">
+          <UiBadge variant="primary" rounded>
+            🌓 Full Dark Mode Support
+          </UiBadge>
+        </div>
       </div>
 
       <!-- Button Examples -->
       <section class="mb-12">
-        <h2 class="text-2xl font-semibold text-gray-900 mb-6">Buttons</h2>
+        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Buttons</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <UiCard>
             <template #header>
@@ -56,7 +66,7 @@
 
       <!-- Alert Example -->
       <section v-if="showAlert" class="mb-12">
-        <h2 class="text-2xl font-semibold text-gray-900 mb-6">Alerts</h2>
+        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Alerts</h2>
         <div class="space-y-4">
           <UiAlert variant="success" title="Success!" dismissible @dismiss="showAlert = false">
             Your changes have been saved successfully.
@@ -75,7 +85,7 @@
 
       <!-- Badge Examples -->
       <section class="mb-12">
-        <h2 class="text-2xl font-semibold text-gray-900 mb-6">Badges</h2>
+        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Badges</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <UiCard>
             <template #header>
@@ -113,7 +123,7 @@
 
       <!-- Select Examples -->
       <section class="mb-12">
-        <h2 class="text-2xl font-semibold text-gray-900 mb-6">Select Dropdowns</h2>
+        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Select Dropdowns</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <UiCard>
             <template #header>
@@ -127,7 +137,7 @@
                 placeholder="Select your country"
                 hint="Choose your country of residence"
               />
-              <p v-if="formData.country" class="text-sm text-gray-600">
+              <p v-if="formData.country" class="text-sm text-gray-600 dark:text-gray-400">
                 Selected: {{ (formData.country as any)?.label }}
               </p>
             </div>
@@ -163,7 +173,7 @@
 
       <!-- Input Examples -->
       <section class="mb-12">
-        <h2 class="text-2xl font-semibold text-gray-900 mb-6">Inputs</h2>
+        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Inputs</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <UiCard>
             <template #header>
@@ -223,7 +233,7 @@
 
       <!-- Card Examples -->
       <section class="mb-12">
-        <h2 class="text-2xl font-semibold text-gray-900 mb-6">Cards</h2>
+        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Cards</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <UiCard variant="default">
             <template #header>
@@ -288,7 +298,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { 
   Button as UiButton, 
   Card as UiCard, 
@@ -296,8 +306,16 @@ import {
   Input as UiInput,
   Badge as UiBadge,
   Alert as UiAlert,
-  Select as UiSelect
+  Select as UiSelect,
+  ThemeToggle as UiThemeToggle,
+  useTheme
 } from './index'
+
+// Initialize theme on app startup
+const { initializeTheme } = useTheme()
+onMounted(() => {
+  initializeTheme()
+})
 
 const showModal = ref(false)
 const modalInput = ref('')

@@ -130,3 +130,68 @@ export const Interactive: Story = {
     `,
     }),
 };
+
+export const DarkModeShowcase: Story = {
+    render: () => ({
+        components: { Card, Button },
+        template: `
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Light Mode -->
+        <div class="p-6 bg-white rounded-lg border">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">Light Mode</h3>
+          <div class="space-y-4">
+            <Card variant="default">
+              <template #header>
+                <h4 class="font-semibold">Product Card</h4>
+              </template>
+              <p class="text-gray-600 text-sm">
+                Beautiful cards with proper spacing and typography for light backgrounds.
+              </p>
+              <template #footer>
+                <Button variant="primary" size="sm">View Details</Button>
+              </template>
+            </Card>
+            
+            <Card variant="elevated">
+              <template #header>
+                <h4 class="font-semibold">Elevated Card</h4>
+              </template>
+              <p class="text-gray-600 text-sm">
+                Elevated cards with shadows work great in light mode.
+              </p>
+            </Card>
+          </div>
+        </div>
+
+        <!-- Dark Mode -->
+        <div class="dark">
+          <div class="p-6 bg-gray-900 rounded-lg border border-gray-700">
+            <h3 class="text-lg font-semibold text-white mb-4">Dark Mode</h3>
+            <div class="space-y-4">
+              <Card variant="default">
+                <template #header>
+                  <h4 class="font-semibold">Product Card</h4>
+                </template>
+                <p class="text-gray-300 text-sm">
+                  Cards automatically adapt with dark backgrounds and proper contrast ratios.
+                </p>
+                <template #footer>
+                  <Button variant="primary" size="sm">View Details</Button>
+                </template>
+              </Card>
+              
+              <Card variant="elevated">
+                <template #header>
+                  <h4 class="font-semibold">Elevated Card</h4>
+                </template>
+                <p class="text-gray-300 text-sm">
+                  Dark mode enhances shadows and maintains visual hierarchy.
+                </p>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </div>
+    `,
+    }),
+};

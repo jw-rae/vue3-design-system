@@ -73,10 +73,38 @@ const alertClasses = computed(() => {
   ]
 
   const variantClasses = {
-    success: ['bg-success-50', 'border-success-200', 'text-success-800'],
-    warning: ['bg-warning-50', 'border-warning-200', 'text-warning-800'],
-    error: ['bg-error-50', 'border-error-200', 'text-error-800'],
-    info: ['bg-blue-50', 'border-blue-200', 'text-blue-800'],
+    success: [
+      'bg-success-50', 
+      'dark:bg-success-900/20',
+      'border-success-200', 
+      'dark:border-success-700',
+      'text-success-800',
+      'dark:text-success-200'
+    ],
+    warning: [
+      'bg-warning-50', 
+      'dark:bg-warning-900/20',
+      'border-warning-200', 
+      'dark:border-warning-700',
+      'text-warning-800',
+      'dark:text-warning-200'
+    ],
+    error: [
+      'bg-error-50', 
+      'dark:bg-error-900/20',
+      'border-error-200', 
+      'dark:border-error-700',
+      'text-error-800',
+      'dark:text-error-200'
+    ],
+    info: [
+      'bg-blue-50', 
+      'dark:bg-blue-900/20',
+      'border-blue-200', 
+      'dark:border-blue-700',
+      'text-blue-800',
+      'dark:text-blue-200'
+    ],
   }
 
   return [
