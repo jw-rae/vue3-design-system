@@ -31,6 +31,10 @@ const meta: Meta<typeof Alert> = {
             control: { type: 'boolean' },
             description: 'Whether to show the alert icon',
         },
+        filled: {
+            control: { type: 'boolean' },
+            description: 'Whether to use filled style with semantic colored backgrounds',
+        },
     },
 };
 
@@ -159,6 +163,80 @@ export const AllVariants: Story = {
     }),
 };
 
+export const FilledSemantic: Story = {
+    args: {
+        variant: 'error',
+        title: 'Filled Alert',
+        filled: true,
+        dismissible: false,
+        showIcon: true,
+    },
+    render: (args) => ({
+        components: { Alert },
+        setup() {
+            return { args };
+        },
+        template: '<Alert v-bind="args">This is a filled alert with semantic colored background.</Alert>',
+    }),
+};
+
+export const FilledVariants: Story = {
+    render: () => ({
+        components: { Alert },
+        template: `
+      <div class="space-y-4">
+        <Alert variant="success" title="Success" filled>Filled success alert with slightly green background!</Alert>
+        <Alert variant="warning" title="Warning" filled>Filled warning alert with slightly amber background.</Alert>
+        <Alert variant="error" title="Error" filled>Filled error alert with slightly red background.</Alert>
+        <Alert variant="info" title="Info" filled>Filled info alert with slightly blue background.</Alert>
+      </div>
+    `,
+    }),
+};
+
+export const RegularVsFilled: Story = {
+    render: () => ({
+        components: { Alert },
+        template: `
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Regular Alerts -->
+        <div class="space-y-4">
+          <h3 class="text-lg font-semibold text-text-primary mb-4">Regular Alerts</h3>
+          <Alert variant="success" title="Success">
+            Regular success alert with theme colors.
+          </Alert>
+          <Alert variant="warning" title="Warning">
+            Regular warning alert with theme colors.
+          </Alert>
+          <Alert variant="error" title="Error">
+            Regular error alert with theme colors.
+          </Alert>
+          <Alert variant="info" title="Info">
+            Regular info alert with theme colors.
+          </Alert>
+        </div>
+
+        <!-- Filled Alerts -->
+        <div class="space-y-4">
+          <h3 class="text-lg font-semibold text-text-primary mb-4">Filled Alerts</h3>
+          <Alert variant="success" title="Success" filled>
+            Filled alert with green background.
+          </Alert>
+          <Alert variant="warning" title="Warning" filled>
+            Filled alert with amber background.
+          </Alert>
+          <Alert variant="error" title="Error" filled>
+            Filled alert with red background.
+          </Alert>
+          <Alert variant="info" title="Info" filled>
+            Filled alert with blue background.
+          </Alert>
+        </div>
+      </div>
+    `,
+    }),
+};
+
 export const DarkModeShowcase: Story = {
     render: () => ({
         components: { Alert },
@@ -167,7 +245,8 @@ export const DarkModeShowcase: Story = {
         <!-- Light Mode -->
         <div class="p-6 bg-white rounded-lg border">
           <h3 class="text-lg font-semibold text-gray-900 mb-4">Light Mode</h3>
-          <div class="space-y-3">
+          <div class="space-y-3 mb-6">
+            <h4 class="text-sm font-medium text-gray-700">Regular Alerts</h4>
             <Alert variant="success" title="Success">
               Data saved successfully in light mode.
             </Alert>
@@ -181,13 +260,29 @@ export const DarkModeShowcase: Story = {
               Helpful information for users.
             </Alert>
           </div>
+          <div class="space-y-3">
+            <h4 class="text-sm font-medium text-gray-700">Filled Alerts</h4>
+            <Alert variant="success" title="Success" filled>
+              Filled success with green background.
+            </Alert>
+            <Alert variant="warning" title="Warning" filled>
+              Filled warning with amber background.
+            </Alert>
+            <Alert variant="error" title="Error" filled>
+              Filled error with red background.
+            </Alert>
+            <Alert variant="info" title="Info" filled>
+              Filled info with blue background.
+            </Alert>
+          </div>
         </div>
 
         <!-- Dark Mode -->
         <div class="dark">
           <div class="p-6 bg-gray-900 rounded-lg border border-gray-700">
             <h3 class="text-lg font-semibold text-white mb-4">Dark Mode</h3>
-            <div class="space-y-3">
+            <div class="space-y-3 mb-6">
+              <h4 class="text-sm font-medium text-gray-300">Regular Alerts</h4>
               <Alert variant="success" title="Success">
                 Data saved successfully in dark mode.
               </Alert>
@@ -201,8 +296,23 @@ export const DarkModeShowcase: Story = {
                 Helpful information for users.
               </Alert>
             </div>
+            <div class="space-y-3">
+              <h4 class="text-sm font-medium text-gray-300">Filled Alerts</h4>
+              <Alert variant="success" title="Success" filled>
+                Filled success with green background.
+              </Alert>
+              <Alert variant="warning" title="Warning" filled>
+                Filled warning with amber background.
+              </Alert>
+              <Alert variant="error" title="Error" filled>
+                Filled error with red background.
+              </Alert>
+              <Alert variant="info" title="Info" filled>
+                Filled info with blue background.
+              </Alert>
+            </div>
             <p class="text-xs text-gray-400 mt-3">
-              Alerts use opacity-based backgrounds for better dark mode contrast.
+              Alerts use semantic colors and adapt to dark mode.
             </p>
           </div>
         </div>

@@ -41,12 +41,14 @@ export interface AlertProps {
   title?: string
   dismissible?: boolean
   showIcon?: boolean
+  filled?: boolean
 }
 
 const props = withDefaults(defineProps<AlertProps>(), {
   variant: 'info',
   dismissible: false,
   showIcon: true,
+  filled: false,
 })
 
 defineEmits<{
@@ -76,8 +78,18 @@ const alertClasses = computed(() => {
   ]
 
   const variantClasses = {
-    success: [
-      // Success alerts use theme-aware accent colors
+    success: props.filled ? [
+      // Filled success alerts - slightly green transparent background
+      'bg-green-500/15',
+      'dark:bg-green-400/15',
+      'backdrop-blur-sm',
+      'border-l-accent-success-main', 
+      'border border-green-500/25', 
+      'dark:border-green-400/25',
+      'text-accent-success-dark',
+      'dark:text-accent-success-light',
+    ] : [
+      // Regular success alerts use theme-aware accent colors
       'bg-accent-success-light/20', 
       'dark:bg-accent-success-dark/20',
       'border-l-accent-success-main', 
@@ -86,8 +98,18 @@ const alertClasses = computed(() => {
       'text-accent-success-dark',
       'dark:text-accent-success-light',
     ],
-    warning: [
-      // Warning alerts use theme-aware accent colors
+    warning: props.filled ? [
+      // Filled warning alerts - slightly orange/yellow transparent background
+      'bg-amber-500/15',
+      'dark:bg-amber-400/15',
+      'backdrop-blur-sm',
+      'border-l-accent-warning-main', 
+      'border border-amber-500/25', 
+      'dark:border-amber-400/25',
+      'text-accent-warning-dark',
+      'dark:text-accent-warning-light',
+    ] : [
+      // Regular warning alerts use theme-aware accent colors
       'bg-accent-warning-light/20', 
       'dark:bg-accent-warning-dark/20',
       'border-l-accent-warning-main', 
@@ -96,8 +118,18 @@ const alertClasses = computed(() => {
       'text-accent-warning-dark',
       'dark:text-accent-warning-light',
     ],
-    error: [
-      // Error alerts use theme-aware accent colors
+    error: props.filled ? [
+      // Filled error alerts - slightly red transparent background
+      'bg-red-500/15',
+      'dark:bg-red-400/15',
+      'backdrop-blur-sm',
+      'border-l-accent-error-main', 
+      'border border-red-500/25', 
+      'dark:border-red-400/25',
+      'text-accent-error-dark',
+      'dark:text-accent-error-light',
+    ] : [
+      // Regular error alerts use theme-aware accent colors
       'bg-accent-error-light/20', 
       'dark:bg-accent-error-dark/20',
       'border-l-accent-error-main', 
@@ -106,8 +138,18 @@ const alertClasses = computed(() => {
       'text-accent-error-dark',
       'dark:text-accent-error-light',
     ],
-    info: [
-      // Info alerts use theme-aware accent colors
+    info: props.filled ? [
+      // Filled info alerts - slightly blue transparent background
+      'bg-blue-500/15',
+      'dark:bg-blue-400/15',
+      'backdrop-blur-sm',
+      'border-l-accent-info-main', 
+      'border border-blue-500/25', 
+      'dark:border-blue-400/25',
+      'text-accent-info-dark',
+      'dark:text-accent-info-light',
+    ] : [
+      // Regular info alerts use theme-aware accent colors
       'bg-accent-info-light/20', 
       'dark:bg-accent-info-dark/20',
       'border-l-accent-info-main', 

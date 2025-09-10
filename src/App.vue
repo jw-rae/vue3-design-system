@@ -73,19 +73,42 @@
       <!-- Alert Example -->
       <section v-if="showAlert" class="mb-12">
         <h2 class="text-2xl font-semibold text-text-primary mb-6">Alerts</h2>
-        <div class="space-y-4">
-          <UiAlert variant="success" title="Success!" dismissible @dismiss="showAlert = false">
-            Your changes have been saved successfully.
-          </UiAlert>
-          <UiAlert variant="warning" title="Warning">
-            Please review your input before proceeding.
-          </UiAlert>
-          <UiAlert variant="error" title="Error">
-            There was an error processing your request.
-          </UiAlert>
-          <UiAlert variant="info">
-            This is an informational message without a title.
-          </UiAlert>
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-lg font-medium text-text-primary mb-3">Regular Alerts</h3>
+            <div class="space-y-4">
+              <UiAlert variant="success" title="Success!" dismissible @dismiss="showAlert = false">
+                Your changes have been saved successfully.
+              </UiAlert>
+              <UiAlert variant="warning" title="Warning">
+                Please review your input before proceeding.
+              </UiAlert>
+              <UiAlert variant="error" title="Error">
+                There was an error processing your request.
+              </UiAlert>
+              <UiAlert variant="info">
+                This is an informational message without a title.
+              </UiAlert>
+            </div>
+          </div>
+          
+          <div>
+            <h3 class="text-lg font-medium text-text-primary mb-3">Filled Alerts (Semantic Colors)</h3>
+            <div class="space-y-4">
+              <UiAlert variant="success" title="Success!" filled dismissible>
+                Success alert with slightly green transparent background.
+              </UiAlert>
+              <UiAlert variant="warning" title="Warning" filled>
+                Warning alert with slightly amber transparent background.
+              </UiAlert>
+              <UiAlert variant="error" title="Error" filled>
+                Error alert with slightly red transparent background.
+              </UiAlert>
+              <UiAlert variant="info" filled>
+                Info alert with slightly blue transparent background.
+              </UiAlert>
+            </div>
+          </div>
         </div>
       </section>
 
