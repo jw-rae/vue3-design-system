@@ -33,7 +33,7 @@
               <UiButton variant="secondary">Secondary</UiButton>
               <UiButton variant="outline">Outline</UiButton>
               <UiButton variant="ghost">Ghost</UiButton>
-              <UiButton variant="danger">Danger</UiButton>
+              <UiButton variant="error">Error</UiButton>
             </div>
           </UiCard>
 

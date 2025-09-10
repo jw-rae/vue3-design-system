@@ -67,43 +67,58 @@ const alertClasses = computed(() => {
   const baseClasses = [
     'flex',
     'p-4',
-    'rounded-lg',
-    'border',
+    'rounded-xl', // More rounded for modern feel
+    'border-l-4', // Add accent border for personality
+    'shadow-sm', // Subtle shadow
     'gap-3',
+    'transition-all',
+    'duration-200',
   ]
 
   const variantClasses = {
     success: [
-      'bg-success-50', 
-      'dark:bg-success-900/20',
-      'border-success-200', 
-      'dark:border-success-700',
-      'text-success-800',
-      'dark:text-success-200'
+      // Light, encouraging feel - simplified backgrounds
+      'bg-primary-50', 
+      'dark:bg-primary-900/30',
+      'border-l-primary-400', 
+      'dark:border-l-primary-500',
+      'border border-primary-200', 
+      'dark:border-primary-700',
+      'text-primary-800',
+      'dark:text-primary-100',
     ],
     warning: [
-      'bg-warning-50', 
-      'dark:bg-warning-900/20',
-      'border-warning-200', 
-      'dark:border-warning-700',
-      'text-warning-800',
-      'dark:text-warning-200'
+      // Attention-grabbing but not alarming - solid backgrounds
+      'bg-primary-100', 
+      'dark:bg-primary-800/40',
+      'border-l-primary-500', 
+      'dark:border-l-primary-400',
+      'border border-primary-300', 
+      'dark:border-primary-600',
+      'text-primary-900',
+      'dark:text-primary-50',
     ],
     error: [
-      'bg-error-50', 
-      'dark:bg-error-900/20',
-      'border-error-200', 
-      'dark:border-error-700',
-      'text-error-800',
-      'dark:text-error-200'
+      // Strong but not harsh - clear contrast
+      'bg-primary-700/10', 
+      'dark:bg-primary-200/20',
+      'border-l-primary-800', 
+      'dark:border-l-primary-200',
+      'border border-primary-700/30', 
+      'dark:border-primary-300/30',
+      'text-primary-900',
+      'dark:text-primary-50',
     ],
     info: [
-      'bg-blue-50', 
-      'dark:bg-blue-900/20',
-      'border-blue-200', 
-      'dark:border-blue-700',
-      'text-blue-800',
-      'dark:text-blue-200'
+      // Calm and informative - readable backgrounds
+      'bg-primary-50/80', 
+      'dark:bg-primary-900/25',
+      'border-l-primary-300', 
+      'dark:border-l-primary-600',
+      'border border-primary-200', 
+      'dark:border-primary-800',
+      'text-primary-700',
+      'dark:text-primary-200',
     ],
   }
 

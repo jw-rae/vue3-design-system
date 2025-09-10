@@ -1,5 +1,10 @@
 import type { Preview } from '@storybook/vue3';
 import '../src/assets/styles/main.css';
+import { useTheme } from '../src/composables/useTheme';
+
+// Initialize theme for Storybook
+const { initializeTheme } = useTheme();
+initializeTheme();
 
 const preview: Preview = {
     parameters: {

@@ -31,8 +31,9 @@ export type { AlertProps } from './components/Alert/Alert.vue'
 export type { SelectProps, SelectOption } from './components/Select/Select.vue'
 export type { SpinnerProps } from './components/Spinner/Spinner.vue'
 
-// Export design tokens
-export { tokens } from './theme/tokens'
+// Import and export design tokens from JS file
+import tokensDefault from './theme/tokens.js'
+export const tokens = tokensDefault
 
 // Plugin installation function
 export const DesignSystem = {

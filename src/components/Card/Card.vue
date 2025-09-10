@@ -33,35 +33,35 @@ const props = withDefaults(defineProps<CardProps>(), {
 
 const cardClasses = computed(() => {
   const baseClasses = [
-    'bg-white',
-    'dark:bg-gray-800',
+    'bg-surface-primary',
+    'dark:bg-surface-primary',
     'overflow-hidden',
     'ui-transition',
   ]
 
-  // Variant classes
+  // Variant classes - monochromatic
   const variantClasses = {
     default: [
       'border', 
-      'border-gray-200', 
-      'dark:border-gray-700'
+      'border-primary-200', 
+      'dark:border-primary-700/50'
     ],
     outlined: [
       'border-2', 
-      'border-gray-300', 
-      'dark:border-gray-600'
+      'border-primary-300', 
+      'dark:border-primary-600/50'
     ],
     elevated: [
       'shadow-md', 
       'border-0',
-      'dark:shadow-gray-900/20'
+      'dark:shadow-primary-900/20'
     ],
     filled: [
-      'bg-gray-50', 
-      'dark:bg-gray-700',
+      'bg-primary-50', 
+      'dark:bg-primary-900/20',
       'border', 
-      'border-gray-200',
-      'dark:border-gray-600'
+      'border-primary-200',
+      'dark:border-primary-700/30'
     ],
   }
 
@@ -70,7 +70,7 @@ const cardClasses = computed(() => {
 
   // Hoverable classes
   const hoverClasses = props.hoverable 
-    ? ['hover:shadow-lg', 'hover:scale-[1.02]', 'cursor-pointer']
+    ? ['hover:shadow-lg', 'hover:scale-[1.02]', 'cursor-pointer', 'hover:border-primary-300', 'dark:hover:border-primary-600']
     : []
 
   return [
@@ -92,10 +92,10 @@ const headerClasses = computed(() => {
 
   return [
     'border-b',
-    'border-gray-200',
-    'dark:border-gray-700',
-    'bg-gray-50',
-    'dark:bg-gray-700',
+    'border-primary-200',
+    'dark:border-primary-700/50',
+    'bg-primary-50',
+    'dark:bg-primary-900/20',
     ...paddingClasses[props.padding],
   ]
 })
@@ -123,10 +123,10 @@ const footerClasses = computed(() => {
 
   return [
     'border-t',
-    'border-gray-200',
-    'dark:border-gray-700',
-    'bg-gray-50',
-    'dark:bg-gray-700',
+    'border-primary-200',
+    'dark:border-primary-700/50',
+    'bg-primary-50',
+    'dark:bg-primary-900/20',
     ...paddingClasses[props.padding],
   ]
 })

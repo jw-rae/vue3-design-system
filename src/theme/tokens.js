@@ -1,5 +1,5 @@
 // Design tokens for the design system
-export const tokens = {
+const tokens = {
     colors: {
         // Semantic colors for theming
         background: {
@@ -164,5 +164,6 @@ export const tokens = {
     },
 }
 
-// Only default export to avoid conflicts
+// Simple CommonJS export that works everywhere
+export { tokens }
 export default tokens

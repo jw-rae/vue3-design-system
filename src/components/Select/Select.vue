@@ -2,7 +2,12 @@
   <div class="relative">
     <label v-if="label" :for="selectId" :class="labelClasses">
       {{ label }}
-      <span v-if="required" class="text-error-500 ml-1">*</span>
+      <span v-if="required" class="      ? [
+        'border-primary-700', 
+        'dark:border-primary-500',
+        'focus:border-primary-800', 
+        'focus:ring-primary-800'
+      ]rimary-700 ml-1">*</span>
     </label>
     
     <Listbox v-model="selectedValue" :disabled="disabled">
@@ -11,11 +16,11 @@
           <span v-if="selectedValue" class="block truncate text-left">
             {{ getDisplayValue(selectedValue) }}
           </span>
-          <span v-else class="block truncate text-left text-gray-400 dark:text-gray-500">
+          <span v-else class="block truncate text-left text-text-tertiary dark:text-text-tertiary">
             {{ placeholder }}
           </span>
           <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-            <ChevronUpDownIcon class="h-5 w-5 text-gray-400 dark:text-gray-500" />
+            <ChevronUpDownIcon class="h-5 w-5 text-text-tertiary dark:text-text-tertiary" />
           </span>
         </ListboxButton>
 
@@ -25,7 +30,7 @@
           leave-to-class="opacity-0"
         >
           <ListboxOptions
-            class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white dark:bg-gray-800 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-gray-600 focus:outline-none sm:text-sm"
+            class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-surface-elevated dark:bg-surface-elevated py-1 text-base shadow-lg ring-1 ring-border-primary dark:ring-border-primary focus:outline-none sm:text-sm"
           >
             <ListboxOption
               v-for="option in options"
@@ -36,7 +41,7 @@
             >
               <li
                 :class="[
-                  active ? 'bg-primary-100 dark:bg-primary-900/20 text-primary-900 dark:text-primary-200' : 'text-gray-900 dark:text-gray-100',
+                  active ? 'bg-primary-100 dark:bg-primary-900/20 text-primary-900 dark:text-primary-200' : 'text-text-primary dark:text-text-primary',
                   'relative cursor-default select-none py-2 pl-10 pr-4',
                 ]"
               >
@@ -56,11 +61,11 @@
       </div>
     </Listbox>
     
-    <p v-if="error" class="mt-1 text-sm text-error-500 dark:text-error-400">
+    <p v-if="error" class="mt-1 text-sm text-primary-700 dark:text-primary-400">
       {{ error }}
     </p>
     
-    <p v-else-if="hint" class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+    <p v-else-if="hint" class="mt-1 text-sm text-text-tertiary dark:text-text-tertiary">
       {{ hint }}
     </p>
   </div>
@@ -121,8 +126,8 @@ const labelClasses = computed(() => [
   'block',
   'text-sm',
   'font-medium',
-  'text-gray-700',
-  'dark:text-gray-300',
+  'text-text-primary',
+  'dark:text-text-primary',
   'mb-1',
 ])
 
@@ -133,16 +138,16 @@ const buttonClasses = computed(() => {
     'cursor-default',
     'rounded-md',
     'border',
-    'bg-white',
-    'dark:bg-gray-800',
-    'text-gray-900',
-    'dark:text-white',
+    'bg-surface-primary',
+    'dark:bg-surface-primary',
+    'text-text-primary',
+    'dark:text-text-primary',
     'text-left',
     'shadow-sm',
     'disabled:opacity-50',
     'disabled:cursor-not-allowed',
-    'disabled:bg-gray-50',
-    'dark:disabled:bg-gray-700',
+    'disabled:bg-surface-secondary',
+    'dark:disabled:bg-surface-secondary',
   ]
 
   // Size classes
@@ -161,8 +166,8 @@ const buttonClasses = computed(() => {
         'focus:ring-error-500'
       ]
     : [
-        'border-gray-300', 
-        'dark:border-gray-600',
+        'border-border-primary', 
+        'dark:border-border-primary',
         'focus:border-primary-500', 
         'focus:ring-primary-500'
       ]

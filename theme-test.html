@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Test</title>
+    <style>
+        /* CSS custom properties - these should be overridden by the theme system */
+        :root {
+            --color-primary-50: #eff6ff;
+            --color-primary-100: #dbeafe;
+            --color-primary-200: #bfdbfe;
+            --color-primary-300: #93c5fd;
+            --color-primary-400: #60a5fa;
+            --color-primary-500: #3b82f6;
+            --color-primary-600: #2563eb;
+            --color-primary-700: #1d4ed8;
+            --color-primary-800: #1e40af;
+            --color-primary-900: #1e3a8a;
+            --color-primary-950: #172554;
+        }
+
+        body {
+            font-family: system-ui, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: var(--color-background-primary);
+            color: var(--color-text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .theme-controls {
+            background: var(--color-surface-primary);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 2px solid var(--color-border-primary);
+        }
+
+        .button {
+            background: var(--color-primary-500);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background: var(--color-primary-600);
+        }
+
+        .color-samples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .color-sample {
+            padding: 20px 10px;
+            text-align: center;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .c50 {
+            background: var(--color-primary-50);
+            color: var(--color-primary-900);
+        }
+
+        .c100 {
+            background: var(--color-primary-100);
+            color: var(--color-primary-900);
+        }
+
+        .c200 {
+            background: var(--color-primary-200);
+            color: var(--color-primary-900);
+        }
+
+        .c300 {
+            background: var(--color-primary-300);
+            color: var(--color-primary-900);
+        }
+
+        .c400 {
+            background: var(--color-primary-400);
+            color: white;
+        }
+
+        .c500 {
+            background: var(--color-primary-500);
+            color: white;
+        }
+
+        .c600 {
+            background: var(--color-primary-600);
+            color: white;
+        }
+
+        .c700 {
+            background: var(--color-primary-700);
+            color: white;
+        }
+
+        .c800 {
+            background: var(--color-primary-800);
+            color: white;
+        }
+
+        .c900 {
+            background: var(--color-primary-900);
+            color: white;
+        }
+
+        .c950 {
+            background: var(--color-primary-950);
+            color: white;
+        }
+
+        .theme-demo {
+            background: var(--color-surface-primary);
+            border: 2px solid var(--color-border-primary);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .current-theme {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--color-primary-700);
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body data-theme="default">
+    <div class="container">
+        <div class="theme-controls">
+            <h1 style="color: var(--color-primary-700); margin-top: 0;">🎨 Theme Switching Test</h1>
+
+            <div>
+                <button class="button" onclick="setTheme('default')">🔵 Default Blue</button>
+                <button class="button" onclick="setTheme('pink')">🌸 Elegant Pink</button>
+                <button class="button" onclick="setTheme('green')">🌿 Nature Green</button>
+                <button class="button" onclick="setTheme('blue')">🌌 Corporate Blue</button>
+                <button class="button" onclick="toggleDarkMode()" id="dark-toggle">🌙 Dark Mode</button>
+            </div>
+
+            <div class="current-theme" id="current-theme">Current Theme: Default Blue</div>
+        </div>
+
+        <div class="theme-demo">
+            <h2 style="color: var(--color-primary-800); margin-top: 0;">Color Scale Preview</h2>
+            <div class="color-samples">
+                <div class="color-sample c50">50</div>
+                <div class="color-sample c100">100</div>
+                <div class="color-sample c200">200</div>
+                <div class="color-sample c300">300</div>
+                <div class="color-sample c400">400</div>
+                <div class="color-sample c500">500</div>
+                <div class="color-sample c600">600</div>
+                <div class="color-sample c700">700</div>
+                <div class="color-sample c800">800</div>
+                <div class="color-sample c900">900</div>
+                <div class="color-sample c950">950</div>
+            </div>
+        </div>
+
+        <div class="theme-demo">
+            <h3 style="color: var(--color-primary-700);">Component Examples</h3>
+            <button class="button">Primary Button</button>
+            <div
+                style="background: var(--color-primary-100); padding: 15px; border-radius: 6px; margin: 10px 0; border-left: 4px solid var(--color-primary-500);">
+                This is a notification using primary-100 background and primary-500 accent
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme definitions (same as themes.ts)
+        const themes = {
+            default: {
+                primary: {
+                    50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa',
+                    500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a', 950: '#172554'
+                }
+            },
+            pink: {
+                primary: {
+                    50: '#fdf2f8', 100: '#fce7f3', 200: '#fbcfe8', 300: '#f9a8d4', 400: '#f472b6',
+                    500: '#ec4899', 600: '#db2777', 700: '#be185d', 800: '#9d174d', 900: '#831843', 950: '#500724'
+                }
+            },
+            green: {
+                primary: {
+                    50: '#f0fdf4', 100: '#dcfce7', 200: '#bbf7d0', 300: '#86efac', 400: '#4ade80',
+                    500: '#22c55e', 600: '#16a34a', 700: '#15803d', 800: '#166534', 900: '#14532d', 950: '#052e16'
+                }
+            },
+            blue: {
+                primary: {
+                    50: '#f0f9ff', 100: '#e0f2fe', 200: '#bae6fd', 300: '#7dd3fc', 400: '#38bdf8',
+                    500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1', 800: '#075985', 900: '#0c4a6e', 950: '#082f49'
+                }
+            }
+        };
+
+        const themeNames = {
+            default: 'Default Blue',
+            pink: 'Elegant Pink',
+            green: 'Nature Green',
+            blue: 'Corporate Blue'
+        };
+
+        let isDarkMode = false;
+
+        function generateThemeCSS(themeName, darkMode = false) {
+            const theme = themes[themeName];
+            if (!theme) return '';
+
+            const primaryVars = Object.entries(theme.primary).map(([key, value]) =>
+                `--color-primary-${key}: ${value};`
+            ).join('\n  ');
+
+            if (darkMode) {
+                return `
+:root[data-theme="${themeName}"].dark {
+  ${primaryVars}
+  --color-background-primary: ${theme.primary[950]};
+  --color-background-secondary: ${theme.primary[900]};
+  --color-background-tertiary: ${theme.primary[800]};
+  --color-surface-primary: ${theme.primary[950]};
+  --color-surface-secondary: ${theme.primary[900]};
+  --color-surface-elevated: ${theme.primary[800]};
+  --color-text-primary: ${theme.primary[50]};
+  --color-text-secondary: ${theme.primary[200]};
+  --color-text-tertiary: ${theme.primary[300]};
+  --color-border-primary: ${theme.primary[700]};
+  --color-border-secondary: ${theme.primary[600]};
+}`;
+            } else {
+                return `
+:root[data-theme="${themeName}"] {
+  ${primaryVars}
+  --color-background-primary: #ffffff;
+  --color-background-secondary: ${theme.primary[50]};
+  --color-background-tertiary: ${theme.primary[100]};
+  --color-surface-primary: #ffffff;
+  --color-surface-secondary: ${theme.primary[50]};
+  --color-surface-elevated: #ffffff;
+  --color-text-primary: ${theme.primary[950]};
+  --color-text-secondary: ${theme.primary[800]};
+  --color-text-tertiary: ${theme.primary[700]};
+  --color-border-primary: ${theme.primary[200]};
+  --color-border-secondary: ${theme.primary[300]};
+}`;
+            }
+        }
+
+        function updateThemeCSS(themeName) {
+            let styleElement = document.getElementById('dynamic-theme-styles');
+            if (!styleElement) {
+                styleElement = document.createElement('style');
+                styleElement.id = 'dynamic-theme-styles';
+                document.head.appendChild(styleElement);
+            }
+
+            styleElement.textContent =
+                generateThemeCSS(themeName, false) + '\n' +
+                generateThemeCSS(themeName, true);
+        }
+
+        function setTheme(themeName) {
+            const theme = themes[themeName];
+            if (!theme) return;
+
+            // Set data-theme attribute
+            document.body.setAttribute('data-theme', themeName);
+            document.documentElement.setAttribute('data-theme', themeName);
+
+            // Update theme CSS
+            updateThemeCSS(themeName);
+
+            // Update display
+            document.getElementById('current-theme').textContent = `Current Theme: ${themeNames[themeName]} • ${isDarkMode ? 'Dark' : 'Light'}`;
+
+            console.log(`Theme switched to: ${themeName}`, theme);
+        }
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.documentElement.classList.toggle('dark', isDarkMode);
+            document.body.classList.toggle('dark', isDarkMode);
+
+            const button = document.getElementById('dark-toggle');
+            button.textContent = isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode';
+
+            // Update current theme display
+            const currentTheme = document.body.getAttribute('data-theme') || 'default';
+            document.getElementById('current-theme').textContent = `Current Theme: ${themeNames[currentTheme]} • ${isDarkMode ? 'Dark' : 'Light'}`;
+        }
+
+        // Initialize default theme
+        setTheme('default');
+        updateThemeCSS('default');
+    </script>
+</body>
+
+</html>

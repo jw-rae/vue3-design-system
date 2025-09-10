@@ -18,7 +18,7 @@
 import { computed } from 'vue'
 
 export interface ButtonProps {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger'
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'success' | 'warning' | 'error' | 'info'
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   disabled?: boolean
   type?: 'button' | 'submit' | 'reset'
@@ -47,9 +47,15 @@ const buttonClasses = computed(() => {
     'font-medium',
     'border',
     'cursor-pointer',
+    'transition-all',
+    'duration-200',
+    'ease-in-out',
+    'transform',
     'disabled:opacity-50',
     'disabled:cursor-not-allowed',
     'disabled:pointer-events-none',
+    'disabled:transform-none',
+    'disabled:shadow-none',
   ]
 
   // Size classes
@@ -61,81 +67,140 @@ const buttonClasses = computed(() => {
     xl: ['px-8', 'py-4', 'text-xl', 'gap-3'],
   }
 
-  // Variant classes
+  // Variant classes - simplified for better legibility
   const variantClasses = {
     primary: [
+      // Bold, confident primary action - solid colors
       'bg-primary-500',
       'border-primary-500',
       'text-white',
       'hover:bg-primary-600',
       'hover:border-primary-600',
       'active:bg-primary-700',
-      // Dark mode - slightly lighter for better contrast
+      // Dark mode - good contrast
       'dark:bg-primary-400',
       'dark:border-primary-400',
+      'dark:text-primary-950',
       'dark:hover:bg-primary-500',
       'dark:hover:border-primary-500',
       'dark:active:bg-primary-600',
     ],
     secondary: [
-      'bg-gray-500',
-      'border-gray-500',
-      'text-white',
-      'hover:bg-gray-600',
-      'hover:border-gray-600',
-      'active:bg-gray-700',
-      // Dark mode
-      'dark:bg-gray-600',
-      'dark:border-gray-600',
-      'dark:hover:bg-gray-500',
-      'dark:hover:border-gray-500',
-      'dark:active:bg-gray-400',
+      // Sophisticated, refined secondary - clear backgrounds
+      'bg-primary-100',
+      'border-primary-200',
+      'text-primary-700',
+      'hover:bg-primary-200',
+      'hover:border-primary-300',
+      'active:bg-primary-300',
+      // Dark mode - solid contrast
+      'dark:bg-primary-800',
+      'dark:border-primary-700',
+      'dark:text-primary-100',
+      'dark:hover:bg-primary-700',
+      'dark:hover:border-primary-600',
+      'dark:active:bg-primary-600',
     ],
     outline: [
+      // Clean outline - no transparency
       'bg-transparent',
-      'border-primary-500',
+      'border-2 border-primary-500',
       'text-primary-500',
       'hover:bg-primary-50',
       'hover:text-primary-600',
+      'hover:border-primary-600',
       'active:bg-primary-100',
       // Dark mode
       'dark:border-primary-400',
       'dark:text-primary-400',
-      'dark:hover:bg-primary-900/20',
+      'dark:hover:bg-primary-900',
       'dark:hover:text-primary-300',
-      'dark:active:bg-primary-900/40',
+      'dark:hover:border-primary-300',
+      'dark:active:bg-primary-800',
     ],
     ghost: [
+      // Subtle ghost - minimal but visible
       'bg-transparent',
       'border-transparent',
       'text-primary-500',
-      'hover:bg-primary-50',
+      'hover:bg-primary-100',
       'hover:text-primary-600',
-      'active:bg-primary-100',
+      'active:bg-primary-200',
       // Dark mode
       'dark:text-primary-400',
-      'dark:hover:bg-primary-900/20',
+      'dark:hover:bg-primary-900',
       'dark:hover:text-primary-300',
-      'dark:active:bg-primary-900/40',
+      'dark:active:bg-primary-800',
     ],
-    danger: [
-      'bg-error-500',
-      'border-error-500',
+    success: [
+      // Success using bright primary - solid
+      'bg-primary-400',
+      'border-primary-400',
       'text-white',
-      'hover:bg-error-600',
-      'hover:border-error-600',
-      'active:bg-error-700',
+      'hover:bg-primary-500',
+      'hover:border-primary-500',
+      'active:bg-primary-600',
       // Dark mode
-      'dark:bg-error-600',
-      'dark:border-error-600',
-      'dark:hover:bg-error-500',
-      'dark:hover:border-error-500',
-      'dark:active:bg-error-400',
+      'dark:bg-primary-300',
+      'dark:border-primary-300',
+      'dark:text-primary-950',
+      'dark:hover:bg-primary-400',
+      'dark:hover:border-primary-400',
+      'dark:active:bg-primary-500',
+    ],
+    warning: [
+      // Warning using medium primary tones - solid
+      'bg-primary-300',
+      'border-primary-300',
+      'text-primary-900',
+      'hover:bg-primary-400',
+      'hover:border-primary-400',
+      'active:bg-primary-500',
+      'active:text-white',
+      // Dark mode
+      'dark:bg-primary-600',
+      'dark:border-primary-600',
+      'dark:text-primary-50',
+      'dark:hover:bg-primary-500',
+      'dark:hover:border-primary-500',
+      'dark:active:bg-primary-400',
+    ],
+    error: [
+      // Error using deep primary tones - solid
+      'bg-primary-700',
+      'border-primary-700',
+      'text-white',
+      'hover:bg-primary-800',
+      'hover:border-primary-800',
+      'active:bg-primary-900',
+      // Dark mode
+      'dark:bg-primary-200',
+      'dark:border-primary-200',
+      'dark:text-primary-950',
+      'dark:hover:bg-primary-300',
+      'dark:hover:border-primary-300',
+      'dark:active:bg-primary-400',
+    ],
+    info: [
+      // Info using light primary tones - solid
+      'bg-primary-200',
+      'border-primary-200',
+      'text-primary-800',
+      'hover:bg-primary-300',
+      'hover:border-primary-300',
+      'active:bg-primary-400',
+      // Dark mode
+      'dark:bg-primary-700',
+      'dark:border-primary-700',
+      'dark:text-primary-100',
+      'dark:hover:bg-primary-600',
+      'dark:hover:border-primary-600',
+      'dark:active:bg-primary-500',
     ],
   }
 
-  // Border radius
-  const radiusClasses = props.rounded ? ['rounded-full'] : ['rounded-md']
+  // Border radius - more modern defaults
+  const radiusClasses = props.rounded ? ['rounded-full'] : ['rounded-lg']
 
   // Block
   const blockClasses = props.block ? ['w-full'] : []

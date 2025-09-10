@@ -69,9 +69,9 @@ const svgClasses = computed(() => {
   // Color classes
   const colorClasses = {
     primary: ['text-primary-500'],
-    secondary: ['text-gray-500'],
+    secondary: ['text-text-secondary'],
     white: ['text-white'],
-    gray: ['text-gray-400'],
+    gray: ['text-text-tertiary'],
   }
   
   return [
@@ -96,9 +96,9 @@ const labelClasses = computed(() => {
   // Color classes for text
   const colorClasses = {
     primary: ['text-primary-600'],
-    secondary: ['text-gray-600'],
+    secondary: ['text-text-secondary'],
     white: ['text-white'],
-    gray: ['text-gray-500'],
+    gray: ['text-text-tertiary'],
   }
   
   return [

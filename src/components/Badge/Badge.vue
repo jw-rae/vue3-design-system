@@ -26,8 +26,11 @@ const badgeClasses = computed(() => {
     'inline-flex',
     'items-center',
     'justify-center',
-    'font-medium',
+    'font-semibold', // Changed from 'font-medium' for more impact
     'border',
+    'transition-all',
+    'duration-200',
+    'ease-in-out',
   ]
 
   // Size classes
@@ -37,103 +40,109 @@ const badgeClasses = computed(() => {
     lg: ['px-3', 'py-1.5', 'text-base'],
   }
 
-  // Variant classes
+  // Variant classes - simplified for better legibility
   const variantClasses = props.outline ? {
     primary: [
       'bg-transparent', 
-      'border-primary-500', 
+      'border-2 border-primary-500', 
       'dark:border-primary-400',
-      'text-primary-500',
-      'dark:text-primary-400'
+      'text-primary-600',
+      'dark:text-primary-400',
     ],
     secondary: [
       'bg-transparent', 
-      'border-gray-500', 
-      'dark:border-gray-400',
-      'text-gray-500',
-      'dark:text-gray-400'
+      'border-2 border-primary-300', 
+      'dark:border-primary-600',
+      'text-primary-500',
+      'dark:text-primary-500',
     ],
     success: [
       'bg-transparent', 
-      'border-success-500', 
-      'dark:border-success-400',
-      'text-success-500',
-      'dark:text-success-400'
+      'border-2 border-primary-400', 
+      'dark:border-primary-500',
+      'text-primary-500',
+      'dark:text-primary-400',
     ],
     warning: [
       'bg-transparent', 
-      'border-warning-500', 
-      'dark:border-warning-400',
-      'text-warning-500',
-      'dark:text-warning-400'
+      'border-2 border-primary-400', 
+      'dark:border-primary-500',
+      'text-primary-500',
+      'dark:text-primary-400',
     ],
     error: [
       'bg-transparent', 
-      'border-error-500', 
-      'dark:border-error-400',
-      'text-error-500',
-      'dark:text-error-400'
+      'border-2 border-primary-700', 
+      'dark:border-primary-300',
+      'text-primary-700',
+      'dark:text-primary-300',
     ],
     info: [
       'bg-transparent', 
-      'border-primary-400', 
-      'dark:border-primary-300',
+      'border-2 border-primary-300', 
+      'dark:border-primary-600',
       'text-primary-400',
-      'dark:text-primary-300'
+      'dark:text-primary-500',
     ],
   } : {
     primary: [
+      // Rich, confident primary - solid backgrounds
       'bg-primary-100', 
-      'dark:bg-primary-900/30',
-      'border-primary-200', 
+      'dark:bg-primary-800',
+      'border border-primary-300', 
       'dark:border-primary-700',
       'text-primary-800',
-      'dark:text-primary-200'
+      'dark:text-primary-100',
     ],
     secondary: [
-      'bg-gray-100', 
-      'dark:bg-gray-700',
-      'border-gray-200', 
-      'dark:border-gray-600',
-      'text-gray-800',
-      'dark:text-gray-200'
+      // Soft, sophisticated secondary - solid
+      'bg-primary-50', 
+      'dark:bg-primary-900',
+      'border border-primary-200', 
+      'dark:border-primary-800',
+      'text-primary-700',
+      'dark:text-primary-200',
     ],
     success: [
-      'bg-success-100', 
-      'dark:bg-success-900/30',
-      'border-success-200', 
-      'dark:border-success-700',
-      'text-success-800',
-      'dark:text-success-200'
+      // Bright, celebratory success - solid
+      'bg-primary-200', 
+      'dark:bg-primary-700',
+      'border border-primary-400', 
+      'dark:border-primary-600',
+      'text-primary-800',
+      'dark:text-primary-100',
     ],
     warning: [
-      'bg-warning-100', 
-      'dark:bg-warning-900/30',
-      'border-warning-200', 
-      'dark:border-warning-700',
-      'text-warning-800',
-      'dark:text-warning-200'
+      // Attention-getting warning - solid
+      'bg-primary-300', 
+      'dark:bg-primary-600',
+      'border border-primary-500', 
+      'dark:border-primary-500',
+      'text-primary-900',
+      'dark:text-primary-50',
     ],
     error: [
-      'bg-error-100', 
-      'dark:bg-error-900/30',
-      'border-error-200', 
-      'dark:border-error-700',
-      'text-error-800',
-      'dark:text-error-200'
+      // Strong error using deep tones - solid
+      'bg-primary-700/20', 
+      'dark:bg-primary-200/30',
+      'border border-primary-700/50', 
+      'dark:border-primary-300/50',
+      'text-primary-900',
+      'dark:text-primary-50',
     ],
     info: [
-      'bg-blue-100', 
-      'dark:bg-blue-900/30',
-      'border-blue-200', 
-      'dark:border-blue-700',
-      'text-blue-800',
-      'dark:text-blue-200'
+      // Calm, informative - solid
+      'bg-primary-50', 
+      'dark:bg-primary-900',
+      'border border-primary-200', 
+      'dark:border-primary-800',
+      'text-primary-600',
+      'dark:text-primary-300',
     ],
   }
 
-  // Border radius
-  const radiusClasses = props.rounded ? ['rounded-full'] : ['rounded-md']
+  // Border radius - more modern defaults
+  const radiusClasses = props.rounded ? ['rounded-full'] : ['rounded-lg']
 
   return [
     ...baseClasses,
