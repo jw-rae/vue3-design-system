@@ -70,11 +70,11 @@ export interface ThemeColors {
 // 🔥 **System Warm**: Subtle sepia-grey tones inspired by VS Code Dark Modern
 export const warmTheme: ThemeColors = {
     primary: {
-        50: '#fafaf9',   // Very light warm grey
-        100: '#f5f5f4',  // Light warm grey
-        200: '#e7e5e4',  // Soft warm grey
-        300: '#d6d3d1',  // Medium warm grey
-        400: '#a8a29e',  // Muted warm grey
+        50: '#faf9f7',   // Very light sand/cream
+        100: '#f5f3f0',  // Light warm sand
+        200: '#ede8e0',  // Soft sand beige
+        300: '#e0d6c7',  // Medium warm sand
+        400: '#a8a29e',  // Muted warm grey (transition point)
         500: '#78716c',  // Main warm grey (sepia-toned)
         600: '#57534e',  // Deeper warm grey
         700: '#44403c',  // Rich warm charcoal
@@ -106,13 +106,13 @@ export const warmTheme: ThemeColors = {
     },
     background: {
         primary: '#ffffff',
-        secondary: '#fafaf9',  // Very subtle warm tint
-        tertiary: '#f5f5f4',   // Light warm grey
+        secondary: '#faf9f7',  // Very light sand/cream
+        tertiary: '#f5f3f0',   // Light warm sand
         inverse: '#0c0a09',    // Darkest warm black
     },
     surface: {
         primary: '#ffffff',
-        secondary: '#fafaf9',
+        secondary: '#faf9f7',
         elevated: '#ffffff',
         overlay: 'rgba(12, 10, 9, 0.6)', // Dark warm overlay
     },
@@ -120,78 +120,78 @@ export const warmTheme: ThemeColors = {
         primary: '#0c0a09',    // Darkest warm black
         secondary: '#1c1917',  // Deep warm charcoal
         tertiary: '#292524',   // Dark warm grey
-        inverse: '#fafaf9',    // Very light warm grey
-        disabled: '#d6d3d1',   // Medium warm grey
+        inverse: '#faf9f7',    // Very light sand/cream
+        disabled: '#e0d6c7',   // Medium warm sand
     },
     border: {
-        primary: '#e7e5e4',    // Soft warm grey
-        secondary: '#d6d3d1',  // Medium warm grey
+        primary: '#ede8e0',    // Soft sand beige
+        secondary: '#e0d6c7',  // Medium warm sand
         focus: '#78716c',      // Main warm grey
         error: '#dc2626',      // Keep error red for clarity
     },
 }
 
-// ❄️ **System Cool**: Dark coal to light white/almost blue - clean and modern
+// ❄️ **System Cool**: Muted greys and coal tones - clean and sophisticated
 export const coolTheme: ThemeColors = {
     primary: {
-        50: '#f8fafc',   // Almost white with blue hint
-        100: '#f1f5f9',  // Light cool gray
-        200: '#e2e8f0',  // Gentle cool gray
-        300: '#cbd5e1',  // Soft blue-gray
-        400: '#94a3b8',  // Medium blue-gray
-        500: '#64748b',  // Main cool gray
-        600: '#475569',  // Deep slate
-        700: '#334155',  // Rich charcoal
-        800: '#1e293b',  // Dark charcoal
-        900: '#0f172a',  // Deep coal
-        950: '#020617',  // Darkest coal
+        50: '#f0f4f8',   // Very light blue-grey
+        100: '#e2e8f0',  // Light blue-grey
+        200: '#cbd5e1',  // Medium light blue-grey
+        300: '#94a3b8',  // Medium blue-grey
+        400: '#64748b',  // Transitional blue to grey
+        500: '#525252',  // Pure medium grey
+        600: '#404040',  // Dark grey
+        700: '#262626',  // Rich charcoal
+        800: '#171717',  // Dark charcoal
+        900: '#0a0a0a',  // Deep coal
+        950: '#000000',  // Pure black
     },
     accent: {
         success: {
-            light: '#86efac',  // Soft green
-            main: '#22c55e',   // Nature green
-            dark: '#15803d',   // Deep forest
+            light: '#9db5a0',  // Cool sage green with grey undertones
+            main: '#6d8570',   // Rich muted green that's clearly green
+            dark: '#4f5f52',   // Deep forest green with cool base
         },
         warning: {
-            light: '#fbbf24',  // Soft amber
-            main: '#f59e0b',   // Amber
-            dark: '#d97706',   // Deep amber
+            light: '#b5a085',  // Cool amber-grey that's clearly orange
+            main: '#8c7555',   // Rich muted orange with cool sophistication
+            dark: '#5f4d3a',   // Deep burnt orange with cool grey
         },
         error: {
-            light: '#fca5a5',  // Soft red
-            main: '#ef4444',   // Clear red
-            dark: '#dc2626',   // Deep red
+            light: '#b59090',  // Cool terracotta-grey that's clearly red
+            main: '#8a5f5f',   // Rich muted red with cool sophistication
+            dark: '#5c4040',   // Deep burgundy with cool grey
         },
         info: {
-            light: '#93c5fd',  // Light blue
-            main: '#3b82f6',   // Clear blue
-            dark: '#1d4ed8',   // Deep blue
+            light: '#90a5b8',  // Cool slate-blue that's clearly blue
+            main: '#5f748c',   // Rich muted blue with cool sophistication
+            dark: '#40526b',   // Deep navy-grey with cool undertones
         }
     },
     background: {
         primary: '#ffffff',
-        secondary: '#fafbfc',  // Cool off-white
-        tertiary: '#f8fafc',   // Blue-tinted white
-        inverse: '#020617',    // Deep coal
+        secondary: '#f0f4f8',  // Very light blue-grey
+        tertiary: '#e2e8f0',   // Light blue-grey
+        inverse: '#0a0a0a',    // Deep grey
     },
     surface: {
         primary: '#ffffff',
-        secondary: '#fafbfc',
+        secondary: '#f0f4f8',
         elevated: '#ffffff',
-        overlay: 'rgba(2, 6, 23, 0.6)', // Cool dark overlay
+        overlay: 'rgba(10, 10, 10, 0.6)', // Pure grey overlay
     },
     text: {
-        primary: '#020617',    // Deep coal
-        secondary: '#0f172a',  // Dark charcoal
-        tertiary: '#1e293b',   // Medium charcoal
-        inverse: '#f8fafc',    // Cool white
-        disabled: '#cbd5e1',   // Muted cool gray
+        primary: '#0a0a0a',    // Deep grey
+        secondary: '#262626',  // Dark charcoal
+        tertiary: '#404040',   // Medium dark grey
+        inverse: '#f0f4f8',    // Very light blue-grey
+        disabled: '#cbd5e1',   // Light blue-grey
     },
     border: {
-        primary: '#e2e8f0',    // Gentle cool gray
-        secondary: '#cbd5e1',  // Soft blue-gray
-        focus: '#64748b',      // Main cool
-        error: '#dc2626',      // Keep error red
+        primary: '#e2e8f0',    // Light blue-grey
+        secondary: '#cbd5e1',  // Medium light blue-grey
+        focus: '#525252',      // Medium grey
+        error: '#dc2626',      // Clear red for errors
     },
 }
 

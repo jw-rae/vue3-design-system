@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Storybook reset - remove default margins from story containers */
+#storybook-root {
+    margin: 0 !important;
+}
+
+.sb-main-padded {
+    padding: 0 !important;
+}
+
 /* Default theme CSS custom properties - will be overridden by theme system */
 :root {
     /* Primary color scale (default blue theme) */
@@ -39,6 +48,20 @@
     --color-border-focus: #3b82f6;
     --color-border-error: #ef4444;
 
+    /* Default accent colors */
+    --color-accent-success-light: #86efac;
+    --color-accent-success-main: #22c55e;
+    --color-accent-success-dark: #15803d;
+    --color-accent-warning-light: #fde047;
+    --color-accent-warning-main: #eab308;
+    --color-accent-warning-dark: #a16207;
+    --color-accent-error-light: #fca5a5;
+    --color-accent-error-main: #ef4444;
+    --color-accent-error-dark: #dc2626;
+    --color-accent-info-light: #7dd3fc;
+    --color-accent-info-main: #0ea5e9;
+    --color-accent-info-dark: #0284c7;
+
     /* Legacy properties for backwards compatibility */
     --color-primary: #3b82f6;
     --color-primary-hover: #2563eb;
@@ -55,6 +78,30 @@
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+/* Dark mode overrides - fallback for when theme system doesn't load properly */
+.dark {
+    --color-background-primary: #0f172a;
+    --color-background-secondary: #1e293b;
+    --color-background-tertiary: #334155;
+    --color-background-inverse: #ffffff;
+
+    --color-surface-primary: #1e293b;
+    --color-surface-secondary: #334155;
+    --color-surface-elevated: #475569;
+    --color-surface-overlay: rgba(0, 0, 0, 0.8);
+
+    --color-text-primary: #f8fafc;
+    --color-text-secondary: #cbd5e1;
+    --color-text-tertiary: #94a3b8;
+    --color-text-inverse: #0f172a;
+    --color-text-disabled: #64748b;
+
+    --color-border-primary: #334155;
+    --color-border-secondary: #475569;
+    --color-border-focus: #60a5fa;
+    --color-border-error: #f87171;
 }
 
 /* Base component styles */
