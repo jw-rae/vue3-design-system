@@ -1,6 +1,11 @@
 <template>
-  <div :class="badgeClasses">
-    <slot />
+  <div :class="badgeClasses" :style="diagonalStyles">
+    <span v-if="diagonal" class="diagonal-content">
+      <slot />
+    </span>
+    <template v-else>
+      <slot />
+    </template>
   </div>
 </template>
 
@@ -12,6 +17,7 @@ export interface BadgeProps {
   size?: 'sm' | 'md' | 'lg'
   rounded?: boolean
   outline?: boolean
+  diagonal?: boolean
 }
 
 const props = withDefaults(defineProps<BadgeProps>(), {
@@ -19,6 +25,7 @@ const props = withDefaults(defineProps<BadgeProps>(), {
   size: 'md',
   rounded: false,
   outline: false,
+  diagonal: false,
 })
 
 const badgeClasses = computed(() => {
@@ -133,14 +140,115 @@ const badgeClasses = computed(() => {
     ],
   }
 
-  // Border radius - more modern defaults
-  const radiusClasses = props.rounded ? ['rounded-full'] : ['rounded-lg']
+  // Border radius - support for diagonal sci-fi corners
+  const radiusClasses = props.diagonal 
+    ? ['ui-diagonal-corners-sm'] 
+    : props.rounded 
+    ? ['rounded-full'] 
+    : ['rounded-lg']
+
+  // Text colors for diagonal variants (override default variant text colors)
+  const diagonalTextClasses = props.diagonal ? (() => {
+    if (props.outline) {
+      // Outline variants use dark text on light backgrounds
+      switch (props.variant) {
+        case 'primary':
+          return ['text-primary-500', 'dark:text-primary-500'] // Match the border color exactly
+        case 'secondary':
+          return ['text-primary-700', 'dark:text-primary-200']
+        case 'success':
+          return ['text-green-700', 'dark:text-green-200'] // Darker in dark mode for better contrast
+        case 'warning':
+          return ['text-orange-700', 'dark:text-orange-200']
+        case 'error':
+          return ['text-red-700', 'dark:text-red-200']
+        case 'info':
+          return ['text-blue-700', 'dark:text-blue-200']
+        default:
+          return ['text-primary-500', 'dark:text-primary-500']
+      }
+    } else {
+      // Filled variants need high contrast
+      switch (props.variant) {
+        case 'primary':
+          return ['text-white', 'dark:text-white'] // White on primary-500
+        case 'secondary':
+          return ['text-primary-900', 'dark:text-primary-900'] // Dark text on light background
+        case 'success':
+          return ['text-white', 'dark:text-white'] // White on accent colors
+        case 'warning':
+          return ['text-white', 'dark:text-white']
+        case 'error':
+          return ['text-white', 'dark:text-white']
+        case 'info':
+          return ['text-white', 'dark:text-white']
+        default:
+          return ['text-white', 'dark:text-white']
+      }
+    }
+  })() : []
 
   return [
     ...baseClasses,
     ...sizeClasses[props.size],
-    ...variantClasses[props.variant],
+    ...(props.diagonal ? [] : variantClasses[props.variant]), // Skip variant classes for diagonal
     ...radiusClasses,
+    ...diagonalTextClasses,
   ]
 })
+
+// Diagonal styles for sci-fi effect
+const diagonalStyles = computed(() => {
+  if (!props.diagonal) return {}
+
+  // Get colors based on variant and outline state
+  const colors = getBadgeDiagonalColors(props.variant, props.outline)
+  
+  return {
+    '--diagonal-border-color': colors.border,
+    '--diagonal-bg-color': colors.background,
+  }
+})
+
+// Helper to get colors for diagonal effect
+function getBadgeDiagonalColors(variant: BadgeProps['variant'], outline: boolean) {
+  const colorMap = {
+    primary: {
+      border: 'var(--color-primary-500)',
+      background: outline ? 'var(--color-primary-50)' : 'var(--color-primary-500)',
+    },
+    secondary: {
+      border: 'var(--color-primary-400)',
+      background: outline ? 'var(--color-primary-50)' : 'var(--color-primary-300)',
+    },
+    success: {
+      border: 'var(--color-accent-success-main)',
+      background: outline ? 'var(--color-surface-secondary)' : 'var(--color-accent-success-subtle)',
+    },
+    warning: {
+      border: 'var(--color-accent-warning-main)',
+      background: outline ? 'var(--color-surface-secondary)' : 'var(--color-accent-warning-subtle)',
+    },
+    error: {
+      border: 'var(--color-accent-error-main)',
+      background: outline ? 'var(--color-surface-secondary)' : 'var(--color-accent-error-subtle)',
+    },
+    info: {
+      border: 'var(--color-accent-info-main)',
+      background: outline ? 'var(--color-surface-secondary)' : 'var(--color-accent-info-subtle)',
+    },
+  } as const
+  
+  return colorMap[variant || 'primary']
+}
 </script>
+
+<style scoped>
+.diagonal-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+</style>

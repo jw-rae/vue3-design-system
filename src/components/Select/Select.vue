@@ -12,17 +12,35 @@
     
     <Listbox v-model="selectedValue" :disabled="disabled">
       <div class="relative">
-        <ListboxButton :class="buttonClasses" class="ui-focus-ring ui-transition">
-          <span v-if="selectedValue" class="block truncate text-left">
-            {{ getDisplayValue(selectedValue) }}
-          </span>
-          <span v-else class="block truncate text-left text-text-tertiary dark:text-text-tertiary">
-            {{ placeholder }}
-          </span>
-          <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-            <ChevronUpDownIcon class="h-5 w-5 text-text-tertiary dark:text-text-tertiary" />
-          </span>
-        </ListboxButton>
+        <template v-if="diagonal">
+          <div class="diagonal-select" :style="diagonalStyles">
+            <ListboxButton :class="buttonClasses" class="ui-focus-ring ui-transition diagonal-content">
+              <span v-if="selectedValue" class="block truncate text-left">
+                {{ getDisplayValue(selectedValue) }}
+              </span>
+              <span v-else class="block truncate text-left text-text-tertiary dark:text-text-tertiary">
+                {{ placeholder }}
+              </span>
+              <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                <ChevronUpDownIcon class="h-5 w-5 text-text-tertiary dark:text-text-tertiary" />
+              </span>
+            </ListboxButton>
+          </div>
+        </template>
+        
+        <template v-else>
+          <ListboxButton :class="buttonClasses" class="ui-focus-ring ui-transition">
+            <span v-if="selectedValue" class="block truncate text-left">
+              {{ getDisplayValue(selectedValue) }}
+            </span>
+            <span v-else class="block truncate text-left text-text-tertiary dark:text-text-tertiary">
+              {{ placeholder }}
+            </span>
+            <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+              <ChevronUpDownIcon class="h-5 w-5 text-text-tertiary dark:text-text-tertiary" />
+            </span>
+          </ListboxButton>
+        </template>
 
         <transition
           leave-active-class="transition duration-100 ease-in"
@@ -30,7 +48,11 @@
           leave-to-class="opacity-0"
         >
           <ListboxOptions
-            class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-surface-elevated dark:bg-surface-elevated py-1 text-base shadow-lg ring-1 ring-border-primary dark:ring-border-primary focus:outline-none sm:text-sm"
+            :class="[
+              'absolute z-10 mt-1 max-h-60 w-full overflow-auto bg-surface-elevated dark:bg-surface-elevated py-1 text-base shadow-lg focus:outline-none sm:text-sm',
+              diagonal ? 'ui-diagonal-corners listbox-options' : 'rounded-md ring-1 ring-border-primary dark:ring-border-primary'
+            ]"
+            :style="diagonal ? diagonalDropdownStyles : {}"
           >
             <ListboxOption
               v-for="option in options"
@@ -41,8 +63,10 @@
             >
               <li
                 :class="[
-                  active ? 'bg-primary-100 dark:bg-primary-900/20 text-primary-900 dark:text-primary-200' : 'text-text-primary dark:text-text-primary',
-                  'relative cursor-default select-none py-2 pl-10 pr-4',
+                  'text-text-primary dark:text-text-primary relative cursor-default select-none py-2 pl-10 pr-4',
+                  diagonal ? 'diagonal-option' : '',
+                  active && diagonal ? 'diagonal-hover-option' : '',
+                  active && !diagonal ? 'bg-primary-100 dark:bg-primary-900/20' : ''
                 ]"
               >
                 <span :class="[selected ? 'font-medium' : 'font-normal', 'block truncate']">
@@ -97,6 +121,7 @@ export interface SelectProps {
   disabled?: boolean
   required?: boolean
   size?: 'sm' | 'md' | 'lg'
+  diagonal?: boolean
 }
 
 const props = withDefaults(defineProps<SelectProps>(), {
@@ -105,6 +130,7 @@ const props = withDefaults(defineProps<SelectProps>(), {
   required: false,
   size: 'md',
   options: () => [],
+  diagonal: false,
 })
 
 const emit = defineEmits<{
@@ -136,8 +162,6 @@ const buttonClasses = computed(() => {
     'relative',
     'w-full',
     'cursor-default',
-    'rounded-md',
-    'border',
     'bg-surface-primary',
     'dark:bg-surface-primary',
     'text-text-primary',
@@ -150,6 +174,11 @@ const buttonClasses = computed(() => {
     'dark:disabled:bg-surface-secondary',
   ]
 
+  // Shape classes
+  const shapeClasses = props.diagonal 
+    ? ['ui-diagonal-corners'] 
+    : ['rounded-md', 'border']
+
   // Size classes
   const sizeClasses = {
     sm: ['px-3', 'py-2', 'text-sm'],
@@ -157,8 +186,8 @@ const buttonClasses = computed(() => {
     lg: ['px-4', 'py-3', 'text-lg'],
   }
 
-  // State classes
-  const stateClasses = props.error
+  // State classes for non-diagonal only
+  const stateClasses = props.diagonal ? [] : (props.error
     ? [
         'border-error-300', 
         'dark:border-error-500',
@@ -170,13 +199,39 @@ const buttonClasses = computed(() => {
         'dark:border-border-primary',
         'focus:border-primary-500', 
         'focus:ring-primary-500'
-      ]
+      ])
 
   return [
     ...baseClasses,
+    ...shapeClasses,
     ...sizeClasses[props.size],
     ...stateClasses,
   ]
+})
+
+const diagonalStyles = computed(() => {
+  if (!props.diagonal) return {}
+  
+  const errorColors = {
+    '--ui-diagonal-border': 'var(--color-error-300)',
+    '--ui-diagonal-bg': 'var(--color-surface-primary)',
+  }
+  
+  const normalColors = {
+    '--ui-diagonal-border': 'var(--color-border-primary)',
+    '--ui-diagonal-bg': 'var(--color-surface-primary)',
+  }
+  
+  return props.error ? errorColors : normalColors
+})
+
+const diagonalDropdownStyles = computed(() => {
+  if (!props.diagonal) return {}
+  
+  return {
+    '--diagonal-border-color': 'var(--color-border-primary)',
+    '--diagonal-bg-color': 'var(--color-surface-elevated)',
+  }
 })
 
 const getDisplayValue = (option: SelectOption | any): string => {

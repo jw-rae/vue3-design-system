@@ -6,7 +6,22 @@
     </label>
     
     <div class="relative">
+      <div v-if="diagonal" :class="inputClasses" :style="diagonalStyles">
+        <input
+          :id="inputId"
+          :type="type"
+          :value="modelValue"
+          :placeholder="placeholder"
+          :disabled="disabled"
+          :readonly="readonly"
+          class="diagonal-input ui-focus-ring ui-transition"
+          @input="onInput"
+          @focus="onFocus"
+          @blur="onBlur"
+        />
+      </div>
       <input
+        v-else
         :id="inputId"
         :type="type"
         :value="modelValue"
@@ -54,6 +69,7 @@ export interface InputProps {
   readonly?: boolean
   required?: boolean
   size?: 'sm' | 'md' | 'lg'
+  diagonal?: boolean
 }
 
 const props = withDefaults(defineProps<InputProps>(), {
@@ -62,6 +78,7 @@ const props = withDefaults(defineProps<InputProps>(), {
   readonly: false,
   required: false,
   size: 'md',
+  diagonal: false,
 })
 
 const emit = defineEmits<{
@@ -88,7 +105,7 @@ const inputClasses = computed(() => {
     'block',
     'w-full',
     'border',
-    'rounded-md',
+    ...(props.diagonal ? ['ui-diagonal-corners'] : ['rounded-md']),
     'shadow-sm',
     'placeholder-text-tertiary',
     'dark:placeholder-text-tertiary',
@@ -138,6 +155,18 @@ const inputClasses = computed(() => {
   ]
 })
 
+// Diagonal styles for sci-fi effect
+const diagonalStyles = computed(() => {
+  if (!props.diagonal) return {}
+  
+  return {
+    '--diagonal-border-color': props.error 
+      ? 'var(--color-primary-700)' 
+      : 'var(--color-primary-300)',
+    '--diagonal-bg-color': 'var(--color-surface-primary)',
+  }
+})
+
 const onInput = (event: Event) => {
   const target = event.target as HTMLInputElement
   const value = props.type === 'number' ? Number(target.value) : target.value
@@ -154,3 +183,19 @@ const onBlur = (event: FocusEvent) => {
   emit('blur', event)
 }
 </script>
+
+<style scoped>
+.diagonal-input {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  background: transparent !important;
+  border: none !important;
+  outline: none;
+  padding: 0.625rem 1rem;
+}
+
+.diagonal-input:focus {
+  outline: none;
+}
+</style>

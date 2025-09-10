@@ -217,14 +217,39 @@ const buttonClasses = computed(() => {
     ? ['rounded-full'] 
     : ['rounded-lg']
 
+  // Text colors for diagonal variants (override default variant text colors)
+  const diagonalTextClasses = props.diagonal ? (() => {
+    switch (props.variant) {
+      case 'primary':
+        return ['text-white', 'dark:text-white'] // White text on dark background
+      case 'secondary':
+        return ['text-primary-800', 'dark:text-primary-900'] // Dark text on light background
+      case 'outline':
+        return ['text-primary-700', 'dark:text-primary-800'] // Dark text on light background
+      case 'ghost':
+        return ['text-primary-700', 'dark:text-primary-800'] // Dark text on light background
+      case 'success':
+        return ['text-white', 'dark:text-white'] // White text on colored background
+      case 'warning':
+        return ['text-white', 'dark:text-white'] // White text on colored background
+      case 'error':
+        return ['text-white', 'dark:text-white'] // White text on colored background
+      case 'info':
+        return ['text-white', 'dark:text-white'] // White text on colored background
+      default:
+        return ['text-white', 'dark:text-white']
+    }
+  })() : []
+
   // Block
   const blockClasses = props.block ? ['w-full'] : []
 
   return [
     ...baseClasses,
     ...sizeClasses[props.size],
-    ...variantClasses[props.variant],
+    ...(props.diagonal ? [] : variantClasses[props.variant]), // Skip variant classes for diagonal
     ...radiusClasses,
+    ...diagonalTextClasses,
     ...blockClasses,
   ]
 })
@@ -246,28 +271,28 @@ const diagonalStyles = computed(() => {
 function getVariantColors(variant: ButtonProps['variant']) {
   const colorMap = {
     primary: {
-      border: 'var(--color-primary-500)',
-      background: 'var(--color-primary-500)', // Revert to solid color
+      border: 'var(--color-primary-600)',
+      background: 'var(--color-primary-600)', // Darker for better contrast with white text
     },
     secondary: {
-      border: 'var(--color-primary-300)',
-      background: 'var(--color-primary-50)', // Even lighter background
+      border: 'var(--color-primary-400)',
+      background: 'var(--color-primary-100)', // Light background for dark text
     },
     outline: {
-      border: 'var(--color-primary-500)',
-      background: 'var(--color-primary-50)', // Light fill instead of transparent
+      border: 'var(--color-primary-600)',
+      background: 'var(--color-primary-50)', // Very light fill for dark text
     },
     ghost: {
-      border: 'var(--color-text-tertiary)',
-      background: 'transparent',
+      border: 'var(--color-primary-300)',
+      background: 'var(--color-primary-50)', // Light background instead of transparent
     },
     success: {
       border: 'var(--color-accent-success-main)',
-      background: 'var(--color-accent-success-main)', // Revert to solid color
+      background: 'var(--color-accent-success-main)', // Keep solid for contrast
     },
     warning: {
       border: 'var(--color-accent-warning-main)',
-      background: 'var(--color-accent-warning-main)', // Revert to solid color
+      background: 'var(--color-accent-warning-main)', // Keep solid for contrast
     },
     error: {
       border: 'var(--color-accent-error-main)',

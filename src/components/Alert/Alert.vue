@@ -1,28 +1,55 @@
 <template>
-  <div :class="alertClasses" role="alert">
-    <div v-if="$slots.icon || showIcon" class="flex-shrink-0">
-      <slot name="icon">
-        <component :is="iconComponent" class="h-5 w-5" />
-      </slot>
-    </div>
-    
-    <div class="flex-1">
-      <div v-if="title" class="font-medium mb-1">
-        {{ title }}
+  <div :class="alertClasses" :style="diagonalStyles" role="alert">
+    <div v-if="diagonal" class="diagonal-content">
+      <div v-if="$slots.icon || showIcon" class="flex-shrink-0">
+        <slot name="icon">
+          <component :is="iconComponent" class="h-5 w-5" />
+        </slot>
       </div>
-      <div>
-        <slot />
+      
+      <div class="flex-1">
+        <div v-if="title" class="font-medium mb-1">
+          {{ title }}
+        </div>
+        <div>
+          <slot />
+        </div>
+      </div>
+      
+      <div v-if="dismissible" class="flex-shrink-0 ml-4">
+        <button
+          @click="$emit('dismiss')"
+          class="inline-flex text-current hover:text-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-current rounded-md p-1"
+        >
+          <XMarkIcon class="h-4 w-4" />
+        </button>
       </div>
     </div>
-    
-    <div v-if="dismissible" class="flex-shrink-0 ml-4">
-      <button
-        @click="$emit('dismiss')"
-        class="inline-flex text-current hover:text-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-current rounded-md p-1"
-      >
-        <XMarkIcon class="h-4 w-4" />
-      </button>
-    </div>
+    <template v-else>
+      <div v-if="$slots.icon || showIcon" class="flex-shrink-0">
+        <slot name="icon">
+          <component :is="iconComponent" class="h-5 w-5" />
+        </slot>
+      </div>
+      
+      <div class="flex-1">
+        <div v-if="title" class="font-medium mb-1">
+          {{ title }}
+        </div>
+        <div>
+          <slot />
+        </div>
+      </div>
+      
+      <div v-if="dismissible" class="flex-shrink-0 ml-4">
+        <button
+          @click="$emit('dismiss')"
+          class="inline-flex text-current hover:text-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-current rounded-md p-1"
+        >
+          <XMarkIcon class="h-4 w-4" />
+        </button>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -42,6 +69,7 @@ export interface AlertProps {
   dismissible?: boolean
   showIcon?: boolean
   filled?: boolean
+  diagonal?: boolean
 }
 
 const props = withDefaults(defineProps<AlertProps>(), {
@@ -49,6 +77,7 @@ const props = withDefaults(defineProps<AlertProps>(), {
   dismissible: false,
   showIcon: true,
   filled: false,
+  diagonal: false,
 })
 
 defineEmits<{
@@ -69,7 +98,7 @@ const alertClasses = computed(() => {
   const baseClasses = [
     'flex',
     'p-4',
-    'rounded-xl', // More rounded for modern feel
+    props.diagonal ? 'ui-diagonal-corners' : 'rounded-xl', // Diagonal or rounded
     'border-l-4', // Add accent border for personality
     'shadow-sm', // Subtle shadow
     'gap-3',
@@ -160,9 +189,88 @@ const alertClasses = computed(() => {
     ],
   }
 
+  // Text colors for diagonal variants (override default variant text colors)
+  const diagonalTextClasses = props.diagonal ? (() => {
+    switch (props.variant) {
+      case 'success':
+        return ['text-green-800', 'dark:text-green-100']
+      case 'warning':
+        return ['text-orange-800', 'dark:text-orange-100'] 
+      case 'error':
+        return ['text-red-800', 'dark:text-red-100']
+      case 'info':
+        return ['text-blue-800', 'dark:text-blue-100']
+      default:
+        return ['text-blue-800', 'dark:text-blue-100']
+    }
+  })() : []
+
   return [
     ...baseClasses,
-    ...variantClasses[props.variant],
+    ...(props.diagonal ? [] : variantClasses[props.variant]), // Skip variant classes for diagonal
+    ...diagonalTextClasses,
   ]
 })
+
+// Diagonal styles for sci-fi effect
+const diagonalStyles = computed(() => {
+  if (!props.diagonal) return {}
+
+  // Get colors based on variant and filled state
+  const colors = getAlertDiagonalColors(props.variant, props.filled)
+  
+  console.log('Diagonal styles:', {
+    variant: props.variant,
+    filled: props.filled,
+    colors,
+  })
+  
+  return {
+    '--diagonal-border-color': colors.border,
+    '--diagonal-bg-color': colors.background,
+  }
+})
+
+// Helper to get colors for diagonal effect
+function getAlertDiagonalColors(variant: AlertProps['variant'], filled: boolean) {
+  if (!filled) {
+    // Non-filled alerts use standard surface background
+    return {
+      border: `var(--color-accent-${variant}-main)`,
+      background: 'var(--color-surface-secondary)',
+    }
+  }
+  
+  // Use CSS custom properties that match the exact Tailwind colors used by regular alerts
+  const colorMap = {
+    success: {
+      border: 'var(--color-accent-success-main)',
+      background: 'rgb(34 197 94 / 0.15)', // green-500/15 - same as bg-green-500/15
+    },
+    warning: {
+      border: 'var(--color-accent-warning-main)', 
+      background: 'rgb(245 158 11 / 0.15)', // amber-500/15 - same as bg-amber-500/15
+    },
+    error: {
+      border: 'var(--color-accent-error-main)',
+      background: 'rgb(239 68 68 / 0.15)', // red-500/15 - same as bg-red-500/15
+    },
+    info: {
+      border: 'var(--color-accent-info-main)',
+      background: 'rgb(59 130 246 / 0.15)', // blue-500/15 - same as bg-blue-500/15
+    },
+  } as const
+  
+  return colorMap[variant || 'info']
+}
 </script>
+
+<style scoped>
+.diagonal-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  width: 100%;
+  height: 100%;
+}
+</style>

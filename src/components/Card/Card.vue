@@ -1,16 +1,31 @@
 <template>
-  <div :class="cardClasses">
-    <header v-if="$slots.header" :class="headerClasses">
-      <slot name="header" />
-    </header>
-    
-    <div v-if="$slots.default" :class="contentClasses">
-      <slot />
+  <div :class="cardClasses" :style="diagonalStyles">
+    <div v-if="diagonal" class="diagonal-content">
+      <header v-if="$slots.header" :class="headerClasses">
+        <slot name="header" />
+      </header>
+      
+      <div v-if="$slots.default" :class="contentClasses">
+        <slot />
+      </div>
+      
+      <footer v-if="$slots.footer" :class="footerClasses">
+        <slot name="footer" />
+      </footer>
     </div>
-    
-    <footer v-if="$slots.footer" :class="footerClasses">
-      <slot name="footer" />
-    </footer>
+    <template v-else>
+      <header v-if="$slots.header" :class="headerClasses">
+        <slot name="header" />
+      </header>
+      
+      <div v-if="$slots.default" :class="contentClasses">
+        <slot />
+      </div>
+      
+      <footer v-if="$slots.footer" :class="footerClasses">
+        <slot name="footer" />
+      </footer>
+    </template>
   </div>
 </template>
 
@@ -22,6 +37,7 @@ export interface CardProps {
   padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl'
   rounded?: boolean
   hoverable?: boolean
+  diagonal?: boolean
 }
 
 const props = withDefaults(defineProps<CardProps>(), {
@@ -29,6 +45,7 @@ const props = withDefaults(defineProps<CardProps>(), {
   padding: 'md',
   rounded: true,
   hoverable: false,
+  diagonal: false,
 })
 
 const cardClasses = computed(() => {
@@ -65,8 +82,12 @@ const cardClasses = computed(() => {
     ],
   }
 
-  // Rounded classes
-  const radiusClasses = props.rounded ? ['rounded-lg'] : ['rounded-none']
+  // Border radius - support for diagonal sci-fi corners
+  const radiusClasses = props.diagonal 
+    ? ['ui-diagonal-corners'] 
+    : props.rounded 
+    ? ['rounded-lg'] 
+    : ['rounded-none']
 
   // Hoverable classes
   const hoverClasses = props.hoverable 
@@ -80,6 +101,43 @@ const cardClasses = computed(() => {
     ...hoverClasses,
   ]
 })
+
+// Diagonal styles for sci-fi effect
+const diagonalStyles = computed(() => {
+  if (!props.diagonal) return {}
+
+  // Get colors based on variant
+  const colors = getCardDiagonalColors(props.variant)
+  
+  return {
+    '--diagonal-border-color': colors.border,
+    '--diagonal-bg-color': colors.background,
+  }
+})
+
+// Helper to get colors for diagonal effect
+function getCardDiagonalColors(variant: CardProps['variant']) {
+  const colorMap = {
+    default: {
+      border: 'var(--color-border-primary)',
+      background: 'var(--color-surface-primary)',
+    },
+    outlined: {
+      border: 'var(--color-border-primary)',
+      background: 'transparent',
+    },
+    elevated: {
+      border: 'var(--color-border-primary)',
+      background: 'var(--color-surface-elevated)',
+    },
+    filled: {
+      border: 'var(--color-primary-300)',
+      background: 'var(--color-surface-secondary)',
+    },
+  } as const
+  
+  return colorMap[variant || 'default']
+}
 
 const headerClasses = computed(() => {
   const paddingClasses = {
@@ -131,3 +189,12 @@ const footerClasses = computed(() => {
   ]
 })
 </script>
+
+<style scoped>
+.diagonal-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+</style>

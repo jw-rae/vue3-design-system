@@ -70,37 +70,6 @@
         </div>
       </section>
 
-      <!-- Diagonal Buttons Demo -->
-      <section class="mb-12">
-        <h2 class="text-2xl font-semibold text-text-primary mb-6">Sci-Fi Diagonal Corners</h2>
-        <p class="text-text-secondary mb-6">Experimental diagonal corner effect using layered elements for a futuristic look.</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <UiCard>
-            <template #header>
-              <h3 class="font-medium">Diagonal Buttons</h3>
-            </template>
-            <div class="space-y-3">
-              <UiButton variant="primary" diagonal>Primary Diagonal</UiButton>
-              <UiButton variant="secondary" diagonal>Secondary Diagonal</UiButton>
-              <UiButton variant="outline" diagonal>Outline Diagonal</UiButton>
-              <UiButton variant="success" diagonal>Success Diagonal</UiButton>
-            </div>
-          </UiCard>
-
-          <UiCard>
-            <template #header>
-              <h3 class="font-medium">Regular vs Diagonal</h3>
-            </template>
-            <div class="space-y-3">
-              <UiButton variant="primary">Regular Primary</UiButton>
-              <UiButton variant="primary" diagonal>Diagonal Primary</UiButton>
-              <UiButton variant="error">Regular Error</UiButton>
-              <UiButton variant="error" diagonal>Diagonal Error</UiButton>
-            </div>
-          </UiCard>
-        </div>
-      </section>
-
       <!-- Alert Example -->
       <section v-if="showAlert" class="mb-12">
         <h2 class="text-2xl font-semibold text-text-primary mb-6">Alerts</h2>
@@ -353,6 +322,165 @@
           </UiButton>
         </template>
       </UiModal>
+
+      <!-- Sci-Fi Diagonal Corners Demo -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold text-text-primary mb-6">Sci-Fi Diagonal Corners</h2>
+        <p class="text-text-secondary mb-6">Experimental diagonal corner effect using layered elements for a futuristic look.</p>
+        
+        <!-- First Row: Diagonal Buttons and All Badge Variants -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <!-- Diagonal Buttons -->
+          <UiCard>
+            <template #header>
+              <h3 class="font-medium">Diagonal Buttons</h3>
+            </template>
+            <div class="space-y-3">
+              <UiButton variant="primary" diagonal>Primary Diagonal</UiButton>
+              <UiButton variant="secondary" diagonal>Secondary Diagonal</UiButton>
+              <UiButton variant="outline" diagonal>Outline Diagonal</UiButton>
+              <UiButton variant="success" diagonal>Success Diagonal</UiButton>
+              <UiButton variant="error" diagonal>Error Diagonal</UiButton>
+            </div>
+          </UiCard>
+
+          <!-- All Diagonal Badge Variants -->
+          <UiCard>
+            <template #header>
+              <h3 class="font-medium">Diagonal Badge Variants</h3>
+            </template>
+            <div class="space-y-4">
+              <!-- Filled Badges -->
+              <div>
+                <h4 class="text-sm font-medium text-text-secondary mb-2">Filled Diagonal Badges</h4>
+                <div class="flex flex-wrap gap-2">
+                  <UiBadge variant="primary" diagonal>Primary</UiBadge>
+                  <UiBadge variant="secondary" diagonal>Secondary</UiBadge>
+                  <UiBadge variant="success" diagonal>Success</UiBadge>
+                  <UiBadge variant="warning" diagonal>Warning</UiBadge>
+                  <UiBadge variant="error" diagonal>Error</UiBadge>
+                  <UiBadge variant="info" diagonal>Info</UiBadge>
+                </div>
+              </div>
+              
+              <!-- Outline Badges -->
+              <div>
+                <h4 class="text-sm font-medium text-text-secondary mb-2">Outline Diagonal Badges</h4>
+                <div class="flex flex-wrap gap-2">
+                  <UiBadge variant="primary" diagonal outline>Primary</UiBadge>
+                  <UiBadge variant="secondary" diagonal outline>Secondary</UiBadge>
+                  <UiBadge variant="success" diagonal outline>Success</UiBadge>
+                  <UiBadge variant="warning" diagonal outline>Warning</UiBadge>
+                  <UiBadge variant="error" diagonal outline>Error</UiBadge>
+                  <UiBadge variant="info" diagonal outline>Info</UiBadge>
+                </div>
+              </div>
+
+              <!-- Rounded Diagonal Badges -->
+              <div>
+                <h4 class="text-sm font-medium text-text-secondary mb-2">Rounded + Diagonal (Mixed Style)</h4>
+                <div class="flex flex-wrap gap-2">
+                  <UiBadge variant="primary" diagonal rounded>Primary</UiBadge>
+                  <UiBadge variant="success" diagonal rounded>Success</UiBadge>
+                  <UiBadge variant="error" diagonal rounded outline>Error Outline</UiBadge>
+                </div>
+              </div>
+            </div>
+          </UiCard>
+        </div>
+
+        <!-- Second Row: All Diagonal Alert Types -->
+        <div class="grid grid-cols-1 gap-6 mb-6">
+          <UiCard>
+            <template #header>
+              <h3 class="font-medium">All Diagonal Alert Types</h3>
+            </template>
+            <div class="space-y-4">
+              <!-- Regular Diagonal Alerts -->
+              <div>
+                <h4 class="text-sm font-medium text-text-secondary mb-3">Regular Diagonal Alerts</h4>
+                <div class="space-y-3">
+                  <UiAlert variant="success" title="Diagonal Success!" diagonal>
+                    Your futuristic operation completed successfully with diagonal styling.
+                  </UiAlert>
+                  <UiAlert variant="warning" title="Diagonal Warning" diagonal>
+                    Please review your sci-fi input before proceeding with diagonal interface.
+                  </UiAlert>
+                  <UiAlert variant="error" title="Diagonal Error" diagonal>
+                    There was an error in the quantum processing matrix with diagonal corners.
+                  </UiAlert>
+                  <UiAlert variant="info" diagonal>
+                    This is a diagonal informational message for the future interface.
+                  </UiAlert>
+                </div>
+              </div>
+
+              <!-- Filled Diagonal Alerts -->
+              <div>
+                <h4 class="text-sm font-medium text-text-secondary mb-3">Filled Diagonal Alerts</h4>
+                <div class="space-y-3">
+                  <UiAlert variant="success" title="Filled Diagonal Success!" diagonal filled>
+                    Filled success alert with diagonal corners and transparent background.
+                  </UiAlert>
+                  <UiAlert variant="warning" title="Filled Diagonal Warning" diagonal filled>
+                    Filled warning alert with diagonal styling for futuristic interfaces.
+                  </UiAlert>
+                  <UiAlert variant="error" title="Filled Diagonal Error" diagonal filled>
+                    Filled error alert with diagonal corners for sci-fi applications.
+                  </UiAlert>
+                  <UiAlert variant="info" diagonal filled>
+                    Filled info alert with diagonal corners - no title for variety.
+                  </UiAlert>
+                </div>
+              </div>
+            </div>
+          </UiCard>
+        </div>
+
+        <!-- Third Row: Diagonal Cards, Inputs, and Selects -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Diagonal Card & Input -->
+          <UiCard diagonal>
+            <template #header>
+              <h3 class="font-medium">Diagonal Card & Input</h3>
+            </template>
+            <div class="space-y-4">
+              <UiInput 
+                diagonal 
+                label="Sci-Fi Input" 
+                placeholder="Enter futuristic data..." 
+              />
+              <p class="text-sm text-text-secondary">
+                This entire card also has diagonal corners! Notice how the layered approach creates clean borders.
+              </p>
+            </div>
+          </UiCard>
+
+          <!-- Diagonal Select -->
+          <UiCard diagonal>
+            <template #header>
+              <h3 class="font-medium">Diagonal Select</h3>
+            </template>
+            <div class="space-y-4">
+              <UiSelect
+                v-model="formData.techChoice"
+                :options="techOptions"
+                diagonal
+                label="Technology Platform"
+                placeholder="Select your tech stack..."
+                hint="Choose your preferred technology"
+              />
+              <p v-if="formData.techChoice" class="text-sm text-text-secondary">
+                Selected: {{ (formData.techChoice as any)?.label }}
+              </p>
+              <p class="text-sm text-text-secondary">
+                Both the card and select have diagonal corners for a futuristic sci-fi look!
+              </p>
+            </div>
+          </UiCard>
+        </div>
+      </section>
+
       </div>
     </div>
   </div>
@@ -391,6 +519,7 @@ const formData = ref({
   medium: '',
   large: '',
   country: null,
+  techChoice: null,
 })
 
 const countryOptions = [
@@ -399,6 +528,15 @@ const countryOptions = [
   { value: 'uk', label: 'United Kingdom' },
   { value: 'de', label: 'Germany' },
   { value: 'fr', label: 'France' },
+]
+
+const techOptions = [
+  { value: 'vue', label: 'Vue.js & TypeScript' },
+  { value: 'react', label: 'React & Next.js' },
+  { value: 'angular', label: 'Angular & RxJS' },
+  { value: 'svelte', label: 'Svelte & SvelteKit' },
+  { value: 'node', label: 'Node.js & Express' },
+  { value: 'python', label: 'Python & FastAPI' },
 ]
 
 const passwordError = computed(() => {
