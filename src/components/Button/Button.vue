@@ -1,16 +1,26 @@
 <template>
   <button
     :class="buttonClasses"
+    :style="diagonalStyles"
     :disabled="disabled"
     :type="type"
     @click="$emit('click', $event)"
     class="ui-focus-ring ui-transition"
   >
-    <slot name="prefix" />
-    <span v-if="$slots.default" class="button-content">
-      <slot />
+    <span v-if="diagonal" class="diagonal-content">
+      <slot name="prefix" />
+      <span v-if="$slots.default" class="button-content">
+        <slot />
+      </span>
+      <slot name="suffix" />
     </span>
-    <slot name="suffix" />
+    <template v-else>
+      <slot name="prefix" />
+      <span v-if="$slots.default" class="button-content">
+        <slot />
+      </span>
+      <slot name="suffix" />
+    </template>
   </button>
 </template>
 
@@ -24,6 +34,7 @@ export interface ButtonProps {
   type?: 'button' | 'submit' | 'reset'
   block?: boolean
   rounded?: boolean
+  diagonal?: boolean
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {
@@ -33,6 +44,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   type: 'button',
   block: false,
   rounded: false,
+  diagonal: false,
 })
 
 defineEmits<{
@@ -198,8 +210,12 @@ const buttonClasses = computed(() => {
     ],
   }
 
-  // Border radius - more modern defaults
-  const radiusClasses = props.rounded ? ['rounded-full'] : ['rounded-lg']
+  // Border radius - support for diagonal sci-fi corners
+  const radiusClasses = props.diagonal 
+    ? ['ui-diagonal-corners-sm'] 
+    : props.rounded 
+    ? ['rounded-full'] 
+    : ['rounded-lg']
 
   // Block
   const blockClasses = props.block ? ['w-full'] : []
@@ -212,6 +228,59 @@ const buttonClasses = computed(() => {
     ...blockClasses,
   ]
 })
+
+// Diagonal styles for sci-fi effect
+const diagonalStyles = computed(() => {
+  if (!props.diagonal) return {}
+
+  // Get the border and background colors based on variant
+  const colors = getVariantColors(props.variant)
+  
+  return {
+    '--diagonal-border-color': colors.border,
+    '--diagonal-bg-color': colors.background,
+  }
+})
+
+// Helper to get colors for diagonal effect using theme CSS custom properties
+function getVariantColors(variant: ButtonProps['variant']) {
+  const colorMap = {
+    primary: {
+      border: 'var(--color-primary-500)',
+      background: 'var(--color-primary-500)', // Revert to solid color
+    },
+    secondary: {
+      border: 'var(--color-primary-300)',
+      background: 'var(--color-primary-50)', // Even lighter background
+    },
+    outline: {
+      border: 'var(--color-primary-500)',
+      background: 'var(--color-primary-50)', // Light fill instead of transparent
+    },
+    ghost: {
+      border: 'var(--color-text-tertiary)',
+      background: 'transparent',
+    },
+    success: {
+      border: 'var(--color-accent-success-main)',
+      background: 'var(--color-accent-success-main)', // Revert to solid color
+    },
+    warning: {
+      border: 'var(--color-accent-warning-main)',
+      background: 'var(--color-accent-warning-main)', // Revert to solid color
+    },
+    error: {
+      border: 'var(--color-accent-error-main)',
+      background: 'var(--color-accent-error-main)', // Revert to solid color
+    },
+    info: {
+      border: 'var(--color-accent-info-main)',
+      background: 'var(--color-accent-info-main)', // Revert to solid color
+    },
+  } as const
+  
+  return colorMap[variant || 'primary']
+}
 </script>
 
 <style scoped>
@@ -219,5 +288,13 @@ const buttonClasses = computed(() => {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.diagonal-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 </style>

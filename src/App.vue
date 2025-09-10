@@ -70,6 +70,37 @@
         </div>
       </section>
 
+      <!-- Diagonal Buttons Demo -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold text-text-primary mb-6">Sci-Fi Diagonal Corners</h2>
+        <p class="text-text-secondary mb-6">Experimental diagonal corner effect using layered elements for a futuristic look.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <UiCard>
+            <template #header>
+              <h3 class="font-medium">Diagonal Buttons</h3>
+            </template>
+            <div class="space-y-3">
+              <UiButton variant="primary" diagonal>Primary Diagonal</UiButton>
+              <UiButton variant="secondary" diagonal>Secondary Diagonal</UiButton>
+              <UiButton variant="outline" diagonal>Outline Diagonal</UiButton>
+              <UiButton variant="success" diagonal>Success Diagonal</UiButton>
+            </div>
+          </UiCard>
+
+          <UiCard>
+            <template #header>
+              <h3 class="font-medium">Regular vs Diagonal</h3>
+            </template>
+            <div class="space-y-3">
+              <UiButton variant="primary">Regular Primary</UiButton>
+              <UiButton variant="primary" diagonal>Diagonal Primary</UiButton>
+              <UiButton variant="error">Regular Error</UiButton>
+              <UiButton variant="error" diagonal>Diagonal Error</UiButton>
+            </div>
+          </UiCard>
+        </div>
+      </section>
+
       <!-- Alert Example -->
       <section v-if="showAlert" class="mb-12">
         <h2 class="text-2xl font-semibold text-text-primary mb-6">Alerts</h2>

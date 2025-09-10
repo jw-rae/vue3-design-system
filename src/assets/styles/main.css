@@ -127,4 +127,140 @@ body {
     .ui-transition {
         @apply transition-all duration-200 ease-in-out;
     }
+
+    /* Sci-fi diagonal corners using layered approach for proper borders */
+    .ui-diagonal-corners-sm {
+        position: relative;
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+    }
+
+    .ui-diagonal-corners-sm::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--diagonal-border-color, currentColor);
+        clip-path: polygon(6px 0%,
+                calc(100% - 6px) 0%,
+                100% 6px,
+                100% calc(100% - 6px),
+                calc(100% - 6px) 100%,
+                6px 100%,
+                0% calc(100% - 6px),
+                0% 6px);
+        z-index: 0;
+    }
+
+    .ui-diagonal-corners-sm::after {
+        content: '';
+        position: absolute;
+        inset: 1px;
+        background: var(--diagonal-bg-color, transparent);
+        clip-path: polygon(5px 0%,
+                calc(100% - 5px) 0%,
+                100% 5px,
+                100% calc(100% - 5px),
+                calc(100% - 5px) 100%,
+                5px 100%,
+                0% calc(100% - 5px),
+                0% 5px);
+        z-index: 1;
+    }
+
+    .ui-diagonal-corners-sm>* {
+        position: relative;
+        z-index: 2;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .ui-diagonal-corners {
+        position: relative;
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+    }
+
+    .ui-diagonal-corners::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--diagonal-border-color, currentColor);
+        clip-path: polygon(8px 0%,
+                calc(100% - 8px) 0%,
+                100% 8px,
+                100% calc(100% - 8px),
+                calc(100% - 8px) 100%,
+                8px 100%,
+                0% calc(100% - 8px),
+                0% 8px);
+        z-index: 0;
+    }
+
+    .ui-diagonal-corners::after {
+        content: '';
+        position: absolute;
+        inset: 1px;
+        background: var(--diagonal-bg-color, transparent);
+        clip-path: polygon(7px 0%,
+                calc(100% - 7px) 0%,
+                100% 7px,
+                100% calc(100% - 7px),
+                calc(100% - 7px) 100%,
+                7px 100%,
+                0% calc(100% - 7px),
+                0% 7px);
+        z-index: 1;
+    }
+
+    .ui-diagonal-corners>* {
+        position: relative;
+        z-index: 2;
+        padding: 1rem 1.5rem;
+    }
+
+    .ui-diagonal-corners-lg {
+        position: relative;
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+    }
+
+    .ui-diagonal-corners-lg::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--diagonal-border-color, currentColor);
+        clip-path: polygon(12px 0%,
+                calc(100% - 12px) 0%,
+                100% 12px,
+                100% calc(100% - 12px),
+                calc(100% - 12px) 100%,
+                12px 100%,
+                0% calc(100% - 12px),
+                0% 12px);
+        z-index: 0;
+    }
+
+    .ui-diagonal-corners-lg::after {
+        content: '';
+        position: absolute;
+        inset: 1px;
+        background: var(--diagonal-bg-color, transparent);
+        clip-path: polygon(11px 0%,
+                calc(100% - 11px) 0%,
+                100% 11px,
+                100% calc(100% - 11px),
+                calc(100% - 11px) 100%,
+                11px 100%,
+                0% calc(100% - 11px),
+                0% 11px);
+        z-index: 1;
+    }
+
+    .ui-diagonal-corners-lg>* {
+        position: relative;
+        z-index: 2;
+        padding: 1.5rem 2rem;
+    }
 }
