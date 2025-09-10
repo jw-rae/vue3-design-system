@@ -26,6 +26,37 @@
         <UiAccentColorsDemo />
       </section>
 
+      <!-- Slider Example -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold text-text-primary mb-6">Slider</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <UiCard>
+            <template #header>
+              <h3 class="font-medium">Basic Slider</h3>
+            </template>
+            <div class="space-y-4">
+              <UiSlider v-model="formData.sliderValue" :min="0" :max="100" :step="1" label="Volume" />
+              <div class="text-sm text-text-secondary">Value: {{ formData.sliderValue }}</div>
+            </div>
+          </UiCard>
+        </div>
+      </section>
+        <!-- ProgressSlider Example -->
+        <section class="mb-12">
+          <h2 class="text-2xl font-semibold text-text-primary mb-6">Progress Slider</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <UiCard>
+              <template #header>
+                <h3 class="font-medium">Progress Bar Style Slider</h3>
+              </template>
+              <div class="space-y-4">
+                <UiProgressSlider v-model="formData.progressSliderValue" :min="0" :max="100" :step="1" label="Progress" />
+                <div class="text-sm text-text-secondary">Value: {{ formData.progressSliderValue }}</div>
+              </div>
+            </UiCard>
+          </div>
+        </section>
+
       <!-- Toggle Examples -->
       <section class="mb-12">
         <h2 class="text-2xl font-semibold text-text-primary mb-6">Toggle Switches</h2>
@@ -710,6 +741,8 @@ import {
   Checkbox as UiCheckbox,
   Tabs as UiTabs,
   RadioButton as UiRadioButton,
+  Slider as UiSlider,
+  ProgressSlider as UiProgressSlider,
   useTheme
 } from './index'
 import { 
@@ -739,6 +772,8 @@ const formData = ref({
   medium: '',
   large: '',
   country: null,
+  sliderValue: 50,
+    progressSliderValue: 30,
   techChoice: null,
   size: 'medium',
   // Toggle properties

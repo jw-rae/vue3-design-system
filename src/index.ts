@@ -16,6 +16,8 @@ import Toggle from './components/Toggle/Toggle.vue'
 import Checkbox from './components/Checkbox/Checkbox.vue'
 import Tabs from './components/Tabs/Tabs.vue'
 import RadioButton from './components/RadioButton/RadioButton.vue'
+import Slider from './components/Slider/Slider.vue'
+import ProgressSlider from './components/Slider/ProgressSlider.vue'
 import { AccentColorsDemo, AccentColorCard } from './components/AccentColorsDemo'
 
 // Composables
@@ -25,7 +27,7 @@ export { useTheme } from './composables/useTheme'
 import './assets/styles/main.css'
 
 // Export individual components
-export { Button, IconButton, Card, Modal, Input, Badge, Alert, Select, Spinner, ThemeToggle, Toggle, Checkbox, Tabs, RadioButton, AccentColorsDemo, AccentColorCard }
+export { Button, IconButton, Card, Modal, Input, Badge, Alert, Select, Spinner, ThemeToggle, Toggle, Checkbox, Tabs, RadioButton, Slider, ProgressSlider, AccentColorsDemo, AccentColorCard }
 
 // Export types
 export type { ButtonProps } from './components/Button/Button.vue'
@@ -49,20 +51,22 @@ export const tokens = tokensDefault
 // Plugin installation function
 export const DesignSystem = {
     install(app: App) {
-        app.component('UiButton', Button)
-        app.component('UiIconButton', IconButton)
-        app.component('UiCard', Card)
-        app.component('UiModal', Modal)
-        app.component('UiInput', Input)
-        app.component('UiBadge', Badge)
-        app.component('UiAlert', Alert)
-        app.component('UiSelect', Select)
-        app.component('UiSpinner', Spinner)
-        app.component('UiThemeToggle', ThemeToggle)
-        app.component('UiToggle', Toggle)
-        app.component('UiCheckbox', Checkbox)
-        app.component('UiTabs', Tabs)
-        app.component('UiRadioButton', RadioButton)
+    app.component('UiButton', Button)
+    app.component('UiIconButton', IconButton)
+    app.component('UiCard', Card)
+    app.component('UiModal', Modal)
+    app.component('UiInput', Input)
+    app.component('UiBadge', Badge)
+    app.component('UiAlert', Alert)
+    app.component('UiSelect', Select)
+    app.component('UiSpinner', Spinner)
+    app.component('UiThemeToggle', ThemeToggle)
+    app.component('UiToggle', Toggle)
+    app.component('UiCheckbox', Checkbox)
+    app.component('UiTabs', Tabs)
+    app.component('UiRadioButton', RadioButton)
+    app.component('UiSlider', Slider)
+    app.component('UiProgressSlider', ProgressSlider)
     },
 }
 
