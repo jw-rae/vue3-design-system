@@ -187,11 +187,6 @@ const tokens = {
     },
 }
 
-// Simple CommonJS/ES module compatible export
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = tokens
-    module.exports.default = tokens
-} else if (typeof exports !== 'undefined') {
-    exports.default = tokens
-    exports.tokens = tokens
-}
+// ES module export for Vite compatibility
+export default tokens
+export { tokens }

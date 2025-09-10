@@ -6,74 +6,31 @@
     :type="type"
     @click="$emit('click', $event)"
     class="ui-focus-ring ui-transition"
+    :aria-label="ariaLabel"
   >
     <span v-if="diagonal" class="diagonal-content">
-      <slot name="prefix" />
-      
-      <!-- Icon before text (left position or icon-only) -->
       <component
         :is="iconComponent"
         :class="iconClasses"
-        v-if="iconComponent && iconPosition === 'left'"
+        v-if="iconComponent"
       />
       <div
-        v-else-if="iconSrc && iconPosition === 'left'"
+        v-else-if="iconSrc"
         :class="iconClasses"
         v-html="iconSvg"
       />
-      
-      <!-- Button text content -->
-      <span v-if="$slots.default" class="button-content">
-        <slot />
-      </span>
-      
-      <!-- Icon after text (right position) -->
-      <component
-        :is="iconComponent"
-        :class="iconClasses"
-        v-if="iconComponent && iconPosition === 'right'"
-      />
-      <div
-        v-else-if="iconSrc && iconPosition === 'right'"
-        :class="iconClasses"
-        v-html="iconSvg"
-      />
-      
-      <slot name="suffix" />
     </span>
     <template v-else>
-      <slot name="prefix" />
-      
-      <!-- Icon before text (left position or icon-only) -->
       <component
         :is="iconComponent"
         :class="iconClasses"
-        v-if="iconComponent && iconPosition === 'left'"
+        v-if="iconComponent"
       />
       <div
-        v-else-if="iconSrc && iconPosition === 'left'"
+        v-else-if="iconSrc"
         :class="iconClasses"
         v-html="iconSvg"
       />
-      
-      <!-- Button text content -->
-      <span v-if="$slots.default" class="button-content">
-        <slot />
-      </span>
-      
-      <!-- Icon after text (right position) -->
-      <component
-        :is="iconComponent"
-        :class="iconClasses"
-        v-if="iconComponent && iconPosition === 'right'"
-      />
-      <div
-        v-else-if="iconSrc && iconPosition === 'right'"
-        :class="iconClasses"
-        v-html="iconSvg"
-      />
-      
-      <slot name="suffix" />
     </template>
   </button>
 </template>
@@ -81,28 +38,25 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, type Component } from 'vue'
 
-export interface ButtonProps {
+export interface IconButtonProps {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'success' | 'warning' | 'error' | 'info'
-  size?: 'xxs' | 'xs' | 'sm' | 'md'
+  size?: 'sm' | 'md' | 'lg'
   disabled?: boolean
   type?: 'button' | 'submit' | 'reset'
-  block?: boolean
   rounded?: boolean
   diagonal?: boolean
   icon?: Component
   iconSrc?: string
-  iconPosition?: 'left' | 'right'
+  ariaLabel: string
 }
 
-const props = withDefaults(defineProps<ButtonProps>(), {
+const props = withDefaults(defineProps<IconButtonProps>(), {
   variant: 'primary',
   size: 'md',
   disabled: false,
   type: 'button',
-  block: false,
   rounded: false,
   diagonal: false,
-  iconPosition: 'left',
 })
 
 defineEmits<{
@@ -134,7 +88,6 @@ const buttonClasses = computed(() => {
     'font-medium',
     'border',
     'cursor-pointer',
-    'whitespace-nowrap',
     'transition-all',
     'duration-200',
     'ease-in-out',
@@ -146,25 +99,22 @@ const buttonClasses = computed(() => {
     'disabled:shadow-none',
   ]
 
-  // Size classes
+  // Size classes for icon buttons (square aspect ratio)
   const sizeClasses = {
-    xxs: ['px-1.5', 'py-0.5', 'text-xs', (props.icon || props.iconSrc) ? 'gap-0.5' : 'gap-0.5'],
-    xs: ['px-2', 'py-1', 'text-xs', (props.icon || props.iconSrc) ? 'gap-1' : 'gap-1'],
-    sm: ['px-3', 'py-1.5', 'text-sm', (props.icon || props.iconSrc) ? 'gap-1' : 'gap-1.5'],
-    md: ['px-4', 'py-2', 'text-base', (props.icon || props.iconSrc) ? 'gap-1.5' : 'gap-2'],
+    sm: ['w-8', 'h-8', 'p-1.5'],
+    md: ['w-10', 'h-10', 'p-2'],
+    lg: ['w-12', 'h-12', 'p-2.5'],
   }
 
-  // Variant classes - simplified for better legibility
+  // Variant classes - same as Button component
   const variantClasses = {
     primary: [
-      // Bold, confident primary action - solid colors
       'bg-primary-500',
       'border-primary-500',
       'text-white',
       'hover:bg-primary-600',
       'hover:border-primary-600',
       'active:bg-primary-700',
-      // Dark mode - good contrast
       'dark:bg-primary-400',
       'dark:border-primary-400',
       'dark:text-primary-950',
@@ -173,14 +123,12 @@ const buttonClasses = computed(() => {
       'dark:active:bg-primary-600',
     ],
     secondary: [
-      // Sophisticated, refined secondary - clear backgrounds
       'bg-primary-100',
       'border-primary-200',
       'text-primary-700',
       'hover:bg-primary-200',
       'hover:border-primary-300',
       'active:bg-primary-300',
-      // Dark mode - solid contrast
       'dark:bg-primary-800',
       'dark:border-primary-700',
       'dark:text-primary-100',
@@ -189,7 +137,6 @@ const buttonClasses = computed(() => {
       'dark:active:bg-primary-600',
     ],
     outline: [
-      // Clean outline - no transparency
       'bg-transparent',
       'border-2 border-primary-500',
       'text-primary-500',
@@ -197,7 +144,6 @@ const buttonClasses = computed(() => {
       'hover:text-primary-600',
       'hover:border-primary-600',
       'active:bg-primary-100',
-      // Dark mode
       'dark:border-primary-400',
       'dark:text-primary-400',
       'dark:hover:bg-primary-900',
@@ -206,28 +152,24 @@ const buttonClasses = computed(() => {
       'dark:active:bg-primary-800',
     ],
     ghost: [
-      // Subtle ghost - minimal but visible
       'bg-transparent',
       'border-transparent',
       'text-primary-500',
       'hover:bg-primary-100',
       'hover:text-primary-600',
       'active:bg-primary-200',
-      // Dark mode
       'dark:text-primary-400',
       'dark:hover:bg-primary-900',
       'dark:hover:text-primary-300',
       'dark:active:bg-primary-800',
     ],
     success: [
-      // Success using theme-aware accent colors
       'bg-accent-success-main',
       'border-accent-success-main',
       'text-white',
       'hover:bg-accent-success-dark',
       'hover:border-accent-success-dark',
       'active:bg-accent-success-dark',
-      // Dark mode - maintain good contrast
       'dark:bg-accent-success-main',
       'dark:border-accent-success-main',
       'dark:text-white',
@@ -236,14 +178,12 @@ const buttonClasses = computed(() => {
       'dark:active:bg-accent-success-light',
     ],
     warning: [
-      // Warning using theme-aware accent colors
       'bg-accent-warning-main',
       'border-accent-warning-main',
       'text-white',
       'hover:bg-accent-warning-dark',
       'hover:border-accent-warning-dark',
       'active:bg-accent-warning-dark',
-      // Dark mode
       'dark:bg-accent-warning-main',
       'dark:border-accent-warning-main',
       'dark:text-white',
@@ -252,14 +192,12 @@ const buttonClasses = computed(() => {
       'dark:active:bg-accent-warning-light',
     ],
     error: [
-      // Error using theme-aware accent colors
       'bg-accent-error-main',
       'border-accent-error-main',
       'text-white',
       'hover:bg-accent-error-dark',
       'hover:border-accent-error-dark',
       'active:bg-accent-error-dark',
-      // Dark mode
       'dark:bg-accent-error-main',
       'dark:border-accent-error-main',
       'dark:text-white',
@@ -268,14 +206,12 @@ const buttonClasses = computed(() => {
       'dark:active:bg-accent-error-light',
     ],
     info: [
-      // Info using theme-aware accent colors
       'bg-accent-info-main',
       'border-accent-info-main',
       'text-white',
       'hover:bg-accent-info-dark',
       'hover:border-accent-info-dark',
       'active:bg-accent-info-dark',
-      // Dark mode
       'dark:bg-accent-info-main',
       'dark:border-accent-info-main',
       'dark:text-white',
@@ -285,56 +221,45 @@ const buttonClasses = computed(() => {
     ],
   }
 
-  // Border radius - support for diagonal sci-fi corners
+  // Border radius
   const radiusClasses = props.diagonal 
     ? ['ui-diagonal-corners-sm'] 
     : props.rounded 
     ? ['rounded-full'] 
     : ['rounded-lg']
 
-  // Text colors for diagonal variants (override default variant text colors)
+  // Text colors for diagonal variants
   const diagonalTextClasses = props.diagonal ? (() => {
     switch (props.variant) {
       case 'primary':
-        return ['text-white', 'dark:text-white'] // White text on dark background
-      case 'secondary':
-        return ['text-primary-800', 'dark:text-primary-900'] // Dark text on light background
-      case 'outline':
-        return ['text-primary-700', 'dark:text-primary-800'] // Dark text on light background
-      case 'ghost':
-        return ['text-primary-700', 'dark:text-primary-800'] // Dark text on light background
       case 'success':
-        return ['text-white', 'dark:text-white'] // White text on colored background
       case 'warning':
-        return ['text-white', 'dark:text-white'] // White text on colored background
       case 'error':
-        return ['text-white', 'dark:text-white'] // White text on colored background
       case 'info':
-        return ['text-white', 'dark:text-white'] // White text on colored background
+        return ['text-white', 'dark:text-white']
+      case 'secondary':
+      case 'outline':
+      case 'ghost':
+        return ['text-primary-800', 'dark:text-primary-900']
       default:
         return ['text-white', 'dark:text-white']
     }
   })() : []
 
-  // Block
-  const blockClasses = props.block ? ['w-full'] : []
-
   return [
     ...baseClasses,
     ...sizeClasses[props.size],
-    ...(props.diagonal ? [] : variantClasses[props.variant]), // Skip variant classes for diagonal
+    ...(props.diagonal ? [] : variantClasses[props.variant]),
     ...radiusClasses,
     ...diagonalTextClasses,
-    ...blockClasses,
   ]
 })
 
 const iconClasses = computed(() => {
   const sizeClasses = {
-    xxs: ['w-2', 'h-2'],
-    xs: ['w-2.5', 'h-2.5'],
-    sm: ['w-3', 'h-3'],
-    md: ['w-3', 'h-3'],
+    sm: ['w-5', 'h-5'],
+    md: ['w-6', 'h-6'],
+    lg: ['w-7', 'h-7'],
   }
 
   return [
@@ -347,7 +272,6 @@ const iconClasses = computed(() => {
 const diagonalStyles = computed(() => {
   if (!props.diagonal) return {}
 
-  // Get the border and background colors based on variant
   const colors = getVariantColors(props.variant)
   
   return {
@@ -356,40 +280,39 @@ const diagonalStyles = computed(() => {
   }
 })
 
-// Helper to get colors for diagonal effect using theme CSS custom properties
-function getVariantColors(variant: ButtonProps['variant']) {
+function getVariantColors(variant: IconButtonProps['variant']) {
   const colorMap = {
     primary: {
       border: 'var(--color-primary-600)',
-      background: 'var(--color-primary-600)', // Darker for better contrast with white text
+      background: 'var(--color-primary-600)',
     },
     secondary: {
       border: 'var(--color-primary-400)',
-      background: 'var(--color-primary-100)', // Light background for dark text
+      background: 'var(--color-primary-100)',
     },
     outline: {
       border: 'var(--color-primary-600)',
-      background: 'var(--color-primary-50)', // Very light fill for dark text
+      background: 'var(--color-primary-50)',
     },
     ghost: {
       border: 'var(--color-primary-300)',
-      background: 'var(--color-primary-50)', // Light background instead of transparent
+      background: 'var(--color-primary-50)',
     },
     success: {
       border: 'var(--color-accent-success-main)',
-      background: 'var(--color-accent-success-main)', // Keep solid for contrast
+      background: 'var(--color-accent-success-main)',
     },
     warning: {
       border: 'var(--color-accent-warning-main)',
-      background: 'var(--color-accent-warning-main)', // Keep solid for contrast
+      background: 'var(--color-accent-warning-main)',
     },
     error: {
       border: 'var(--color-accent-error-main)',
-      background: 'var(--color-accent-error-main)', // Revert to solid color
+      background: 'var(--color-accent-error-main)',
     },
     info: {
       border: 'var(--color-accent-info-main)',
-      background: 'var(--color-accent-info-main)', // Revert to solid color
+      background: 'var(--color-accent-info-main)',
     },
   } as const
   
@@ -398,40 +321,18 @@ function getVariantColors(variant: ButtonProps['variant']) {
 </script>
 
 <style scoped>
-.button-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-}
-
 .diagonal-content {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100%;
-  gap: inherit;
 }
 
-/* Constrain SVG size strictly and prevent expansion */
+/* Ensure SVG content inherits the text color */
 :deep(svg) {
   fill: currentColor;
-  max-width: 1rem;
-  max-height: 1rem;
-  width: auto;
-  height: auto;
-  display: block;
-  flex-shrink: 0;
-}
-
-/* Ensure icon containers have fixed dimensions and don't grow */
-.icon-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: fit-content;
-  height: fit-content;
+  width: 100%;
+  height: 100%;
 }
 </style>

@@ -136,11 +136,10 @@
               <h3 class="font-medium">Button Sizes</h3>
             </template>
             <div class="space-y-3">
+              <UiButton size="xxs">Extra Extra Small</UiButton>
               <UiButton size="xs">Extra Small</UiButton>
               <UiButton size="sm">Small</UiButton>
               <UiButton size="md">Medium</UiButton>
-              <UiButton size="lg">Large</UiButton>
-              <UiButton size="xl">Extra Large</UiButton>
             </div>
           </UiCard>
 
@@ -383,6 +382,126 @@
             <p class="text-text-secondary">Hover over this card to see the effect.</p>
           </UiCard>
         </div>
+        
+        <!-- Filled Header Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+          <UiCard :filled-header="true">
+            <template #header>
+              <h3 class="text-lg font-semibold">Filled Header</h3>
+            </template>
+            <p class="text-text-secondary">This card has a prominent filled header with white text on a colored background.</p>
+            <template #footer>
+              <UiButton variant="primary" size="sm">Learn More</UiButton>
+            </template>
+          </UiCard>
+
+          <UiCard variant="elevated" :filled-header="true">
+            <template #header>
+              <h3 class="text-lg font-semibold">Elevated + Filled</h3>
+            </template>
+            <p class="text-text-secondary">Combination of elevated shadow with filled header for extra emphasis.</p>
+          </UiCard>
+
+          <UiCard variant="outlined" :filled-header="true">
+            <template #header>
+              <h3 class="text-lg font-semibold">Outlined + Filled</h3>
+            </template>
+            <p class="text-text-secondary">Strong border with filled header creates a professional look.</p>
+          </UiCard>
+        </div>
+      </section>
+
+      <!-- IconButton Examples -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold text-text-primary mb-6">Icon Buttons</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <UiCard>
+            <template #header>
+              <h3 class="font-medium">Icon Button Variants</h3>
+            </template>
+            <div class="flex flex-wrap gap-3">
+              <UiIconButton variant="primary" :icon="HeartIcon" ariaLabel="Like" />
+              <UiIconButton variant="secondary" :icon="ShareIcon" ariaLabel="Share" />
+              <UiIconButton variant="outline" :icon="BookmarkIcon" ariaLabel="Bookmark" />
+              <UiIconButton variant="ghost" :icon="PlusIcon" ariaLabel="Add" />
+            </div>
+          </UiCard>
+
+          <UiCard>
+            <template #header>
+              <h3 class="font-medium">Icon Button Sizes</h3>
+            </template>
+            <div class="flex flex-wrap items-center gap-3">
+              <UiIconButton variant="primary" :icon="HeartIcon" size="sm" ariaLabel="Small" />
+              <UiIconButton variant="primary" :icon="HeartIcon" size="md" ariaLabel="Medium" />
+              <UiIconButton variant="primary" :icon="HeartIcon" size="lg" ariaLabel="Large" />
+            </div>
+          </UiCard>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold text-text-primary mb-6">Buttons with Icons</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <UiCard>
+            <template #header>
+              <h3 class="font-medium">Button with Icons</h3>
+            </template>
+            <div class="space-y-3">
+              <div class="flex gap-2">
+                <UiButton variant="primary" :icon="PlusIcon" size="sm">Add Item</UiButton>
+                <UiButton variant="secondary" :icon="HeartIcon" size="sm">Like</UiButton>
+              </div>
+              <div class="flex gap-2">
+                <UiButton variant="outline" :icon="ArrowLeftIcon" icon-position="left">Previous</UiButton>
+                <UiButton variant="outline" :icon="ArrowRightIcon" icon-position="right">Next</UiButton>
+              </div>
+              <div class="flex gap-2">
+                <UiButton variant="success" :icon="PlusIcon" size="md">Medium with Icon</UiButton>
+              </div>
+            </div>
+          </UiCard>
+        </div>
+      </section>
+
+      <!-- RadioButton Examples -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold text-text-primary mb-6">Radio Buttons</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <UiCard>
+            <template #header>
+              <h3 class="font-medium">Size Selection</h3>
+            </template>
+            <div class="space-y-4">
+              <UiRadioButton
+                v-model="formData.size"
+                :options="sizeOptions"
+                name="size-selection"
+              />
+              <p v-if="formData.size" class="text-sm text-text-secondary">
+                Selected: {{ formData.size }}
+              </p>
+            </div>
+          </UiCard>
+
+          <UiCard>
+            <template #header>
+              <h3 class="font-medium">Notification Preferences</h3>
+            </template>
+            <div class="space-y-4">
+              <UiRadioButton
+                v-model="formData.notificationPreference"
+                :options="notificationOptions"
+                direction="horizontal"
+                size="sm"
+                name="notification-prefs"
+              />
+              <p v-if="formData.notificationPreference" class="text-sm text-text-secondary">
+                Selected: {{ formData.notificationPreference }}
+              </p>
+            </div>
+          </UiCard>
+        </div>
       </section>
 
       <!-- Modal Example -->
@@ -578,6 +697,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { 
   Button as UiButton, 
+  IconButton as UiIconButton,
   Card as UiCard, 
   Modal as UiModal, 
   Input as UiInput,
@@ -589,8 +709,17 @@ import {
   Toggle as UiToggle,
   Checkbox as UiCheckbox,
   Tabs as UiTabs,
+  RadioButton as UiRadioButton,
   useTheme
 } from './index'
+import { 
+  HeartIcon, 
+  ShareIcon, 
+  BookmarkIcon, 
+  PlusIcon, 
+  ArrowLeftIcon, 
+  ArrowRightIcon 
+} from '@heroicons/vue/24/outline'
 
 // Initialize theme on app startup
 const { initializeTheme } = useTheme()
@@ -611,8 +740,10 @@ const formData = ref({
   large: '',
   country: null,
   techChoice: null,
+  size: 'medium',
   // Toggle properties
   notifications: true,
+  notificationPreference: 'email',
   darkMode: false,
   autoSave: true,
   analytics: false,
@@ -648,6 +779,19 @@ const techOptions = [
   { value: 'svelte', label: 'Svelte & SvelteKit' },
   { value: 'node', label: 'Node.js & Express' },
   { value: 'python', label: 'Python & FastAPI' },
+]
+
+const sizeOptions = [
+  { label: 'Small (S)', value: 'small' },
+  { label: 'Medium (M)', value: 'medium' },
+  { label: 'Large (L)', value: 'large' },
+  { label: 'Extra Large (XL)', value: 'xl', disabled: true },
+]
+
+const notificationOptions = [
+  { label: 'Email', value: 'email' },
+  { label: 'SMS', value: 'sms' },
+  { label: 'None', value: 'none' },
 ]
 
 // Tab data for demo

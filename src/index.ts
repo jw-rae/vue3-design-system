@@ -3,6 +3,7 @@ import type { App } from 'vue'
 
 // Components
 import Button from './components/Button/Button.vue'
+import IconButton from './components/IconButton/IconButton.vue'
 import Card from './components/Card/Card.vue'
 import Modal from './components/Modal/Modal.vue'
 import Input from './components/Input/Input.vue'
@@ -14,6 +15,7 @@ import ThemeToggle from './components/ThemeToggle/ThemeToggle.vue'
 import Toggle from './components/Toggle/Toggle.vue'
 import Checkbox from './components/Checkbox/Checkbox.vue'
 import Tabs from './components/Tabs/Tabs.vue'
+import RadioButton from './components/RadioButton/RadioButton.vue'
 import { AccentColorsDemo, AccentColorCard } from './components/AccentColorsDemo'
 
 // Composables
@@ -23,10 +25,11 @@ export { useTheme } from './composables/useTheme'
 import './assets/styles/main.css'
 
 // Export individual components
-export { Button, Card, Modal, Input, Badge, Alert, Select, Spinner, ThemeToggle, Toggle, Checkbox, Tabs, AccentColorsDemo, AccentColorCard }
+export { Button, IconButton, Card, Modal, Input, Badge, Alert, Select, Spinner, ThemeToggle, Toggle, Checkbox, Tabs, RadioButton, AccentColorsDemo, AccentColorCard }
 
 // Export types
 export type { ButtonProps } from './components/Button/Button.vue'
+export type { IconButtonProps } from './components/IconButton/IconButton.vue'
 export type { CardProps } from './components/Card/Card.vue'
 export type { ModalProps } from './components/Modal/Modal.vue'
 export type { InputProps } from './components/Input/Input.vue'
@@ -37,15 +40,17 @@ export type { SpinnerProps } from './components/Spinner/Spinner.vue'
 export type { ToggleProps } from './components/Toggle/Toggle.vue'
 export type { CheckboxProps } from './components/Checkbox/Checkbox.vue'
 export type { TabsProps, TabItem } from './components/Tabs/Tabs.vue'
+export type { RadioButtonProps } from './components/RadioButton/RadioButton.vue'
 
 // Import and export design tokens from JS file
 import tokensDefault from './theme/tokens.js'
-export const tokens = tokensDefault || {}
+export const tokens = tokensDefault
 
 // Plugin installation function
 export const DesignSystem = {
     install(app: App) {
         app.component('UiButton', Button)
+        app.component('UiIconButton', IconButton)
         app.component('UiCard', Card)
         app.component('UiModal', Modal)
         app.component('UiInput', Input)
@@ -57,6 +62,7 @@ export const DesignSystem = {
         app.component('UiToggle', Toggle)
         app.component('UiCheckbox', Checkbox)
         app.component('UiTabs', Tabs)
+        app.component('UiRadioButton', RadioButton)
     },
 }
 

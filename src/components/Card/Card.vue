@@ -38,6 +38,7 @@ export interface CardProps {
   rounded?: boolean
   hoverable?: boolean
   diagonal?: boolean
+  filledHeader?: boolean
 }
 
 const props = withDefaults(defineProps<CardProps>(), {
@@ -46,6 +47,7 @@ const props = withDefaults(defineProps<CardProps>(), {
   rounded: true,
   hoverable: false,
   diagonal: false,
+  filledHeader: false,
 })
 
 const cardClasses = computed(() => {
@@ -148,13 +150,29 @@ const headerClasses = computed(() => {
     xl: ['px-8', 'py-6'],
   }
 
-  return [
+  const baseClasses = [
     'border-b',
     'border-primary-200',
     'dark:border-primary-700/50',
+    ...paddingClasses[props.padding],
+  ]
+
+  // Filled header with stronger colors
+  if (props.filledHeader) {
+    return [
+      ...baseClasses,
+      'bg-primary-500',
+      'dark:bg-primary-600',
+      'text-white',
+      'font-semibold',
+    ]
+  }
+
+  // Default subtle header
+  return [
+    ...baseClasses,
     'bg-primary-50',
     'dark:bg-primary-900/20',
-    ...paddingClasses[props.padding],
   ]
 })
 

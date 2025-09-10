@@ -3,55 +3,60 @@ import Card from './Card.vue';
 import Button from '../Button/Button.vue';
 
 const meta: Meta<typeof Card> = {
-    title: 'Components/Card',
-    component: Card,
-    parameters: {
-        layout: 'centered',
-        docs: {
-            description: {
-                component: 'A flexible card component for displaying content in a contained layout.',
-            },
-        },
+  title: 'Components/Card',
+  component: Card,
+  parameters: {
+    layout: 'centered',
+    docs: {
+      description: {
+        component: 'A flexible card component for displaying content in a contained layout.',
+      },
     },
-    tags: ['autodocs'],
-    argTypes: {
-        variant: {
-            control: { type: 'select' },
-            options: ['default', 'outlined', 'elevated', 'filled'],
-            description: 'The visual style variant of the card',
-        },
-        padding: {
-            control: { type: 'select' },
-            options: ['none', 'sm', 'md', 'lg', 'xl'],
-            description: 'The padding size inside the card',
-        },
-        rounded: {
-            control: { type: 'boolean' },
-            description: 'Whether the card has rounded corners',
-        },
-        hoverable: {
-            control: { type: 'boolean' },
-            description: 'Whether the card has hover effects',
-        },
+  },
+  tags: ['autodocs'],
+  argTypes: {
+    variant: {
+      control: { type: 'select' },
+      options: ['default', 'outlined', 'elevated', 'filled'],
+      description: 'The visual style variant of the card',
     },
+    padding: {
+      control: { type: 'select' },
+      options: ['none', 'sm', 'md', 'lg', 'xl'],
+      description: 'The padding size inside the card',
+    },
+    rounded: {
+      control: { type: 'boolean' },
+      description: 'Whether the card has rounded corners',
+    },
+    hoverable: {
+      control: { type: 'boolean' },
+      description: 'Whether the card has hover effects',
+    },
+    filledHeader: {
+      control: { type: 'boolean' },
+      description: 'Whether the header has a prominent filled background',
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-    args: {
-        variant: 'default',
-        padding: 'md',
-        rounded: true,
-        hoverable: false,
+  args: {
+    variant: 'default',
+    padding: 'md',
+    rounded: true,
+    hoverable: false,
+    filledHeader: false,
+  },
+  render: (args) => ({
+    components: { Card },
+    setup() {
+      return { args };
     },
-    render: (args) => ({
-        components: { Card },
-        setup() {
-            return { args };
-        },
-        template: `
+    template: `
       <Card v-bind="args" style="width: 300px;">
         <template #header>
           <h3 class="text-lg font-semibold">Card Title</h3>
@@ -67,30 +72,62 @@ export const Default: Story = {
         </template>
       </Card>
     `,
-    }),
+  }),
 };
 
 export const WithoutHeaderFooter: Story = {
-    render: (args) => ({
-        components: { Card },
-        setup() {
-            return { args };
-        },
-        template: `
+  render: (args) => ({
+    components: { Card },
+    setup() {
+      return { args };
+    },
+    template: `
       <Card style="width: 300px;">
         <p class="text-gray-600">
           This is a simple card with just content, no header or footer.
         </p>
       </Card>
     `,
-    }),
+  }),
+};
+
+export const FilledHeader: Story = {
+  args: {
+    variant: 'default',
+    padding: 'md',
+    rounded: true,
+    hoverable: false,
+    filledHeader: true,
+  },
+  render: (args) => ({
+    components: { Card },
+    setup() {
+      return { args };
+    },
+    template: `
+      <Card v-bind="args" style="width: 300px;">
+        <template #header>
+          <h3 class="text-lg font-semibold">Filled Header Card</h3>
+        </template>
+        <p class="text-gray-600">
+          This card has a prominent filled header with white text on a colored background.
+        </p>
+        <template #footer>
+          <div class="flex justify-end space-x-2">
+            <button class="px-3 py-1 text-sm border rounded">Cancel</button>
+            <button class="px-3 py-1 text-sm bg-blue-500 text-white rounded">Save</button>
+          </div>
+        </template>
+      </Card>
+    `,
+  }),
 };
 
 export const AllVariants: Story = {
-    render: () => ({
-        components: { Card },
-        template: `
-      <div class="grid grid-cols-2 gap-4" style="width: 600px;">
+  render: () => ({
+    components: { Card },
+    template: `
+      <div class="grid grid-cols-2 gap-4" style="width: 800px;">
         <Card variant="default">
           <template #header>Default Card</template>
           <p class="text-sm text-gray-600">Default variant with border</p>
@@ -104,18 +141,26 @@ export const AllVariants: Story = {
           <p class="text-sm text-gray-600">Elevated variant with shadow</p>
         </Card>
         <Card variant="filled">
-          <template #header">Filled Card</template>
+          <template #header>Filled Card</template>
           <p class="text-sm text-gray-600">Filled variant with background</p>
+        </Card>
+        <Card variant="default" :filled-header="true">
+          <template #header>Filled Header</template>
+          <p class="text-sm text-gray-600">Default variant with filled header</p>
+        </Card>
+        <Card variant="elevated" :filled-header="true">
+          <template #header>Elevated + Filled Header</template>
+          <p class="text-sm text-gray-600">Combination of variants</p>
         </Card>
       </div>
     `,
-    }),
+  }),
 };
 
 export const Interactive: Story = {
-    render: () => ({
-        components: { Card, Button },
-        template: `
+  render: () => ({
+    components: { Card, Button },
+    template: `
       <div class="space-y-4" style="width: 400px;">
         <Card hoverable>
           <template #header>
@@ -128,13 +173,13 @@ export const Interactive: Story = {
         </Card>
       </div>
     `,
-    }),
+  }),
 };
 
 export const DarkModeShowcase: Story = {
-    render: () => ({
-        components: { Card, Button },
-        template: `
+  render: () => ({
+    components: { Card, Button },
+    template: `
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <!-- Light Mode -->
         <div class="p-6 bg-white rounded-lg border">
@@ -193,5 +238,5 @@ export const DarkModeShowcase: Story = {
         </div>
       </div>
     `,
-    }),
+  }),
 };
