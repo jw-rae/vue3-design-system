@@ -198,192 +198,192 @@ export const coolTheme: ThemeColors = {
 // 🌸 **Pink Theme**: Elegant soft pinks to dark berry
 export const pinkTheme: ThemeColors = {
     primary: {
-        50: '#fdf2f8',   // Softest baby pink
-        100: '#fce7f3',  // Light blush
-        200: '#fbcfe8',  // Gentle pink
-        300: '#f9a8d4',  // Soft rose
-        400: '#f472b6',  // Medium pink
-        500: '#ec4899',  // Main elegant pink
-        600: '#db2777',  // Deep rose
-        700: '#be185d',  // Rich berry
-        800: '#9d174d',  // Dark berry
-        900: '#831843',  // Deep berry
-        950: '#500724',  // Darkest berry
+        50: '#fdf2f8',   // Softest pink blush
+        100: '#fce7f3',  // Light pink mist
+        200: '#f8d5e3',  // Gentle pink
+        300: '#f2b8ce',  // Soft rose
+        400: '#e48aaa',  // Muted rose pink
+        500: '#d16891',  // Main dusty rose
+        600: '#b85078',  // Deep rose
+        700: '#9d3f63',  // Rich berry
+        800: '#7c2e4f',  // Dark berry
+        900: '#5e1e3b',  // Deep wine
+        950: '#3d1429',  // Darkest wine
     },
     accent: {
         success: {
-            light: '#86efac',  // Soft green
-            main: '#22c55e',   // Nature green
-            dark: '#15803d',   // Deep forest
+            light: '#e8f0e8',  // Very muted sage with pink undertone
+            main: '#7a9b7a',   // Desaturated sage-green
+            dark: '#5a735a',   // Deep muted green-grey
         },
         warning: {
-            light: '#fed7aa',  // Soft peach
-            main: '#fb923c',   // Warm orange
-            dark: '#ea580c',   // Deep orange
+            light: '#f8e7d5',  // Muted cream-pink
+            main: '#d4a679',   // Dusty rose-gold
+            dark: '#a17854',   // Deep rose-brown
         },
         error: {
-            light: '#fca5a5',  // Soft red
-            main: '#ef4444',   // Clear red
-            dark: '#dc2626',   // Deep red
+            light: '#f0e8e8',  // Very muted rose blush
+            main: '#a67a7a',   // Desaturated rose-grey
+            dark: '#7a5a5a',   // Deep muted red-grey
         },
         info: {
-            light: '#c4b5fd',  // Soft purple
-            main: '#8b5cf6',   // Purple
-            dark: '#7c3aed',   // Deep purple
+            light: '#f2e7f3',  // Soft lavender-pink
+            main: '#b8829e',   // Muted mauve-pink
+            dark: '#7c5268',   // Deep mauve-grey
         }
     },
     background: {
         primary: '#ffffff',
-        secondary: '#fef7f0',  // Warm cream
-        tertiary: '#fdf2f8',   // Softest pink tint
-        inverse: '#500724',    // Deep berry
+        secondary: '#fdf2f8',  // Softest pink blush
+        tertiary: '#fce7f3',   // Light pink mist
+        inverse: '#3d1429',    // Darkest wine
     },
     surface: {
         primary: '#ffffff',
-        secondary: '#fef7f0',
+        secondary: '#fdf2f8',
         elevated: '#ffffff',
-        overlay: 'rgba(80, 7, 36, 0.5)', // Berry overlay
+        overlay: 'rgba(61, 20, 41, 0.6)', // Dark wine overlay
     },
     text: {
-        primary: '#500724',    // Deep berry
-        secondary: '#831843',  // Medium berry
-        tertiary: '#9d174d',   // Lighter berry
-        inverse: '#fdf2f8',    // Soft pink
-        disabled: '#f9a8d4',   // Muted pink
+        primary: '#3d1429',    // Darkest wine
+        secondary: '#5e1e3b',  // Deep wine
+        tertiary: '#7c2e4f',   // Dark berry
+        inverse: '#fdf2f8',    // Softest pink blush
+        disabled: '#f2b8ce',   // Soft rose
     },
     border: {
-        primary: '#fbcfe8',    // Gentle pink
-        secondary: '#f9a8d4',  // Soft rose
-        focus: '#ec4899',      // Main pink
-        error: '#dc2626',      // Keep error red
+        primary: '#f8d5e3',    // Gentle pink
+        secondary: '#f2b8ce',  // Soft rose
+        focus: '#d16891',      // Main dusty rose
+        error: '#f87171',      // Muted coral red
     },
 }
 
 // 🌿 **Green Theme**: Soothing muted nature greens
 export const greenTheme: ThemeColors = {
     primary: {
-        50: '#f0fdf4',   // Softest mint
-        100: '#dcfce7',  // Light sage
-        200: '#bbf7d0',  // Gentle mint
-        300: '#86efac',  // Soft green
-        400: '#4ade80',  // Fresh green
-        500: '#22c55e',  // Main nature green
-        600: '#16a34a',  // Deep forest
-        700: '#15803d',  // Rich forest
-        800: '#166534',  // Dark forest
-        900: '#14532d',  // Deep forest
-        950: '#052e16',  // Darkest forest
+        50: '#f9faf9',   // Almost grey with hint of green
+        100: '#f3f5f3',  // Very muted sage
+        200: '#e6e9e6',  // Grey-green
+        300: '#d1d6d1',  // Muted sage-grey
+        400: '#a8b0a8',  // Grey with green undertone
+        500: '#8a958a',  // Main muted green-grey
+        600: '#6b766b',  // Deep muted sage
+        700: '#4e574e',  // Dark grey-green
+        800: '#3a423a',  // Very dark grey-green
+        900: '#262c26',  // Deep grey-green
+        950: '#151815',  // Darkest grey-green
     },
     accent: {
         success: {
-            light: '#bbf7d0',  // Light mint (theme primary)
-            main: '#22c55e',   // Nature green (theme primary)
-            dark: '#15803d',   // Deep forest (theme primary)
+            light: '#e8f0e8',  // Very muted sage-green
+            main: '#7a8f7a',   // Desaturated sage green
+            dark: '#5a6b5a',   // Deep muted green
         },
         warning: {
-            light: '#fde047',  // Bright yellow
-            main: '#eab308',   // Warning yellow
-            dark: '#a16207',   // Deep amber
+            light: '#f5f3e6',  // Muted cream with green undertone
+            main: '#c4b370',   // Muted sage-gold
+            dark: '#8a7a42',   // Deep olive-gold
         },
         error: {
-            light: '#fca5a5',  // Soft red
-            main: '#ef4444',   // Clear red
-            dark: '#dc2626',   // Deep red
+            light: '#f2e8e8',  // Very muted rose-grey
+            main: '#a67a7a',   // Desaturated rose-grey
+            dark: '#7a5a5a',   // Deep muted red-grey
         },
         info: {
-            light: '#67e8f9',  // Soft cyan
-            main: '#06b6d4',   // Cyan
-            dark: '#0891b2',   // Deep cyan
+            light: '#e9f0f0',  // Muted blue-green
+            main: '#7ba3a3',   // Sage-blue grey
+            dark: '#4e6b6b',   // Deep blue-green grey
         }
     },
     background: {
         primary: '#ffffff',
-        secondary: '#f7fdf7',  // Subtle sage tint
-        tertiary: '#f0fdf4',   // Softest mint
-        inverse: '#052e16',    // Deep forest
+        secondary: '#f9faf9',  // Almost grey with hint of green
+        tertiary: '#f3f5f3',   // Very muted sage
+        inverse: '#151815',    // Darkest grey-green
     },
     surface: {
         primary: '#ffffff',
-        secondary: '#f7fdf7',
+        secondary: '#f9faf9',
         elevated: '#ffffff',
-        overlay: 'rgba(5, 46, 22, 0.5)', // Forest overlay
+        overlay: 'rgba(21, 24, 21, 0.6)', // Muted grey-green overlay
     },
     text: {
-        primary: '#052e16',    // Deep forest
-        secondary: '#14532d',  // Medium forest
-        tertiary: '#166534',   // Lighter forest
-        inverse: '#f0fdf4',    // Soft mint
-        disabled: '#86efac',   // Muted green
+        primary: '#151815',    // Darkest grey-green
+        secondary: '#262c26',  // Deep grey-green
+        tertiary: '#3a423a',   // Dark grey-green
+        inverse: '#f9faf9',    // Almost grey with hint of green
+        disabled: '#d1d6d1',   // Muted sage-grey
     },
     border: {
-        primary: '#bbf7d0',    // Gentle mint
-        secondary: '#86efac',  // Soft green
-        focus: '#22c55e',      // Main green
+        primary: '#e6e9e6',    // Grey-green
+        secondary: '#d1d6d1',  // Muted sage-grey
+        focus: '#8a958a',      // Main muted green-grey
         error: '#dc2626',      // Keep error red
     },
 }
 
-// 🌌 **Blue Theme**: Night sky to light corporate blues
+// 🌌 **Blue Theme**: Sophisticated night sky to ice blue
 export const blueTheme: ThemeColors = {
     primary: {
-        50: '#f0f9ff',   // Softest sky
-        100: '#e0f2fe',  // Light sky
-        200: '#bae6fd',  // Gentle blue
-        300: '#7dd3fc',  // Soft blue
-        400: '#38bdf8',  // Fresh blue
-        500: '#0ea5e9',  // Main corporate blue
-        600: '#0284c7',  // Deep ocean
-        700: '#0369a1',  // Rich navy
-        800: '#075985',  // Dark navy
-        900: '#0c4a6e',  // Deep navy
-        950: '#082f49',  // Night sky
+        50: '#f8fafd',   // Ice white with blue whisper
+        100: '#f1f6fb',  // Frost blue
+        200: '#e2eef8',  // Pale ice blue
+        300: '#c8ddf1',  // Soft steel blue
+        400: '#9bc2e7',  // Muted slate blue
+        500: '#6b9fd9',  // Sophisticated steel blue (main)
+        600: '#4a7db8',  // Deep steel blue
+        700: '#35619a',  // Rich midnight blue
+        800: '#244a7c',  // Dark navy steel
+        900: '#1a3660',  // Deep night blue
+        950: '#0a1426',  // Deepest midnight navy
     },
     accent: {
         success: {
-            light: '#86efac',  // Soft green
-            main: '#22c55e',   // Nature green
-            dark: '#15803d',   // Deep forest
+            light: '#e8f2f0',  // Muted mint with blue undertone
+            main: '#7ba8a0',   // Steel-green
+            dark: '#4e6b66',   // Deep blue-green
         },
         warning: {
-            light: '#fbbf24',  // Soft amber
-            main: '#f59e0b',   // Amber
-            dark: '#d97706',   // Deep amber
+            light: '#f2f0e8',  // Muted champagne with blue undertone
+            main: '#b8a885',   // Steel-gold
+            dark: '#7a7056',   // Deep blue-brown
         },
         error: {
-            light: '#fca5a5',  // Soft red
-            main: '#ef4444',   // Clear red
-            dark: '#dc2626',   // Deep red
+            light: '#f0e8e8',  // Soft blush with blue undertone
+            main: '#a87a7a',   // Steel-rose
+            dark: '#6b4e4e',   // Deep blue-grey red
         },
         info: {
-            light: '#bae6fd',  // Light sky (theme primary)
-            main: '#0ea5e9',   // Corporate blue (theme primary)
-            dark: '#0369a1',   // Rich navy (theme primary)
+            light: '#e2eef8',  // Pale ice blue (theme primary)
+            main: '#6b9fd9',   // Sophisticated steel blue (theme primary)
+            dark: '#35619a',   // Rich midnight blue (theme primary)
         }
     },
     background: {
         primary: '#ffffff',
-        secondary: '#f8fafc',  // Cool gray tint
-        tertiary: '#f0f9ff',   // Softest sky
-        inverse: '#082f49',    // Night sky
+        secondary: '#f8fafd',  // Ice white with blue whisper
+        tertiary: '#f1f6fb',   // Frost blue
+        inverse: '#0a1426',    // Deepest midnight navy
     },
     surface: {
         primary: '#ffffff',
-        secondary: '#f8fafc',
+        secondary: '#f8fafd',
         elevated: '#ffffff',
-        overlay: 'rgba(8, 47, 73, 0.5)', // Navy overlay
+        overlay: 'rgba(10, 20, 38, 0.6)', // Deepest midnight navy overlay
     },
     text: {
-        primary: '#082f49',    // Night sky
-        secondary: '#0c4a6e',  // Medium navy
-        tertiary: '#075985',   // Lighter navy
-        inverse: '#f0f9ff',    // Soft sky
-        disabled: '#7dd3fc',   // Muted blue
+        primary: '#0a1426',    // Deepest midnight navy
+        secondary: '#1a3660',  // Deep night blue
+        tertiary: '#244a7c',   // Dark navy steel
+        inverse: '#f8fafd',    // Ice white
+        disabled: '#c8ddf1',   // Soft steel blue
     },
     border: {
-        primary: '#bae6fd',    // Gentle blue
-        secondary: '#7dd3fc',  // Soft blue
-        focus: '#0ea5e9',      // Main blue
-        error: '#dc2626',      // Keep error red
+        primary: '#e2eef8',    // Pale ice blue
+        secondary: '#c8ddf1',  // Soft steel blue
+        focus: '#6b9fd9',      // Sophisticated steel blue
+        error: '#dc2626',      // Clean red
     },
 }
 

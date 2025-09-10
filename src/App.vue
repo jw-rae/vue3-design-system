@@ -1,6 +1,7 @@
 <template>
-  <div class="min-h-screen bg-background-primary text-text-primary px-4 sm:px-6 lg:px-8 transition-colors">
-    <div class="max-w-4xl mx-auto">
+  <div class="min-h-screen bg-background-primary text-text-primary transition-colors">
+    <div class="px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto">
       <!-- Theme Toggle -->
       <div class="flex justify-end mb-8">
         <UiThemeToggle />
@@ -298,6 +299,7 @@
           </UiButton>
         </template>
       </UiModal>
+      </div>
     </div>
   </div>
 </template>

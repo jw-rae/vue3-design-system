@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Ensure full height layout */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 /* Storybook reset - remove default margins from story containers */
 #storybook-root {
     margin: 0 !important;
