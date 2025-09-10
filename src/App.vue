@@ -26,6 +26,94 @@
         <UiAccentColorsDemo />
       </section>
 
+      <!-- Toggle Examples -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold text-text-primary mb-6">Toggle Switches</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <UiCard>
+            <template #header>
+              <h3 class="font-medium">Basic Toggles</h3>
+            </template>
+            <div class="space-y-4">
+              <UiToggle v-model="formData.notifications" label="Push Notifications" />
+              <UiToggle v-model="formData.darkMode" variant="info" label="Dark Mode" />
+              <UiToggle v-model="formData.autoSave" variant="success" label="Auto-save" />
+              <UiToggle v-model="formData.analytics" variant="warning" show-icons label="Analytics" />
+            </div>
+          </UiCard>
+
+          <UiCard>
+            <template #header>
+              <h3 class="font-medium">Toggle Sizes</h3>
+            </template>
+            <div class="space-y-4">
+              <UiToggle v-model="formData.smallToggle" size="sm" label="Small toggle" />
+              <UiToggle v-model="formData.mediumToggle" size="md" label="Medium toggle" />
+              <UiToggle v-model="formData.largeToggle" size="lg" label="Large toggle" />
+            </div>
+          </UiCard>
+        </div>
+      </section>
+
+      <!-- Checkbox Examples -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold text-text-primary mb-6">Checkboxes</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <UiCard>
+            <template #header>
+              <h3 class="font-medium">Checkbox Variants</h3>
+            </template>
+            <div class="space-y-4">
+              <UiCheckbox v-model="formData.primaryCheck" variant="primary" label="Primary checkbox" />
+              <UiCheckbox v-model="formData.successCheck" variant="success" label="Success checkbox" />
+              <UiCheckbox v-model="formData.warningCheck" variant="warning" label="Warning checkbox" />
+              <UiCheckbox v-model="formData.errorCheck" variant="error" label="Error checkbox" />
+            </div>
+          </UiCard>
+
+          <UiCard>
+            <template #header>
+              <h3 class="font-medium">Checkbox Sizes</h3>
+            </template>
+            <div class="space-y-4">
+              <UiCheckbox v-model="formData.smallCheck" size="sm" label="Small checkbox" />
+              <UiCheckbox v-model="formData.mediumCheck" size="md" label="Medium checkbox" />
+              <UiCheckbox v-model="formData.largeCheck" size="lg" label="Large checkbox" />
+            </div>
+          </UiCard>
+        </div>
+      </section>
+
+      <!-- Tabs Examples -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold text-text-primary mb-6">Tabs</h2>
+        <div class="space-y-8">
+          <!-- Basic Tabs -->
+          <UiCard>
+            <template #header>
+              <h3 class="font-medium">Basic Tabs</h3>
+            </template>
+            <UiTabs v-model="formData.basicTab" :tabs="basicTabs" />
+          </UiCard>
+
+          <!-- Tabs with Icons and Badges -->
+          <UiCard>
+            <template #header>
+              <h3 class="font-medium">Tabs with Icons & Badges</h3>
+            </template>
+            <UiTabs v-model="formData.iconTab" :tabs="iconTabs" variant="pills" />
+          </UiCard>
+
+          <!-- Diagonal Tabs -->
+          <UiCard>
+            <template #header>
+              <h3 class="font-medium">Sci-Fi Diagonal Tabs</h3>
+            </template>
+            <UiTabs v-model="formData.diagonalTab" :tabs="sciFiTabs" diagonal />
+          </UiCard>
+        </div>
+      </section>
+
       <!-- Button Examples -->
       <section class="mb-12">
         <h2 class="text-2xl font-semibold text-text-primary mb-6">Buttons</h2>
@@ -498,6 +586,9 @@ import {
   Select as UiSelect,
   ThemeToggle as UiThemeToggle,
   AccentColorsDemo as UiAccentColorsDemo,
+  Toggle as UiToggle,
+  Checkbox as UiCheckbox,
+  Tabs as UiTabs,
   useTheme
 } from './index'
 
@@ -520,6 +611,26 @@ const formData = ref({
   large: '',
   country: null,
   techChoice: null,
+  // Toggle properties
+  notifications: true,
+  darkMode: false,
+  autoSave: true,
+  analytics: false,
+  smallToggle: false,
+  mediumToggle: true,
+  largeToggle: false,
+  // Checkbox properties
+  primaryCheck: true,
+  successCheck: false,
+  warningCheck: true,
+  errorCheck: false,
+  smallCheck: true,
+  mediumCheck: false,
+  largeCheck: true,
+  // Tab properties
+  basicTab: 'home',
+  iconTab: 'dashboard',
+  diagonalTab: 'systems',
 })
 
 const countryOptions = [
@@ -537,6 +648,52 @@ const techOptions = [
   { value: 'svelte', label: 'Svelte & SvelteKit' },
   { value: 'node', label: 'Node.js & Express' },
   { value: 'python', label: 'Python & FastAPI' },
+]
+
+// Tab data for demo
+const basicTabs = [
+  { value: 'home', label: 'Home', content: '<div class="p-4"><h3 class="font-semibold mb-2">Welcome Home</h3><p class="text-text-secondary">This is the home tab content with basic information and overview.</p></div>' },
+  { value: 'about', label: 'About', content: '<div class="p-4"><h3 class="font-semibold mb-2">About Us</h3><p class="text-text-secondary">Learn more about our company and mission.</p></div>' },
+  { value: 'services', label: 'Services', content: '<div class="p-4"><h3 class="font-semibold mb-2">Our Services</h3><p class="text-text-secondary">Discover what we can do for you.</p></div>' },
+  { value: 'contact', label: 'Contact', content: '<div class="p-4"><h3 class="font-semibold mb-2">Get in Touch</h3><p class="text-text-secondary">Contact information and form.</p></div>' },
+]
+
+const iconTabs = [
+  { 
+    value: 'dashboard', 
+    label: 'Dashboard', 
+    content: '<div class="p-4"><h3 class="font-semibold mb-2">📊 Dashboard</h3><p class="text-text-secondary">Overview of your system metrics and key performance indicators.</p></div>'
+  },
+  { 
+    value: 'users', 
+    label: 'Users', 
+    badge: '12',
+    content: '<div class="p-4"><h3 class="font-semibold mb-2">👥 User Management</h3><p class="text-text-secondary">Manage user accounts and permissions. 12 pending approvals.</p></div>'
+  },
+  { 
+    value: 'settings', 
+    label: 'Settings', 
+    content: '<div class="p-4"><h3 class="font-semibold mb-2">⚙️ System Settings</h3><p class="text-text-secondary">Configure your application preferences and system options.</p></div>'
+  },
+]
+
+const sciFiTabs = [
+  { 
+    value: 'systems', 
+    label: 'Systems', 
+    content: '<div class="p-4"><h3 class="font-semibold mb-2 text-primary-600">🚀 System Status</h3><p class="text-text-secondary">Core systems operational. All primary functions online.</p><div class="mt-3 space-y-1"><p class="text-accent-success-main">✓ Life Support: Active</p><p class="text-accent-success-main">✓ Navigation: Online</p><p class="text-accent-warning-main">⚠ Backup Power: Standby</p></div></div>'
+  },
+  { 
+    value: 'navigation', 
+    label: 'Navigation', 
+    badge: '3',
+    content: '<div class="p-4"><h3 class="font-semibold mb-2 text-primary-600">🧭 Navigation Control</h3><p class="text-text-secondary">Stellar navigation and course plotting systems. 3 waypoints active.</p><div class="mt-3 space-y-1"><p>Current Position: Sector 7G</p><p>Destination: Alpha Centauri</p><p>ETA: 14.7 hours</p></div></div>'
+  },
+  { 
+    value: 'comms', 
+    label: 'Communications', 
+    content: '<div class="p-4"><h3 class="font-semibold mb-2 text-primary-600">📡 Communications Array</h3><p class="text-text-secondary">Subspace communications and signal processing systems.</p><div class="mt-3 space-y-1"><p class="text-accent-info-main">• Long Range: Operational</p><p class="text-accent-info-main">• Emergency Beacon: Ready</p><p class="text-accent-success-main">• Quantum Encryption: Active</p></div></div>'
+  },
 ]
 
 const passwordError = computed(() => {

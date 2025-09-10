@@ -11,6 +11,9 @@ import Alert from './components/Alert/Alert.vue'
 import Select from './components/Select/Select.vue'
 import Spinner from './components/Spinner/Spinner.vue'
 import ThemeToggle from './components/ThemeToggle/ThemeToggle.vue'
+import Toggle from './components/Toggle/Toggle.vue'
+import Checkbox from './components/Checkbox/Checkbox.vue'
+import Tabs from './components/Tabs/Tabs.vue'
 import { AccentColorsDemo, AccentColorCard } from './components/AccentColorsDemo'
 
 // Composables
@@ -20,7 +23,7 @@ export { useTheme } from './composables/useTheme'
 import './assets/styles/main.css'
 
 // Export individual components
-export { Button, Card, Modal, Input, Badge, Alert, Select, Spinner, ThemeToggle, AccentColorsDemo, AccentColorCard }
+export { Button, Card, Modal, Input, Badge, Alert, Select, Spinner, ThemeToggle, Toggle, Checkbox, Tabs, AccentColorsDemo, AccentColorCard }
 
 // Export types
 export type { ButtonProps } from './components/Button/Button.vue'
@@ -31,10 +34,13 @@ export type { BadgeProps } from './components/Badge/Badge.vue'
 export type { AlertProps } from './components/Alert/Alert.vue'
 export type { SelectProps, SelectOption } from './components/Select/Select.vue'
 export type { SpinnerProps } from './components/Spinner/Spinner.vue'
+export type { ToggleProps } from './components/Toggle/Toggle.vue'
+export type { CheckboxProps } from './components/Checkbox/Checkbox.vue'
+export type { TabsProps, TabItem } from './components/Tabs/Tabs.vue'
 
 // Import and export design tokens from JS file
 import tokensDefault from './theme/tokens.js'
-export const tokens = tokensDefault
+export const tokens = tokensDefault || {}
 
 // Plugin installation function
 export const DesignSystem = {
@@ -48,6 +54,9 @@ export const DesignSystem = {
         app.component('UiSelect', Select)
         app.component('UiSpinner', Spinner)
         app.component('UiThemeToggle', ThemeToggle)
+        app.component('UiToggle', Toggle)
+        app.component('UiCheckbox', Checkbox)
+        app.component('UiTabs', Tabs)
     },
 }
 

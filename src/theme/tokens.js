@@ -187,6 +187,11 @@ const tokens = {
     },
 }
 
-// Simple CommonJS export that works everywhere
-export { tokens }
-export default tokens
+// Simple CommonJS/ES module compatible export
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = tokens
+    module.exports.default = tokens
+} else if (typeof exports !== 'undefined') {
+    exports.default = tokens
+    exports.tokens = tokens
+}
