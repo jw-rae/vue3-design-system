@@ -58,31 +58,27 @@ const badgeClasses = computed(() => {
     ],
     success: [
       'bg-transparent', 
-      'border-2 border-primary-400', 
-      'dark:border-primary-500',
-      'text-primary-500',
-      'dark:text-primary-400',
+      'border-2 border-accent-success-main', 
+      'text-accent-success-dark',
+      'dark:text-accent-success-light',
     ],
     warning: [
       'bg-transparent', 
-      'border-2 border-primary-400', 
-      'dark:border-primary-500',
-      'text-primary-500',
-      'dark:text-primary-400',
+      'border-2 border-accent-warning-main', 
+      'text-accent-warning-dark',
+      'dark:text-accent-warning-light',
     ],
     error: [
       'bg-transparent', 
-      'border-2 border-primary-700', 
-      'dark:border-primary-300',
-      'text-primary-700',
-      'dark:text-primary-300',
+      'border-2 border-accent-error-main', 
+      'text-accent-error-dark',
+      'dark:text-accent-error-light',
     ],
     info: [
       'bg-transparent', 
-      'border-2 border-primary-300', 
-      'dark:border-primary-600',
-      'text-primary-400',
-      'dark:text-primary-500',
+      'border-2 border-accent-info-main', 
+      'text-accent-info-dark',
+      'dark:text-accent-info-light',
     ],
   } : {
     primary: [
@@ -104,40 +100,36 @@ const badgeClasses = computed(() => {
       'dark:text-primary-200',
     ],
     success: [
-      // Bright, celebratory success - solid
-      'bg-primary-200', 
-      'dark:bg-primary-700',
-      'border border-primary-400', 
-      'dark:border-primary-600',
-      'text-primary-800',
-      'dark:text-primary-100',
+      // Success using theme-aware accent colors
+      'bg-accent-success-light/30', 
+      'dark:bg-accent-success-dark/30',
+      'border border-accent-success-main/50', 
+      'text-accent-success-dark',
+      'dark:text-accent-success-light',
     ],
     warning: [
-      // Attention-getting warning - solid
-      'bg-primary-300', 
-      'dark:bg-primary-600',
-      'border border-primary-500', 
-      'dark:border-primary-500',
-      'text-primary-900',
-      'dark:text-primary-50',
+      // Warning using theme-aware accent colors
+      'bg-accent-warning-light/30', 
+      'dark:bg-accent-warning-dark/30',
+      'border border-accent-warning-main/50', 
+      'text-accent-warning-dark',
+      'dark:text-accent-warning-light',
     ],
     error: [
-      // Strong error using deep tones - solid
-      'bg-primary-700/20', 
-      'dark:bg-primary-200/30',
-      'border border-primary-700/50', 
-      'dark:border-primary-300/50',
-      'text-primary-900',
-      'dark:text-primary-50',
+      // Error using theme-aware accent colors
+      'bg-accent-error-light/30', 
+      'dark:bg-accent-error-dark/30',
+      'border border-accent-error-main/50', 
+      'text-accent-error-dark',
+      'dark:text-accent-error-light',
     ],
     info: [
-      // Calm, informative - solid
-      'bg-primary-50', 
-      'dark:bg-primary-900',
-      'border border-primary-200', 
-      'dark:border-primary-800',
-      'text-primary-600',
-      'dark:text-primary-300',
+      // Info using theme-aware accent colors
+      'bg-accent-info-light/30', 
+      'dark:bg-accent-info-dark/30',
+      'border border-accent-info-main/50', 
+      'text-accent-info-dark',
+      'dark:text-accent-info-light',
     ],
   }
 

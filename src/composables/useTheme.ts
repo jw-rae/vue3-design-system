@@ -6,7 +6,7 @@ export type Theme = 'light' | 'dark' | 'system'
 // Theme state
 const theme = ref<Theme>('system')
 const isDark = ref(false)
-const currentTheme = ref<ThemeName>('default')
+const currentTheme = ref<ThemeName>('warm')
 
 // Check system preference
 const getSystemTheme = (): 'light' | 'dark' => {
@@ -56,7 +56,7 @@ const initializeTheme = () => {
 
     // Load color theme
     const storedColorTheme = localStorage.getItem('theme-color') as ThemeName
-    if (storedColorTheme && ['default', 'pink', 'green', 'blue'].includes(storedColorTheme)) {
+    if (storedColorTheme && ['warm', 'cool', 'pink', 'green', 'blue'].includes(storedColorTheme)) {
         currentTheme.value = storedColorTheme
     }
 
@@ -95,7 +95,8 @@ export function useTheme() {
         isDark: isDark.value,
         colorTheme: currentTheme.value,
         displayName: {
-            default: 'Default Blue',
+            warm: 'System Warm',
+            cool: 'System Cool',
             pink: 'Elegant Pink',
             green: 'Nature Green',
             blue: 'Corporate Blue'

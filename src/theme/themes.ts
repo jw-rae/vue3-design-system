@@ -1,5 +1,5 @@
-// Multi-theme system with beautiful color variations
-export type ThemeName = 'default' | 'pink' | 'green' | 'blue'
+// Multi-theme system with sophisticated themes
+export type ThemeName = 'warm' | 'cool' | 'pink' | 'green' | 'blue'
 
 export interface ThemeColors {
     // Primary brand colors
@@ -15,6 +15,29 @@ export interface ThemeColors {
         800: string
         900: string
         950: string
+    }
+    // Semantic accent colors
+    accent: {
+        success: {
+            light: string
+            main: string
+            dark: string
+        }
+        warning: {
+            light: string
+            main: string
+            dark: string
+        }
+        error: {
+            light: string
+            main: string
+            dark: string
+        }
+        info: {
+            light: string
+            main: string
+            dark: string
+        }
     }
     // Semantic surface colors (theme-aware)
     background: {
@@ -44,6 +67,134 @@ export interface ThemeColors {
     }
 }
 
+// 🔥 **System Warm**: Subtle sepia-grey tones inspired by VS Code Dark Modern
+export const warmTheme: ThemeColors = {
+    primary: {
+        50: '#fafaf9',   // Very light warm grey
+        100: '#f5f5f4',  // Light warm grey
+        200: '#e7e5e4',  // Soft warm grey
+        300: '#d6d3d1',  // Medium warm grey
+        400: '#a8a29e',  // Muted warm grey
+        500: '#78716c',  // Main warm grey (sepia-toned)
+        600: '#57534e',  // Deeper warm grey
+        700: '#44403c',  // Rich warm charcoal
+        800: '#292524',  // Dark warm grey
+        900: '#1c1917',  // Deep warm charcoal
+        950: '#0c0a09',  // Darkest warm black
+    },
+    accent: {
+        success: {
+            light: '#a8b5a0',  // Warm sage green with grey undertones
+            main: '#7a8a70',   // Rich muted green that's clearly green
+            dark: '#5a6650',   // Deep forest green with warm base
+        },
+        warning: {
+            light: '#b8a690',  // Warm amber-grey that's clearly orange
+            main: '#8c7860',   // Rich muted orange with sophistication
+            dark: '#6b5a47',   // Deep burnt orange with warm grey
+        },
+        error: {
+            light: '#b59590',  // Warm terracotta-grey that's clearly red
+            main: '#8a6660',   // Rich muted red with sophistication
+            dark: '#684d47',   // Deep burgundy with warm grey
+        },
+        info: {
+            light: '#95a5b8',  // Cool slate-blue that's clearly blue
+            main: '#65758c',   // Rich muted blue with sophistication
+            dark: '#4a566b',   // Deep navy-grey with cool undertones
+        }
+    },
+    background: {
+        primary: '#ffffff',
+        secondary: '#fafaf9',  // Very subtle warm tint
+        tertiary: '#f5f5f4',   // Light warm grey
+        inverse: '#0c0a09',    // Darkest warm black
+    },
+    surface: {
+        primary: '#ffffff',
+        secondary: '#fafaf9',
+        elevated: '#ffffff',
+        overlay: 'rgba(12, 10, 9, 0.6)', // Dark warm overlay
+    },
+    text: {
+        primary: '#0c0a09',    // Darkest warm black
+        secondary: '#1c1917',  // Deep warm charcoal
+        tertiary: '#292524',   // Dark warm grey
+        inverse: '#fafaf9',    // Very light warm grey
+        disabled: '#d6d3d1',   // Medium warm grey
+    },
+    border: {
+        primary: '#e7e5e4',    // Soft warm grey
+        secondary: '#d6d3d1',  // Medium warm grey
+        focus: '#78716c',      // Main warm grey
+        error: '#dc2626',      // Keep error red for clarity
+    },
+}
+
+// ❄️ **System Cool**: Dark coal to light white/almost blue - clean and modern
+export const coolTheme: ThemeColors = {
+    primary: {
+        50: '#f8fafc',   // Almost white with blue hint
+        100: '#f1f5f9',  // Light cool gray
+        200: '#e2e8f0',  // Gentle cool gray
+        300: '#cbd5e1',  // Soft blue-gray
+        400: '#94a3b8',  // Medium blue-gray
+        500: '#64748b',  // Main cool gray
+        600: '#475569',  // Deep slate
+        700: '#334155',  // Rich charcoal
+        800: '#1e293b',  // Dark charcoal
+        900: '#0f172a',  // Deep coal
+        950: '#020617',  // Darkest coal
+    },
+    accent: {
+        success: {
+            light: '#86efac',  // Soft green
+            main: '#22c55e',   // Nature green
+            dark: '#15803d',   // Deep forest
+        },
+        warning: {
+            light: '#fbbf24',  // Soft amber
+            main: '#f59e0b',   // Amber
+            dark: '#d97706',   // Deep amber
+        },
+        error: {
+            light: '#fca5a5',  // Soft red
+            main: '#ef4444',   // Clear red
+            dark: '#dc2626',   // Deep red
+        },
+        info: {
+            light: '#93c5fd',  // Light blue
+            main: '#3b82f6',   // Clear blue
+            dark: '#1d4ed8',   // Deep blue
+        }
+    },
+    background: {
+        primary: '#ffffff',
+        secondary: '#fafbfc',  // Cool off-white
+        tertiary: '#f8fafc',   // Blue-tinted white
+        inverse: '#020617',    // Deep coal
+    },
+    surface: {
+        primary: '#ffffff',
+        secondary: '#fafbfc',
+        elevated: '#ffffff',
+        overlay: 'rgba(2, 6, 23, 0.6)', // Cool dark overlay
+    },
+    text: {
+        primary: '#020617',    // Deep coal
+        secondary: '#0f172a',  // Dark charcoal
+        tertiary: '#1e293b',   // Medium charcoal
+        inverse: '#f8fafc',    // Cool white
+        disabled: '#cbd5e1',   // Muted cool gray
+    },
+    border: {
+        primary: '#e2e8f0',    // Gentle cool gray
+        secondary: '#cbd5e1',  // Soft blue-gray
+        focus: '#64748b',      // Main cool
+        error: '#dc2626',      // Keep error red
+    },
+}
+
 // 🌸 **Pink Theme**: Elegant soft pinks to dark berry
 export const pinkTheme: ThemeColors = {
     primary: {
@@ -58,6 +209,28 @@ export const pinkTheme: ThemeColors = {
         800: '#9d174d',  // Dark berry
         900: '#831843',  // Deep berry
         950: '#500724',  // Darkest berry
+    },
+    accent: {
+        success: {
+            light: '#86efac',  // Soft green
+            main: '#22c55e',   // Nature green
+            dark: '#15803d',   // Deep forest
+        },
+        warning: {
+            light: '#fed7aa',  // Soft peach
+            main: '#fb923c',   // Warm orange
+            dark: '#ea580c',   // Deep orange
+        },
+        error: {
+            light: '#fca5a5',  // Soft red
+            main: '#ef4444',   // Clear red
+            dark: '#dc2626',   // Deep red
+        },
+        info: {
+            light: '#c4b5fd',  // Soft purple
+            main: '#8b5cf6',   // Purple
+            dark: '#7c3aed',   // Deep purple
+        }
     },
     background: {
         primary: '#ffffff',
@@ -101,6 +274,28 @@ export const greenTheme: ThemeColors = {
         900: '#14532d',  // Deep forest
         950: '#052e16',  // Darkest forest
     },
+    accent: {
+        success: {
+            light: '#bbf7d0',  // Light mint (theme primary)
+            main: '#22c55e',   // Nature green (theme primary)
+            dark: '#15803d',   // Deep forest (theme primary)
+        },
+        warning: {
+            light: '#fde047',  // Bright yellow
+            main: '#eab308',   // Warning yellow
+            dark: '#a16207',   // Deep amber
+        },
+        error: {
+            light: '#fca5a5',  // Soft red
+            main: '#ef4444',   // Clear red
+            dark: '#dc2626',   // Deep red
+        },
+        info: {
+            light: '#67e8f9',  // Soft cyan
+            main: '#06b6d4',   // Cyan
+            dark: '#0891b2',   // Deep cyan
+        }
+    },
     background: {
         primary: '#ffffff',
         secondary: '#f7fdf7',  // Subtle sage tint
@@ -143,6 +338,28 @@ export const blueTheme: ThemeColors = {
         900: '#0c4a6e',  // Deep navy
         950: '#082f49',  // Night sky
     },
+    accent: {
+        success: {
+            light: '#86efac',  // Soft green
+            main: '#22c55e',   // Nature green
+            dark: '#15803d',   // Deep forest
+        },
+        warning: {
+            light: '#fbbf24',  // Soft amber
+            main: '#f59e0b',   // Amber
+            dark: '#d97706',   // Deep amber
+        },
+        error: {
+            light: '#fca5a5',  // Soft red
+            main: '#ef4444',   // Clear red
+            dark: '#dc2626',   // Deep red
+        },
+        info: {
+            light: '#bae6fd',  // Light sky (theme primary)
+            main: '#0ea5e9',   // Corporate blue (theme primary)
+            dark: '#0369a1',   // Rich navy (theme primary)
+        }
+    },
     background: {
         primary: '#ffffff',
         secondary: '#f8fafc',  // Cool gray tint
@@ -170,51 +387,10 @@ export const blueTheme: ThemeColors = {
     },
 }
 
-// 🔵 **Default Theme**: Current system (enhanced)
-export const defaultTheme: ThemeColors = {
-    primary: {
-        50: '#eff6ff',
-        100: '#dbeafe',
-        200: '#bfdbfe',
-        300: '#93c5fd',
-        400: '#60a5fa',
-        500: '#3b82f6',   // Main blue
-        600: '#2563eb',
-        700: '#1d4ed8',
-        800: '#1e40af',
-        900: '#1e3a8a',
-        950: '#172554',
-    },
-    background: {
-        primary: '#ffffff',
-        secondary: '#f8fafc',
-        tertiary: '#f1f5f9',
-        inverse: '#0f172a',
-    },
-    surface: {
-        primary: '#ffffff',
-        secondary: '#f8fafc',
-        elevated: '#ffffff',
-        overlay: 'rgba(0, 0, 0, 0.5)',
-    },
-    text: {
-        primary: '#0f172a',
-        secondary: '#475569',
-        tertiary: '#64748b',
-        inverse: '#f8fafc',
-        disabled: '#94a3b8',
-    },
-    border: {
-        primary: '#e2e8f0',
-        secondary: '#cbd5e1',
-        focus: '#3b82f6',
-        error: '#ef4444',
-    },
-}
-
 // Theme registry
 export const themes: Record<ThemeName, ThemeColors> = {
-    default: defaultTheme,
+    warm: warmTheme,
+    cool: coolTheme,
     pink: pinkTheme,
     green: greenTheme,
     blue: blueTheme,
@@ -222,7 +398,7 @@ export const themes: Record<ThemeName, ThemeColors> = {
 
 // Get theme colors by name
 export function getTheme(name: ThemeName): ThemeColors {
-    return themes[name] || defaultTheme
+    return themes[name] || warmTheme // Default to warm theme
 }
 
 // CSS custom properties generator for themes
@@ -232,13 +408,60 @@ export function generateThemeCSS(themeName: ThemeName): string {
     const lightModeVars: string[] = []
     const darkModeVars: string[] = []
 
-    // Primary colors (same for light and dark)
+    // Light mode: use normal primary colors
     Object.entries(theme.primary).forEach(([key, value]) => {
         lightModeVars.push(`--color-primary-${key}: ${value};`)
+    })
+
+    // Light mode: accent colors
+    lightModeVars.push(`--color-accent-success-light: ${theme.accent.success.light};`)
+    lightModeVars.push(`--color-accent-success-main: ${theme.accent.success.main};`)
+    lightModeVars.push(`--color-accent-success-dark: ${theme.accent.success.dark};`)
+    lightModeVars.push(`--color-accent-warning-light: ${theme.accent.warning.light};`)
+    lightModeVars.push(`--color-accent-warning-main: ${theme.accent.warning.main};`)
+    lightModeVars.push(`--color-accent-warning-dark: ${theme.accent.warning.dark};`)
+    lightModeVars.push(`--color-accent-error-light: ${theme.accent.error.light};`)
+    lightModeVars.push(`--color-accent-error-main: ${theme.accent.error.main};`)
+    lightModeVars.push(`--color-accent-error-dark: ${theme.accent.error.dark};`)
+    lightModeVars.push(`--color-accent-info-light: ${theme.accent.info.light};`)
+    lightModeVars.push(`--color-accent-info-main: ${theme.accent.info.main};`)
+    lightModeVars.push(`--color-accent-info-dark: ${theme.accent.info.dark};`)
+
+    // Dark mode: thoughtful color mapping for proper contrast and hierarchy
+    // Keep the main brand colors recognizable, but adjust for dark backgrounds
+    const darkPrimaryMapping = {
+        50: `color-mix(in srgb, ${theme.primary[950]} 85%, black 15%)`,   // Very dark but slightly tinted
+        100: `color-mix(in srgb, ${theme.primary[900]} 70%, black 30%)`, // Dark tinted background
+        200: `color-mix(in srgb, ${theme.primary[800]} 60%, black 40%)`, // Medium dark background
+        300: `color-mix(in srgb, ${theme.primary[700]} 80%, white 20%)`, // Muted but visible
+        400: `color-mix(in srgb, ${theme.primary[600]} 85%, white 15%)`, // More saturated
+        500: theme.primary[500],  // Keep main brand color recognizable
+        600: `color-mix(in srgb, ${theme.primary[400]} 90%, white 10%)`, // Lighter, more vibrant
+        700: `color-mix(in srgb, ${theme.primary[300]} 85%, white 15%)`, // Bright for contrast
+        800: `color-mix(in srgb, ${theme.primary[200]} 80%, white 20%)`, // Very bright text
+        900: `color-mix(in srgb, ${theme.primary[100]} 75%, white 25%)`, // Brightest readable
+        950: `color-mix(in srgb, ${theme.primary[50]} 70%, white 30%)`,   // Near white for contrast
+    }
+
+    Object.entries(darkPrimaryMapping).forEach(([key, value]) => {
         darkModeVars.push(`--color-primary-${key}: ${value};`)
     })
 
-    // Light mode colors
+    // Dark mode: accent colors (keep semantic colors consistent in dark mode)
+    darkModeVars.push(`--color-accent-success-light: ${theme.accent.success.light};`)
+    darkModeVars.push(`--color-accent-success-main: ${theme.accent.success.main};`)
+    darkModeVars.push(`--color-accent-success-dark: ${theme.accent.success.dark};`)
+    darkModeVars.push(`--color-accent-warning-light: ${theme.accent.warning.light};`)
+    darkModeVars.push(`--color-accent-warning-main: ${theme.accent.warning.main};`)
+    darkModeVars.push(`--color-accent-warning-dark: ${theme.accent.warning.dark};`)
+    darkModeVars.push(`--color-accent-error-light: ${theme.accent.error.light};`)
+    darkModeVars.push(`--color-accent-error-main: ${theme.accent.error.main};`)
+    darkModeVars.push(`--color-accent-error-dark: ${theme.accent.error.dark};`)
+    darkModeVars.push(`--color-accent-info-light: ${theme.accent.info.light};`)
+    darkModeVars.push(`--color-accent-info-main: ${theme.accent.info.main};`)
+    darkModeVars.push(`--color-accent-info-dark: ${theme.accent.info.dark};`)
+
+    // Light mode semantic colors
     lightModeVars.push(`--color-background-primary: ${theme.background.primary};`)
     lightModeVars.push(`--color-background-secondary: ${theme.background.secondary};`)
     lightModeVars.push(`--color-background-tertiary: ${theme.background.tertiary};`)
@@ -251,18 +474,18 @@ export function generateThemeCSS(themeName: ThemeName): string {
     lightModeVars.push(`--color-border-primary: ${theme.border.primary};`)
     lightModeVars.push(`--color-border-secondary: ${theme.border.secondary};`)
 
-    // Dark mode colors (using inverted primary colors)
-    darkModeVars.push(`--color-background-primary: ${theme.primary[950]};`)
-    darkModeVars.push(`--color-background-secondary: ${theme.primary[900]};`)
-    darkModeVars.push(`--color-background-tertiary: ${theme.primary[800]};`)
-    darkModeVars.push(`--color-surface-primary: ${theme.primary[950]};`)
-    darkModeVars.push(`--color-surface-secondary: ${theme.primary[900]};`)
-    darkModeVars.push(`--color-surface-elevated: ${theme.primary[800]};`)
-    darkModeVars.push(`--color-text-primary: ${theme.primary[50]};`)
-    darkModeVars.push(`--color-text-secondary: ${theme.primary[200]};`)
-    darkModeVars.push(`--color-text-tertiary: ${theme.primary[300]};`)
-    darkModeVars.push(`--color-border-primary: ${theme.primary[700]};`)
-    darkModeVars.push(`--color-border-secondary: ${theme.primary[600]};`)
+    // Dark mode semantic colors (carefully chosen for good contrast)
+    darkModeVars.push(`--color-background-primary: color-mix(in srgb, ${theme.primary[950]} 90%, black 10%);`)
+    darkModeVars.push(`--color-background-secondary: color-mix(in srgb, ${theme.primary[900]} 80%, black 20%);`)
+    darkModeVars.push(`--color-background-tertiary: color-mix(in srgb, ${theme.primary[800]} 70%, black 30%);`)
+    darkModeVars.push(`--color-surface-primary: color-mix(in srgb, ${theme.primary[950]} 85%, black 15%);`)
+    darkModeVars.push(`--color-surface-secondary: color-mix(in srgb, ${theme.primary[900]} 75%, black 25%);`)
+    darkModeVars.push(`--color-surface-elevated: color-mix(in srgb, ${theme.primary[800]} 80%, black 20%);`)
+    darkModeVars.push(`--color-text-primary: color-mix(in srgb, white 95%, ${theme.primary[50]} 5%);`) // Near white with slight tint
+    darkModeVars.push(`--color-text-secondary: color-mix(in srgb, white 85%, ${theme.primary[100]} 15%);`) // Bright but readable
+    darkModeVars.push(`--color-text-tertiary: color-mix(in srgb, white 70%, ${theme.primary[200]} 30%);`) // Still quite bright
+    darkModeVars.push(`--color-border-primary: color-mix(in srgb, ${theme.primary[700]} 70%, white 30%);`)
+    darkModeVars.push(`--color-border-secondary: color-mix(in srgb, ${theme.primary[600]} 75%, white 25%);`)
 
     // Static colors for both modes
     const staticVars = [

@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8 transition-colors">
+  <div class="min-h-screen bg-background-primary text-text-primary px-4 sm:px-6 lg:px-8 transition-colors">
     <div class="max-w-4xl mx-auto">
       <!-- Theme Toggle -->
       <div class="flex justify-end mb-8">
@@ -7,10 +7,10 @@
       </div>
       
       <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        <h1 class="text-4xl font-bold text-text-primary mb-4">
           Vue 3 Design System
         </h1>
-        <p class="text-xl text-gray-600 dark:text-gray-300">
+        <p class="text-xl text-text-secondary">
           A responsive component library built with Vue 3, Tailwind CSS, and TypeScript
         </p>
         <div class="mt-4">
@@ -20,9 +20,14 @@
         </div>
       </div>
 
+      <!-- Accent Colors Demo -->
+      <section class="mb-12">
+        <UiAccentColorsDemo />
+      </section>
+
       <!-- Button Examples -->
       <section class="mb-12">
-        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Buttons</h2>
+        <h2 class="text-2xl font-semibold text-text-primary mb-6">Buttons</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <UiCard>
             <template #header>
@@ -66,7 +71,7 @@
 
       <!-- Alert Example -->
       <section v-if="showAlert" class="mb-12">
-        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Alerts</h2>
+        <h2 class="text-2xl font-semibold text-text-primary mb-6">Alerts</h2>
         <div class="space-y-4">
           <UiAlert variant="success" title="Success!" dismissible @dismiss="showAlert = false">
             Your changes have been saved successfully.
@@ -123,7 +128,7 @@
 
       <!-- Select Examples -->
       <section class="mb-12">
-        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Select Dropdowns</h2>
+        <h2 class="text-2xl font-semibold text-text-primary mb-6">Select Dropdowns</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <UiCard>
             <template #header>
@@ -137,7 +142,7 @@
                 placeholder="Select your country"
                 hint="Choose your country of residence"
               />
-              <p v-if="formData.country" class="text-sm text-gray-600 dark:text-gray-400">
+              <p v-if="formData.country" class="text-sm text-text-secondary">
                 Selected: {{ (formData.country as any)?.label }}
               </p>
             </div>
@@ -173,7 +178,7 @@
 
       <!-- Input Examples -->
       <section class="mb-12">
-        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Inputs</h2>
+        <h2 class="text-2xl font-semibold text-text-primary mb-6">Inputs</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <UiCard>
             <template #header>
@@ -233,13 +238,13 @@
 
       <!-- Card Examples -->
       <section class="mb-12">
-        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Cards</h2>
+        <h2 class="text-2xl font-semibold text-text-primary mb-6">Cards</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <UiCard variant="default">
             <template #header>
               <h3 class="font-medium">Default Card</h3>
             </template>
-            <p class="text-gray-600">This is a default card with header and content.</p>
+            <p class="text-text-secondary">This is a default card with header and content.</p>
             <template #footer>
               <UiButton size="sm">Action</UiButton>
             </template>
@@ -249,21 +254,21 @@
             <template #header>
               <h3 class="font-medium">Outlined Card</h3>
             </template>
-            <p class="text-gray-600">This card has a thicker border.</p>
+            <p class="text-text-secondary">This card has a thicker border.</p>
           </UiCard>
 
           <UiCard variant="elevated">
             <template #header>
               <h3 class="font-medium">Elevated Card</h3>
             </template>
-            <p class="text-gray-600">This card has a shadow effect.</p>
+            <p class="text-text-secondary">This card has a shadow effect.</p>
           </UiCard>
 
           <UiCard variant="filled" hoverable>
             <template #header>
               <h3 class="font-medium">Hoverable Card</h3>
             </template>
-            <p class="text-gray-600">Hover over this card to see the effect.</p>
+            <p class="text-text-secondary">Hover over this card to see the effect.</p>
           </UiCard>
         </div>
       </section>
@@ -274,7 +279,7 @@
           Modal Example
         </template>
         <div>
-          <p class="text-gray-600 mb-4">
+          <p class="text-text-secondary mb-4">
             This is an example modal built with Headless UI. It includes smooth transitions
             and proper accessibility features.
           </p>
@@ -308,6 +313,7 @@ import {
   Alert as UiAlert,
   Select as UiSelect,
   ThemeToggle as UiThemeToggle,
+  AccentColorsDemo as UiAccentColorsDemo,
   useTheme
 } from './index'
 

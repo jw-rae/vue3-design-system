@@ -1,12 +1,12 @@
 <template>
-  <div class="flex items-center gap-4">
+  <div class="flex items-center gap-3 p-3 bg-surface-secondary dark:bg-surface-secondary rounded-xl border border-border-primary dark:border-border-primary">
     <!-- Dark/Light Mode Toggle -->
     <button
       @click="toggleTheme"
-      class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-border-primary bg-surface-primary text-primary-700 hover:bg-primary-50 dark:border-border-primary dark:bg-surface-primary dark:text-primary-300 dark:hover:bg-primary-900/20 transition-colors"
-      :title="`Switch to ${isDark ? 'light' : 'dark'} mode`"
+      class="flex items-center justify-center w-10 h-10 rounded-lg bg-surface-primary dark:bg-surface-primary border border-border-primary dark:border-border-primary text-text-primary dark:text-text-primary hover:bg-surface-elevated dark:hover:bg-surface-elevated transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-1"
+      :title="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
     >
-      <!-- Sun icon for light mode -->
+      <!-- Sun icon (light mode) -->
       <svg
         v-if="isDark"
         class="w-5 h-5"
@@ -22,7 +22,7 @@
         />
       </svg>
       
-      <!-- Moon icon for dark mode -->
+      <!-- Moon icon (dark mode) -->
       <svg
         v-else
         class="w-5 h-5"
@@ -46,7 +46,8 @@
         @change="setColorTheme(currentTheme as ThemeName)"
         class="appearance-none bg-surface-primary dark:bg-surface-primary border border-border-primary dark:border-border-primary rounded-lg px-3 py-2 pr-8 text-sm text-text-primary dark:text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
       >
-        <option value="default">🔵 Default Blue</option>
+        <option value="warm">🔥 System Warm</option>
+        <option value="cool">❄️ System Cool</option>
         <option value="pink">🌸 Elegant Pink</option>
         <option value="green">🌿 Nature Green</option>
         <option value="blue">🌌 Corporate Blue</option>
@@ -54,7 +55,7 @@
       
       <!-- Dropdown Arrow -->
       <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-        <svg class="w-4 h-4 text-primary-400 dark:text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-4 h-4 text-primary-400 dark:text-primary-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
         </svg>
       </div>

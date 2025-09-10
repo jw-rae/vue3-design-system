@@ -77,48 +77,44 @@ const alertClasses = computed(() => {
 
   const variantClasses = {
     success: [
-      // Light, encouraging feel - simplified backgrounds
-      'bg-primary-50', 
-      'dark:bg-primary-900/30',
-      'border-l-primary-400', 
-      'dark:border-l-primary-500',
-      'border border-primary-200', 
-      'dark:border-primary-700',
-      'text-primary-800',
-      'dark:text-primary-100',
+      // Success alerts use theme-aware accent colors
+      'bg-accent-success-light/20', 
+      'dark:bg-accent-success-dark/20',
+      'border-l-accent-success-main', 
+      'border border-accent-success-light/50', 
+      'dark:border-accent-success-dark/50',
+      'text-accent-success-dark',
+      'dark:text-accent-success-light',
     ],
     warning: [
-      // Attention-grabbing but not alarming - solid backgrounds
-      'bg-primary-100', 
-      'dark:bg-primary-800/40',
-      'border-l-primary-500', 
-      'dark:border-l-primary-400',
-      'border border-primary-300', 
-      'dark:border-primary-600',
-      'text-primary-900',
-      'dark:text-primary-50',
+      // Warning alerts use theme-aware accent colors
+      'bg-accent-warning-light/20', 
+      'dark:bg-accent-warning-dark/20',
+      'border-l-accent-warning-main', 
+      'border border-accent-warning-light/50', 
+      'dark:border-accent-warning-dark/50',
+      'text-accent-warning-dark',
+      'dark:text-accent-warning-light',
     ],
     error: [
-      // Strong but not harsh - clear contrast
-      'bg-primary-700/10', 
-      'dark:bg-primary-200/20',
-      'border-l-primary-800', 
-      'dark:border-l-primary-200',
-      'border border-primary-700/30', 
-      'dark:border-primary-300/30',
-      'text-primary-900',
-      'dark:text-primary-50',
+      // Error alerts use theme-aware accent colors
+      'bg-accent-error-light/20', 
+      'dark:bg-accent-error-dark/20',
+      'border-l-accent-error-main', 
+      'border border-accent-error-light/50', 
+      'dark:border-accent-error-dark/50',
+      'text-accent-error-dark',
+      'dark:text-accent-error-light',
     ],
     info: [
-      // Calm and informative - readable backgrounds
-      'bg-primary-50/80', 
-      'dark:bg-primary-900/25',
-      'border-l-primary-300', 
-      'dark:border-l-primary-600',
-      'border border-primary-200', 
-      'dark:border-primary-800',
-      'text-primary-700',
-      'dark:text-primary-200',
+      // Info alerts use theme-aware accent colors
+      'bg-accent-info-light/20', 
+      'dark:bg-accent-info-dark/20',
+      'border-l-accent-info-main', 
+      'border border-accent-info-light/50', 
+      'dark:border-accent-info-dark/50',
+      'text-accent-info-dark',
+      'dark:text-accent-info-light',
     ],
   }
 

@@ -41,6 +41,29 @@ const tokens = {
             900: '#1e3a8a',
             950: '#172554',
         },
+        // Theme-aware accent colors (updated by theme selection)
+        accent: {
+            success: {
+                light: 'var(--color-accent-success-light, #86efac)',
+                main: 'var(--color-accent-success-main, #22c55e)',
+                dark: 'var(--color-accent-success-dark, #15803d)',
+            },
+            warning: {
+                light: 'var(--color-accent-warning-light, #fbbf24)',
+                main: 'var(--color-accent-warning-main, #f59e0b)',
+                dark: 'var(--color-accent-warning-dark, #d97706)',
+            },
+            error: {
+                light: 'var(--color-accent-error-light, #fca5a5)',
+                main: 'var(--color-accent-error-main, #ef4444)',
+                dark: 'var(--color-accent-error-dark, #dc2626)',
+            },
+            info: {
+                light: 'var(--color-accent-info-light, #93c5fd)',
+                main: 'var(--color-accent-info-main, #3b82f6)',
+                dark: 'var(--color-accent-info-dark, #1d4ed8)',
+            },
+        },
         // Neutral palette with more options
         gray: {
             50: '#f8fafc',
@@ -55,7 +78,7 @@ const tokens = {
             900: '#0f172a',
             950: '#020617',
         },
-        // Enhanced semantic colors
+        // Enhanced semantic colors (fallback for non-themed usage)
         success: {
             50: '#f0fdf4',
             100: '#dcfce7',
