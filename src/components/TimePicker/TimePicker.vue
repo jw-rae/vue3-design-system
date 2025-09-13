@@ -1,57 +1,64 @@
 <template>
   <div class="timepicker-root">
-    <label v-if="label" :for="id" class="timepicker-label">{{ label }}</label>
-    <div class="timepicker-input-wrapper">
+  <label v-if="props.label" :for="props.id" class="timepicker-label">{{ props.label }}</label>
+  <div class="timepicker-input-wrapper" ref="inputWrapperRef">
       <div class="timepicker-input-row">
         <input
-          :id="id"
+          :id="props.id"
           :value="displayValue"
-          :placeholder="mode === 'chronometer' ? 'HH:mm:ss' : (ampmMode ? 'hh:mm AM' : 'HH:mm')"
-          :disabled="disabled"
+          :placeholder="props.mode === 'chronometer' ? 'HH:mm:ss' : (ampmMode ? 'hh:mm AM' : 'HH:mm')"
+          :disabled="props.disabled"
           class="timepicker-input"
           @focus="showPopup = true"
           @click="showPopup = true"
           @input="onInputText"
-          :aria-label="label"
+          :aria-label="props.label"
           autocomplete="off"
         />
       </div>
-      <div v-if="showPopup && !disabled" class="timepicker-popup" @mousedown.prevent>
-        <div class="timepicker-popup-content-fixed">
-          <div class="timepicker-fields">
-            <div class="timepicker-selector">
-              <button type="button" class="timepicker-arrow" @click="inc('hour')">▲</button>
-              <div class="timepicker-value">{{ displayHour }}</div>
-              <button type="button" class="timepicker-arrow" @click="dec('hour')">▼</button>
+      <teleport to="body">
+  <div v-if="showPopup && !props.disabled" class="timepicker-popup" ref="popupRef" @mousedown.prevent :style="popupPositionStyle">
+          <div class="timepicker-popup-content-fixed">
+            <div class="timepicker-fields">
+              <div class="timepicker-selector">
+                <button type="button" class="timepicker-arrow" @click="inc('hour')">▲</button>
+                <div class="timepicker-value">{{ displayHour }}</div>
+                <button type="button" class="timepicker-arrow" @click="dec('hour')">▼</button>
+              </div>
+              <span>:</span>
+              <div class="timepicker-selector">
+                <button type="button" class="timepicker-arrow" @click="inc('minute')">▲</button>
+                <div class="timepicker-value">{{ String(minute).padStart(2, '0') }}</div>
+                <button type="button" class="timepicker-arrow" @click="dec('minute')">▼</button>
+              </div>
+              <span v-if="props.mode === 'chronometer'">:</span>
+              <div v-if="props.mode === 'chronometer'" class="timepicker-selector">
+                <button type="button" class="timepicker-arrow" @click="inc('second')">▲</button>
+                <div class="timepicker-value">{{ String(second).padStart(2, '0') }}</div>
+                <button type="button" class="timepicker-arrow" @click="dec('second')">▼</button>
+              </div>
+              <button v-if="ampmMode" class="ampm-toggle-popup" type="button" @click="toggleAmPm">
+                {{ ampm }}
+              </button>
             </div>
-            <span>:</span>
-            <div class="timepicker-selector">
-              <button type="button" class="timepicker-arrow" @click="inc('minute')">▲</button>
-              <div class="timepicker-value">{{ String(minute).padStart(2, '0') }}</div>
-              <button type="button" class="timepicker-arrow" @click="dec('minute')">▼</button>
+            <div v-if="mode === 'chronometer'" class="timepicker-chrono-controls">
+              <button @click="startChrono" type="button">Start</button>
+              <button @click="stopChrono" type="button">Stop</button>
+              <button @click="resetChrono" type="button">Reset</button>
             </div>
-            <span v-if="mode === 'chronometer'">:</span>
-            <div v-if="mode === 'chronometer'" class="timepicker-selector">
-              <button type="button" class="timepicker-arrow" @click="inc('second')">▲</button>
-              <div class="timepicker-value">{{ String(second).padStart(2, '0') }}</div>
-              <button type="button" class="timepicker-arrow" @click="dec('second')">▼</button>
-            </div>
-            <button v-if="ampmMode" class="ampm-toggle-popup" type="button" @click="toggleAmPm">
-              {{ ampm }}
-            </button>
-          </div>
-          <div v-if="mode === 'chronometer'" class="timepicker-chrono-controls">
-            <button @click="startChrono" type="button">Start</button>
-            <button @click="stopChrono" type="button">Stop</button>
-            <button @click="resetChrono" type="button">Reset</button>
           </div>
         </div>
-      </div>
+      </teleport>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+
+
+// Expose variables to template (must be after all declarations)
+// Place this at the very end of <script setup>
+
 function inc(type: 'hour' | 'minute' | 'second') {
   if (type === 'hour') {
     if (hour.value < hourMax.value) hour.value++;
@@ -77,7 +84,7 @@ function dec(type: 'hour' | 'minute' | 'second') {
   }
 }
 
-import { ref, watch, computed } from 'vue'
+import { ref, watch, computed, onMounted, onUnmounted, nextTick } from 'vue'
 
 const props = defineProps({
   modelValue: { type: String, required: true },
@@ -89,13 +96,64 @@ const props = defineProps({
   mode: { type: String, default: 'time' }, // 'time' or 'chronometer'
   ampm: { type: Boolean, default: false }, // 12-hour mode if true
 })
+const showPopup = ref(false)
+const popupPositionStyle = ref<Record<string, string | number>>({})
+const inputWrapperRef = ref<HTMLElement | null>(null)
+const popupRef = ref<HTMLElement | null>(null)
+
+function updatePopupPosition() {
+  if (!showPopup.value || !inputWrapperRef.value) return;
+  const rect = inputWrapperRef.value.getBoundingClientRect();
+  popupPositionStyle.value = {
+    position: 'absolute',
+    top: `${rect.bottom + window.scrollY + 4}px`,
+    left: `${rect.left + window.scrollX}px`,
+    zIndex: 1000,
+    width: '230px',
+  };
+}
+
+watch(showPopup, (v) => {
+  if (v) nextTick(updatePopupPosition);
+});
+onMounted(() => {
+  window.addEventListener('scroll', updatePopupPosition, true);
+  window.addEventListener('resize', updatePopupPosition);
+});
+onUnmounted(() => {
+  window.removeEventListener('scroll', updatePopupPosition, true);
+  window.removeEventListener('resize', updatePopupPosition);
+});
+
+function onClickOutside(e: MouseEvent) {
+  const inputWrapper = inputWrapperRef.value;
+  const popup = popupRef.value;
+  if (
+    inputWrapper &&
+    popup &&
+    !inputWrapper.contains(e.target as Node) &&
+    !popup.contains(e.target as Node)
+  ) {
+    showPopup.value = false;
+  }
+}
+onMounted(() => {
+  window.addEventListener('mousedown', onClickOutside)
+})
+onUnmounted(() => {
+  window.removeEventListener('mousedown', onClickOutside)
+})
+
+
+
 
 const emit = defineEmits(['update:modelValue', 'change'])
-const showPopup = ref(false)
 const internalValue = ref(props.modelValue)
 const hour = ref(0)
 const minute = ref(0)
 const second = ref(0)
+
+
 
 
 const ampmMode = computed(() => props.ampm && props.mode === 'time')
