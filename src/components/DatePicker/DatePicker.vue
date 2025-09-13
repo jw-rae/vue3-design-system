@@ -1,7 +1,7 @@
 <template>
   <div class="datepicker-root">
     <label v-if="label" :for="id" class="datepicker-label">{{ label }}</label>
-    <div class="datepicker-input-wrapper">
+    <div class="datepicker-input-wrapper" ref="inputWrapperRef">
       <input
         :id="id"
         type="text"
@@ -16,74 +16,76 @@
         :aria-label="label"
         autocomplete="off"
       />
-      <div v-if="showCalendar && !disabled" class="datepicker-popup" @mousedown.prevent>
-        <div class="datepicker-calendar">
-          <div class="datepicker-header">
-            <div class="datepicker-header-arrow left">
-              <button 
-                class="datepicker-nav" 
-                @click="prevMonth" 
-                type="button" 
-                v-if="!showYearSelect"
-                :disabled="showYearSelect"
-                aria-label="Previous Month"
-              >‹</button>
-            </div>
-            <div class="datepicker-header-center">
-              <span class="datepicker-month">
-                <span class="datepicker-month-label">{{ monthLabel }}</span>
+      <teleport to="body">
+  <div v-if="showCalendar && !disabled" class="datepicker-popup" ref="popupRef" @mousedown.prevent :style="popupPositionStyle">
+          <div class="datepicker-calendar">
+            <div class="datepicker-header">
+              <div class="datepicker-header-arrow left">
                 <button 
-                  class="datepicker-year-btn" 
-                  @click="toggleYearSelect" 
-                  type="button"
-                  :aria-pressed="showYearSelect"
+                  class="datepicker-nav" 
+                  @click="prevMonth" 
+                  type="button" 
+                  v-if="!showYearSelect"
                   :disabled="showYearSelect"
-                  :class="{ 'is-active': showYearSelect }"
-                >{{ yearLabel }}</button>
-              </span>
-            </div>
-            <div class="datepicker-header-arrow right">
-              <button 
-                class="datepicker-nav" 
-                @click="nextMonth" 
-                type="button" 
-                v-if="!showYearSelect"
-                :disabled="showYearSelect"
-                aria-label="Next Month"
-              >›</button>
-            </div>
-          </div>
-              <Scrollbar width="sm" style="height: 225px; width: 210px; max-width: 100vw;">
-            <div class="datepicker-popup-content-fixed">
-              <div v-if="showYearSelect" class="datepicker-year-select">
-                <div class="datepicker-year-grid">
-                  <button
-                    v-for="year in yearGrid"
-                    :key="year"
-                    class="datepicker-year-cell"
-                    :class="{ 'is-selected': year === calendarYear }"
-                    @click="selectYear(year)"
+                  aria-label="Previous Month"
+                >‹</button>
+              </div>
+              <div class="datepicker-header-center">
+                <span class="datepicker-month">
+                  <span class="datepicker-month-label">{{ monthLabel }}</span>
+                  <button 
+                    class="datepicker-year-btn" 
+                    @click="toggleYearSelect" 
                     type="button"
-                  >{{ year }}</button>
+                    :aria-pressed="showYearSelect"
+                    :disabled="showYearSelect"
+                    :class="{ 'is-active': showYearSelect }"
+                  >{{ yearLabel }}</button>
+                </span>
+              </div>
+              <div class="datepicker-header-arrow right">
+                <button 
+                  class="datepicker-nav" 
+                  @click="nextMonth" 
+                  type="button" 
+                  v-if="!showYearSelect"
+                  :disabled="showYearSelect"
+                  aria-label="Next Month"
+                >›</button>
+              </div>
+            </div>
+                <Scrollbar width="sm" style="height: 100%; width: 210px; max-width: 100vw;">
+              <div class="datepicker-popup-content-fixed">
+                <div v-if="showYearSelect" class="datepicker-year-select">
+                  <div class="datepicker-year-grid">
+                    <button
+                      v-for="year in yearGrid"
+                      :key="year"
+                      class="datepicker-year-cell"
+                      :class="{ 'is-selected': year === calendarYear }"
+                      @click="selectYear(year)"
+                      type="button"
+                    >{{ year }}</button>
+                  </div>
+                </div>
+                <!-- Month selection removed -->
+                <div v-else class="datepicker-grid">
+                  <div class="datepicker-day" v-for="d in weekDays" :key="d">{{ d }}</div>
+                  <button
+                    v-for="day in daysInMonth"
+                    :key="day.key"
+                    class="datepicker-cell"
+                    :class="{ 'is-today': day.isToday, 'is-selected': day.isSelected, 'is-disabled': day.isDisabled }"
+                    :disabled="day.isDisabled"
+                    @click="day.date && selectDate(day.date)"
+                    type="button"
+                  >{{ day.label }}</button>
                 </div>
               </div>
-              <!-- Month selection removed -->
-              <div v-else class="datepicker-grid">
-                <div class="datepicker-day" v-for="d in weekDays" :key="d">{{ d }}</div>
-                <button
-                  v-for="day in daysInMonth"
-                  :key="day.key"
-                  class="datepicker-cell"
-                  :class="{ 'is-today': day.isToday, 'is-selected': day.isSelected, 'is-disabled': day.isDisabled }"
-                  :disabled="day.isDisabled"
-                  @click="day.date && selectDate(day.date)"
-                  type="button"
-                >{{ day.label }}</button>
-              </div>
-            </div>
-          </Scrollbar>
+            </Scrollbar>
+          </div>
         </div>
-      </div>
+      </teleport>
     </div>
   </div>
 </template>
@@ -93,7 +95,36 @@
 
 
 import Scrollbar from '../Scrollbar/Scrollbar.vue'
-import { ref, watch, computed, onMounted, onUnmounted } from 'vue'
+import { ref, watch, computed, onMounted, onUnmounted, nextTick } from 'vue'
+
+const showCalendar = ref(false)
+const popupPositionStyle = ref({});
+const inputWrapperRef = ref<HTMLElement | null>(null);
+const popupRef = ref<HTMLElement | null>(null);
+
+function updatePopupPosition() {
+  if (!showCalendar.value || !inputWrapperRef.value) return;
+  const rect = inputWrapperRef.value.getBoundingClientRect();
+  popupPositionStyle.value = {
+    position: 'absolute',
+    top: `${rect.bottom + window.scrollY + 4}px`,
+    left: `${rect.left + window.scrollX}px`,
+    zIndex: 1000,
+    width: '230px',
+  };
+}
+
+watch(showCalendar, (v) => {
+  if (v) nextTick(updatePopupPosition);
+});
+onMounted(() => {
+  window.addEventListener('scroll', updatePopupPosition, true);
+  window.addEventListener('resize', updatePopupPosition);
+});
+onUnmounted(() => {
+  window.removeEventListener('scroll', updatePopupPosition, true);
+  window.removeEventListener('resize', updatePopupPosition);
+});
 
 const props = defineProps({
   modelValue: { type: String, required: true },
@@ -136,7 +167,6 @@ const yearGrid = computed(() => {
 })
 
 const emit = defineEmits(['update:modelValue', 'change'])
-const showCalendar = ref(false)
 const internalValue = ref(props.modelValue)
 const today = new Date()
 const calendarDate = ref(props.modelValue ? new Date(props.modelValue) : new Date(today.getFullYear(), today.getMonth(), 1))
@@ -220,8 +250,15 @@ const displayValue = computed(() => internalValue.value)
 
 // Hide calendar on outside click
 function onClickOutside(e: MouseEvent) {
-  if (!(e.target as HTMLElement).closest('.datepicker-input-wrapper')) {
-    showCalendar.value = false
+  const inputWrapper = inputWrapperRef.value;
+  const popup = popupRef.value;
+  if (
+    inputWrapper &&
+    popup &&
+    !inputWrapper.contains(e.target as Node) &&
+    !popup.contains(e.target as Node)
+  ) {
+    showCalendar.value = false;
   }
 }
 onMounted(() => {
@@ -242,7 +279,7 @@ onUnmounted(() => {
 }
 .datepicker-popup-content-fixed {
   min-width: 170px;
-  min-height: 205px;
+  min-height: 250px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -292,7 +329,7 @@ onUnmounted(() => {
   background: var(--color-primary-100, #e0e7ff);
 }
 .datepicker-year-select {
-  max-height: 180px;
+  max-height: 250px;
   overflow-y: auto;
   margin-bottom: 0.5em;
 }
