@@ -1,7 +1,13 @@
 import type { Preview } from '@storybook/vue3';
 import '../src/assets/styles/main.css';
-import { useTheme } from '../src/composables/useTheme';
 
+// Force a working theme and color theme for Storybook reliability
+if (typeof window !== 'undefined') {
+    localStorage.setItem('theme', 'light');
+    localStorage.setItem('theme-color', 'warm');
+}
+
+import { useTheme } from '../src/composables/useTheme';
 // Initialize theme for Storybook
 const { initializeTheme, setTheme } = useTheme();
 initializeTheme();

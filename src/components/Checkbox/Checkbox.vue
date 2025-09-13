@@ -60,7 +60,6 @@ export interface CheckboxProps {
   disabled?: boolean
   label?: string
   indeterminate?: boolean
-  diagonal?: boolean
 }
 
 const props = withDefaults(defineProps<CheckboxProps>(), {
@@ -69,7 +68,6 @@ const props = withDefaults(defineProps<CheckboxProps>(), {
   variant: 'primary',
   disabled: false,
   indeterminate: false,
-  diagonal: false,
 })
 
 const emit = defineEmits<{
@@ -220,69 +218,35 @@ const iconClasses = computed(() => {
     sm: ['h-3', 'w-3'],
     md: ['h-4', 'w-4'],
     lg: ['h-5', 'w-5'],
+  };
+  // Diagonal removed
+  // Otherwise, use white for checked, dark for unchecked
+  const isActive = isChecked.value || props.indeterminate;
+  let colorClass = 'text-primary-900';
+  if (isActive) {
+    colorClass = 'text-white';
   }
-
   return [
     ...sizeClasses[props.size],
-    'text-white',
+    colorClass,
     'drop-shadow-sm',
-  ]
+  ];
+});
+
+const labelClasses = computed(() => {
+  // Always use a visible color for Storybook/demo
+  // Fallback to text-primary-900 (dark) for light backgrounds, text-white for dark
+  // If you want to support dark mode, you can add 'dark:text-white' as well
+  return [
+    'ml-3',
+    'text-sm',
+    'font-medium',
+    'text-primary-900',
+    'dark:text-white',
+    props.disabled ? 'text-text-disabled' : 'cursor-pointer',
+  ];
 })
 
-const labelClasses = computed(() => [
-  'ml-3',
-  'text-sm',
-  'font-medium',
-  'text-text-primary',
-  props.disabled ? 'text-text-disabled' : 'cursor-pointer',
-])
-
-// Diagonal styles for sci-fi effect
-const diagonalStyles = computed(() => {
-  if (!props.diagonal) return {}
-
-  const colors = getCheckboxDiagonalColors(props.variant, isChecked.value || props.indeterminate)
-  
-  return {
-    '--diagonal-border-color': colors.border,
-    '--diagonal-bg-color': colors.background,
-  }
-})
-
-// Helper to get colors for diagonal effect
-function getCheckboxDiagonalColors(variant: CheckboxProps['variant'], checked: boolean) {
-  if (!checked) {
-    return {
-      border: 'var(--color-border-primary)',
-      background: 'var(--color-surface-primary)',
-    }
-  }
-
-  const colorMap = {
-    primary: {
-      border: 'var(--color-primary-500)',
-      background: 'var(--color-primary-500)',
-    },
-    success: {
-      border: 'var(--color-accent-success-main)',
-      background: 'var(--color-accent-success-main)',
-    },
-    warning: {
-      border: 'var(--color-accent-warning-main)',
-      background: 'var(--color-accent-warning-main)',
-    },
-    error: {
-      border: 'var(--color-accent-error-main)',
-      background: 'var(--color-accent-error-main)',
-    },
-    info: {
-      border: 'var(--color-accent-info-main)',
-      background: 'var(--color-accent-info-main)',
-    },
-  } as const
-  
-  return colorMap[variant || 'primary']
-}
 </script>
 
 <style scoped>

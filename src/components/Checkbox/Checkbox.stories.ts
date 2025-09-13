@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import Checkbox from './Checkbox.vue'
 
 const meta: Meta<typeof Checkbox> = {
@@ -172,44 +172,17 @@ export const States: Story = {
     }),
 }
 
-// Diagonal/Sci-Fi Style
-export const DiagonalStyle: Story = {
-    render: () => ({
-        components: { Checkbox },
-        setup() {
-            const diagonalPrimary = ref(true)
-            const diagonalSuccess = ref(false)
-            const diagonalWarning = ref(true)
-            const diagonalError = ref(false)
-            const diagonalIndeterminate = ref(false)
-            return { diagonalPrimary, diagonalSuccess, diagonalWarning, diagonalError, diagonalIndeterminate }
-        },
-        template: `
-      <div class="space-y-4">
-        <h3 class="text-lg font-medium mb-4">Sci-Fi Diagonal Corners</h3>
-        <Checkbox v-model="diagonalPrimary" diagonal variant="primary" label="Primary Diagonal" />
-        <Checkbox v-model="diagonalSuccess" diagonal variant="success" label="Success Diagonal" />
-        <Checkbox v-model="diagonalWarning" diagonal variant="warning" label="Warning Diagonal" />
-        <Checkbox v-model="diagonalError" diagonal variant="error" label="Error Diagonal" />
-        <Checkbox v-model="diagonalIndeterminate" diagonal indeterminate variant="info" label="Indeterminate Diagonal" />
-      </div>
-    `,
-    }),
-}
-
 // Multi-select Example
 export const MultiSelectExample: Story = {
     render: () => ({
         components: { Checkbox },
         setup() {
-            const selectAll = ref(false)
             const option1 = ref(false)
             const option2 = ref(true)
             const option3 = ref(false)
             const option4 = ref(true)
-
-            // Calculate select all state
             const allOptions = [option1, option2, option3, option4]
+
             const selectedCount = computed(() =>
                 allOptions.filter(option => option.value).length
             )
@@ -218,23 +191,14 @@ export const MultiSelectExample: Story = {
                 selectedCount.value > 0 && selectedCount.value < allOptions.length
             )
 
-            const isAllSelected = computed(() =>
-                selectedCount.value === allOptions.length
-            )
-
-            watch([isAllSelected, isIndeterminate], () => {
-                if (isAllSelected.value) {
-                    selectAll.value = true
-                } else {
-                    selectAll.value = false
+            const selectAll = computed({
+                get: () => selectedCount.value === allOptions.length,
+                set: (value: boolean) => {
+                    allOptions.forEach(option => {
+                        option.value = value
+                    })
                 }
             })
-
-            const handleSelectAll = (value: boolean) => {
-                allOptions.forEach(option => {
-                    option.value = value
-                })
-            }
 
             return {
                 selectAll,
@@ -243,36 +207,31 @@ export const MultiSelectExample: Story = {
                 option3,
                 option4,
                 isIndeterminate,
-                selectedCount,
-                handleSelectAll
+                selectedCount
             }
         },
         template: `
-      <div class="space-y-6 p-6 bg-surface-secondary rounded-lg">
-        <h3 class="text-lg font-semibold text-text-primary">Email Preferences</h3>
-        
-        <Checkbox 
-          :model-value="selectAll"
-          :indeterminate="isIndeterminate"
-          @change="handleSelectAll"
-          variant="primary"
-          label="Select All"
-          class="font-medium border-b border-border-primary pb-2"
-        />
-        
-        <div class="space-y-3 ml-6">
-          <Checkbox v-model="option1" label="Newsletter updates" />
-          <Checkbox v-model="option2" label="Product announcements" />
-          <Checkbox v-model="option3" label="Security alerts" />
-          <Checkbox v-model="option4" label="Marketing emails" />
-        </div>
-        
-        <div class="mt-4 p-3 bg-surface-elevated rounded border border-border-primary">
-          <p class="text-sm text-text-secondary">
-            Selected: {{ selectedCount }} of 4 options
-          </p>
-        </div>
-      </div>
-    `,
+            <div class="space-y-6 p-6 bg-surface-secondary rounded-lg">
+                <h3 class="text-lg font-semibold text-text-primary">Email Preferences</h3>
+                <Checkbox 
+                    v-model="selectAll"
+                    :indeterminate="isIndeterminate"
+                    variant="primary"
+                    label="Select All"
+                    class="font-medium border-b border-border-primary pb-2"
+                />
+                <div class="space-y-3 ml-6">
+                    <Checkbox v-model="option1" label="Newsletter updates" />
+                    <Checkbox v-model="option2" label="Product announcements" />
+                    <Checkbox v-model="option3" label="Security alerts" />
+                    <Checkbox v-model="option4" label="Marketing emails" />
+                </div>
+                <div class="mt-4 p-3 bg-surface-elevated rounded border border-border-primary">
+                    <p class="text-sm text-text-secondary">
+                        Selected: {{ selectedCount }} of 4 options
+                    </p>
+                </div>
+            </div>
+        `,
     }),
 }
