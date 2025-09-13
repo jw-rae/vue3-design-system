@@ -244,8 +244,8 @@ const iconClasses = computed(() => {
     'text-primary-500',
     'dark:text-primary-400',
   ] : [
-    'text-gray-400',
-    'dark:text-gray-500',
+    'text-text-tertiary',
+    'dark:text-text-tertiary',
   ]
 
   return [

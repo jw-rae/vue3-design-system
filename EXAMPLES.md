@@ -203,8 +203,8 @@ const resetForm = () => {
     >
       <div class="flex items-center justify-between">
         <div>
-          <p class="text-sm font-medium text-gray-600">{{ stat.title }}</p>
-          <p class="text-3xl font-bold text-gray-900">{{ stat.value }}</p>
+          <p class="text-sm font-medium text-text-secondary">{{ stat.title }}</p>
+          <p class="text-3xl font-bold text-text-primary">{{ stat.value }}</p>
           <div class="flex items-center mt-2">
             <UiBadge
               :variant="stat.trend === 'up' ? 'success' : 'error'"
@@ -212,7 +212,7 @@ const resetForm = () => {
             >
               {{ stat.change }}
             </UiBadge>
-            <span class="ml-2 text-sm text-gray-500">vs last month</span>
+            <span class="ml-2 text-sm text-text-tertiary">vs last month</span>
           </div>
         </div>
         <div :class="[
@@ -241,7 +241,7 @@ const resetForm = () => {
     </template>
     
     <div class="space-y-4">
-      <p class="text-gray-600">
+      <p class="text-text-secondary">
         Are you sure you want to delete this item? This action cannot be undone.
       </p>
       

@@ -373,3 +373,18 @@ body {
         z-index: 1;
     }
 }
+
+/* Base styles for body, p, and a using theme variables */
+body {
+    color: var(--color-text-primary);
+    background: var(--color-background-primary);
+}
+
+p {
+    color: var(--color-text-secondary);
+}
+
+a {
+    color: var(--color-primary-600);
+    text-underline-offset: 2px;
+}

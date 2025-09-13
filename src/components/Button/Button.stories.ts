@@ -197,7 +197,7 @@ export const DarkModeShowcase: Story = {
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <!-- Light Mode -->
         <div class="p-6 bg-white rounded-lg border">
-          <h3 class="text-lg font-semibold text-gray-900 mb-4">Light Mode</h3>
+          <h3 class="text-lg font-semibold text-text-primary mb-4">Light Mode</h3>
           <div class="space-y-4">
             <div class="flex flex-wrap gap-2">
               <Button variant="primary" size="sm">Primary</Button>
@@ -206,7 +206,7 @@ export const DarkModeShowcase: Story = {
               <Button variant="ghost" size="sm">Ghost</Button>
               <Button variant="danger" size="sm">Danger</Button>
             </div>
-            <p class="text-sm text-gray-600">
+            <p class="text-sm text-text-secondary">
               Buttons in light mode with proper contrast and accessibility.
             </p>
           </div>
@@ -224,7 +224,7 @@ export const DarkModeShowcase: Story = {
                 <Button variant="ghost" size="sm">Ghost</Button>
                 <Button variant="danger" size="sm">Danger</Button>
               </div>
-              <p class="text-sm text-gray-300">
+              <p class="text-sm text-text-disabled">
                 Buttons automatically adapt to dark mode with enhanced contrast.
               </p>
             </div>

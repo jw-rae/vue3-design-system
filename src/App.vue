@@ -26,6 +26,31 @@
         <UiAccentColorsDemo />
       </section>
 
+      <!-- Date & Time Pickers -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold text-text-primary mb-6">Date & Time Pickers</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <UiCard>
+            <template #header>
+              <h3 class="font-medium">Date Picker</h3>
+            </template>
+            <div class="space-y-4">
+              <UiDatePicker v-model="formData.dateValue" label="Date" />
+              <div class="text-sm text-text-secondary">Value: {{ formData.dateValue }}</div>
+            </div>
+          </UiCard>
+          <UiCard>
+            <template #header>
+              <h3 class="font-medium">Time Picker</h3>
+            </template>
+            <div class="space-y-4">
+              <UiTimePicker v-model="formData.timeValue" label="Time" />
+              <div class="text-sm text-text-secondary">Value: {{ formData.timeValue }}</div>
+            </div>
+          </UiCard>
+        </div>
+      </section>
+
       <!-- Slider Example -->
       <section class="mb-12">
         <h2 class="text-2xl font-semibold text-text-primary mb-6">Slider</h2>
@@ -232,7 +257,7 @@
 
       <!-- Badge Examples -->
       <section class="mb-12">
-        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Badges</h2>
+        <h2 class="text-2xl font-semibold text-text-primary mb-6">Badges</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <UiCard>
             <template #header>
@@ -743,6 +768,8 @@ import {
   RadioButton as UiRadioButton,
   Slider as UiSlider,
   ProgressSlider as UiProgressSlider,
+  DatePicker as UiDatePicker,
+  TimePicker as UiTimePicker,
   useTheme
 } from './index'
 import { 
@@ -772,8 +799,16 @@ const formData = ref({
   medium: '',
   large: '',
   country: null,
+  dateValue: '2025-09-10',
+  timeValue: '12:00',
+  // Task manager data
+  task1: false,
+  task2: true,
+  task3: false,
+  task4: false,
+  newTask: '',
   sliderValue: 50,
-    progressSliderValue: 30,
+  progressSliderValue: 30,
   techChoice: null,
   size: 'medium',
   // Toggle properties

@@ -4,64 +4,64 @@ import Modal from './Modal.vue';
 import Button from '../Button/Button.vue';
 
 const meta: Meta<typeof Modal> = {
-    title: 'Components/Modal',
-    component: Modal,
-    parameters: {
-        layout: 'fullscreen',
-        docs: {
-            description: {
-                component: 'Modal dialog component with backdrop, focus management, and accessibility features.',
-            },
-        },
+  title: 'Components/Modal',
+  component: Modal,
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        component: 'Modal dialog component with backdrop, focus management, and accessibility features.',
+      },
     },
-    tags: ['autodocs'],
-    argTypes: {
-        open: {
-            control: { type: 'boolean' },
-            description: 'Whether the modal is open',
-        },
-        size: {
-            control: { type: 'select' },
-            options: ['sm', 'md', 'lg', 'xl'],
-            description: 'The size of the modal',
-        },
-        title: {
-            control: { type: 'text' },
-            description: 'The title of the modal',
-        },
-        showCloseButton: {
-            control: { type: 'boolean' },
-            description: 'Whether to show the close button',
-        },
+  },
+  tags: ['autodocs'],
+  argTypes: {
+    open: {
+      control: { type: 'boolean' },
+      description: 'Whether the modal is open',
     },
+    size: {
+      control: { type: 'select' },
+      options: ['sm', 'md', 'lg', 'xl'],
+      description: 'The size of the modal',
+    },
+    title: {
+      control: { type: 'text' },
+      description: 'The title of the modal',
+    },
+    showCloseButton: {
+      control: { type: 'boolean' },
+      description: 'Whether to show the close button',
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-    args: {
-        open: true,
-        size: 'md',
-        title: 'Default Modal',
-        showCloseButton: true,
+  args: {
+    open: true,
+    size: 'md',
+    title: 'Default Modal',
+    showCloseButton: true,
+  },
+  render: (args) => ({
+    components: { Modal, Button },
+    setup() {
+      const isOpen = ref(args.open || false);
+
+      const openModal = () => {
+        isOpen.value = true;
+      };
+
+      const closeModal = () => {
+        isOpen.value = false;
+      };
+
+      return { args, isOpen, openModal, closeModal };
     },
-    render: (args) => ({
-        components: { Modal, Button },
-        setup() {
-            const isOpen = ref(args.open || false);
-
-            const openModal = () => {
-                isOpen.value = true;
-            };
-
-            const closeModal = () => {
-                isOpen.value = false;
-            };
-
-            return { args, isOpen, openModal, closeModal };
-        },
-        template: `
+    template: `
       <div>
         <Button @click="openModal">Open Modal</Button>
         <Modal 
@@ -69,38 +69,38 @@ export const Default: Story = {
           :open="isOpen" 
           @close="closeModal"
         >
-          <p class="text-gray-600">
+          <p class="text-text-secondary">
             This is the default modal content. You can put any content here including forms, 
             images, or other components.
           </p>
         </Modal>
       </div>
     `,
-    }),
+  }),
 };
 
 export const AllSizes: Story = {
-    render: () => ({
-        components: { Modal, Button },
-        setup() {
-            const openModals = ref({
-                sm: false,
-                md: false,
-                lg: false,
-                xl: false,
-            });
+  render: () => ({
+    components: { Modal, Button },
+    setup() {
+      const openModals = ref({
+        sm: false,
+        md: false,
+        lg: false,
+        xl: false,
+      });
 
-            const openModal = (size) => {
-                openModals.value[size] = true;
-            };
+      const openModal = (size) => {
+        openModals.value[size] = true;
+      };
 
-            const closeModal = (size) => {
-                openModals.value[size] = false;
-            };
+      const closeModal = (size) => {
+        openModals.value[size] = false;
+      };
 
-            return { openModals, openModal, closeModal };
-        },
-        template: `
+      return { openModals, openModal, closeModal };
+    },
+    template: `
       <div class="space-x-4">
         <Button @click="openModal('sm')" size="sm">Small Modal</Button>
         <Button @click="openModal('md')">Medium Modal</Button>
@@ -113,7 +113,7 @@ export const AllSizes: Story = {
           title="Small Modal"
           @close="closeModal('sm')"
         >
-          <p class="text-sm text-gray-600">This is a small modal with limited content.</p>
+          <p class="text-sm text-text-secondary">This is a small modal with limited content.</p>
         </Modal>
         
         <Modal 
@@ -122,7 +122,7 @@ export const AllSizes: Story = {
           title="Medium Modal"
           @close="closeModal('md')"
         >
-          <p class="text-gray-600">
+          <p class="text-text-secondary">
             This is a medium-sized modal with moderate content. Perfect for most use cases
             where you need to display information or simple forms.
           </p>
@@ -134,7 +134,7 @@ export const AllSizes: Story = {
           title="Large Modal"
           @close="closeModal('lg')"
         >
-          <p class="text-gray-600">
+          <p class="text-text-secondary">
             This is a large modal that can accommodate more content. Great for detailed forms,
             image galleries, or comprehensive information displays. The content can be quite
             extensive while maintaining good readability and user experience.
@@ -148,11 +148,11 @@ export const AllSizes: Story = {
           @close="closeModal('xl')"
         >
           <div class="space-y-4">
-            <p class="text-gray-600">
+            <p class="text-text-secondary">
               This is an extra large modal designed for maximum content display. Perfect for
               complex forms, data tables, or any scenario requiring significant screen real estate.
             </p>
-            <p class="text-gray-600">
+            <p class="text-text-secondary">
               The extra large size ensures that even complex interfaces remain usable and
               accessible across different screen sizes.
             </p>
@@ -160,31 +160,31 @@ export const AllSizes: Story = {
         </Modal>
       </div>
     `,
-    }),
+  }),
 };
 
 export const ConfirmationDialog: Story = {
-    render: () => ({
-        components: { Modal, Button },
-        setup() {
-            const isOpen = ref(false);
+  render: () => ({
+    components: { Modal, Button },
+    setup() {
+      const isOpen = ref(false);
 
-            const openModal = () => {
-                isOpen.value = true;
-            };
+      const openModal = () => {
+        isOpen.value = true;
+      };
 
-            const closeModal = () => {
-                isOpen.value = false;
-            };
+      const closeModal = () => {
+        isOpen.value = false;
+      };
 
-            const confirmAction = () => {
-                alert('Action confirmed!');
-                closeModal();
-            };
+      const confirmAction = () => {
+        alert('Action confirmed!');
+        closeModal();
+      };
 
-            return { isOpen, openModal, closeModal, confirmAction };
-        },
-        template: `
+      return { isOpen, openModal, closeModal, confirmAction };
+    },
+    template: `
       <div>
         <Button @click="openModal" variant="danger">Delete Item</Button>
         <Modal 
@@ -194,7 +194,7 @@ export const ConfirmationDialog: Story = {
           @close="closeModal"
         >
           <div class="space-y-4">
-            <p class="text-gray-600">
+            <p class="text-text-secondary">
               Are you sure you want to delete this item? This action cannot be undone.
             </p>
             <div class="flex justify-end space-x-2">
@@ -209,38 +209,38 @@ export const ConfirmationDialog: Story = {
         </Modal>
       </div>
     `,
-    }),
+  }),
 };
 
 export const FormModal: Story = {
-    render: () => ({
-        components: { Modal, Button },
-        setup() {
-            const isOpen = ref(false);
-            const formData = ref({
-                name: '',
-                email: '',
-                message: ''
-            });
+  render: () => ({
+    components: { Modal, Button },
+    setup() {
+      const isOpen = ref(false);
+      const formData = ref({
+        name: '',
+        email: '',
+        message: ''
+      });
 
-            const openModal = () => {
-                isOpen.value = true;
-            };
+      const openModal = () => {
+        isOpen.value = true;
+      };
 
-            const closeModal = () => {
-                isOpen.value = false;
-                // Reset form
-                formData.value = { name: '', email: '', message: '' };
-            };
+      const closeModal = () => {
+        isOpen.value = false;
+        // Reset form
+        formData.value = { name: '', email: '', message: '' };
+      };
 
-            const submitForm = () => {
-                alert('Form submitted!');
-                closeModal();
-            };
+      const submitForm = () => {
+        alert('Form submitted!');
+        closeModal();
+      };
 
-            return { isOpen, formData, openModal, closeModal, submitForm };
-        },
-        template: `
+      return { isOpen, formData, openModal, closeModal, submitForm };
+    },
+    template: `
       <div>
         <Button @click="openModal">Contact Us</Button>
         <Modal 
@@ -292,26 +292,26 @@ export const FormModal: Story = {
         </Modal>
       </div>
     `,
-    }),
+  }),
 };
 
 export const WithoutCloseButton: Story = {
-    render: () => ({
-        components: { Modal, Button },
-        setup() {
-            const isOpen = ref(false);
+  render: () => ({
+    components: { Modal, Button },
+    setup() {
+      const isOpen = ref(false);
 
-            const openModal = () => {
-                isOpen.value = true;
-            };
+      const openModal = () => {
+        isOpen.value = true;
+      };
 
-            const closeModal = () => {
-                isOpen.value = false;
-            };
+      const closeModal = () => {
+        isOpen.value = false;
+      };
 
-            return { isOpen, openModal, closeModal };
-        },
-        template: `
+      return { isOpen, openModal, closeModal };
+    },
+    template: `
       <div>
         <Button @click="openModal">Open Modal (No Close Button)</Button>
         <Modal 
@@ -321,7 +321,7 @@ export const WithoutCloseButton: Story = {
           @close="closeModal"
         >
           <div class="space-y-4">
-            <p class="text-gray-600">
+            <p class="text-text-secondary">
               This modal doesn't have a close button in the header. Users must use the
               action buttons or click outside to close.
             </p>
@@ -334,26 +334,26 @@ export const WithoutCloseButton: Story = {
         </Modal>
       </div>
     `,
-    }),
+  }),
 };
 
 export const WithCustomContent: Story = {
-    render: () => ({
-        components: { Modal, Button },
-        setup() {
-            const isOpen = ref(false);
+  render: () => ({
+    components: { Modal, Button },
+    setup() {
+      const isOpen = ref(false);
 
-            const openModal = () => {
-                isOpen.value = true;
-            };
+      const openModal = () => {
+        isOpen.value = true;
+      };
 
-            const closeModal = () => {
-                isOpen.value = false;
-            };
+      const closeModal = () => {
+        isOpen.value = false;
+      };
 
-            return { isOpen, openModal, closeModal };
-        },
-        template: `
+      return { isOpen, openModal, closeModal };
+    },
+    template: `
       <div>
         <Button @click="openModal">View Gallery</Button>
         <Modal 
@@ -365,66 +365,66 @@ export const WithCustomContent: Story = {
           <div class="space-y-4">
             <div class="grid grid-cols-2 gap-4">
               <div class="bg-gray-200 h-32 rounded-lg flex items-center justify-center">
-                <span class="text-gray-500">Image 1</span>
+                <span class="text-text-tertiary">Image 1</span>
               </div>
               <div class="bg-gray-200 h-32 rounded-lg flex items-center justify-center">
-                <span class="text-gray-500">Image 2</span>
+                <span class="text-text-tertiary">Image 2</span>
               </div>
               <div class="bg-gray-200 h-32 rounded-lg flex items-center justify-center">
-                <span class="text-gray-500">Image 3</span>
+                <span class="text-text-tertiary">Image 3</span>
               </div>
               <div class="bg-gray-200 h-32 rounded-lg flex items-center justify-center">
-                <span class="text-gray-500">Image 4</span>
+                <span class="text-text-tertiary">Image 4</span>
               </div>
             </div>
-            <p class="text-sm text-gray-600 text-center">
+            <p class="text-sm text-text-secondary text-center">
               Click on any image to view in full size
             </p>
           </div>
         </Modal>
       </div>
     `,
-    }),
+  }),
 };
 
 export const DarkModeShowcase: Story = {
-    render: () => ({
-        components: { Modal, Button },
-        setup() {
-            const lightModal = ref(false);
-            const darkModal = ref(false);
+  render: () => ({
+    components: { Modal, Button },
+    setup() {
+      const lightModal = ref(false);
+      const darkModal = ref(false);
 
-            const openLightModal = () => {
-                lightModal.value = true;
-            };
+      const openLightModal = () => {
+        lightModal.value = true;
+      };
 
-            const closeLightModal = () => {
-                lightModal.value = false;
-            };
+      const closeLightModal = () => {
+        lightModal.value = false;
+      };
 
-            const openDarkModal = () => {
-                darkModal.value = true;
-            };
+      const openDarkModal = () => {
+        darkModal.value = true;
+      };
 
-            const closeDarkModal = () => {
-                darkModal.value = false;
-            };
+      const closeDarkModal = () => {
+        darkModal.value = false;
+      };
 
-            return {
-                lightModal,
-                darkModal,
-                openLightModal,
-                closeLightModal,
-                openDarkModal,
-                closeDarkModal
-            };
-        },
-        template: `
+      return {
+        lightModal,
+        darkModal,
+        openLightModal,
+        closeLightModal,
+        openDarkModal,
+        closeDarkModal
+      };
+    },
+    template: `
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <!-- Light Mode -->
         <div class="p-6 bg-white rounded-lg border">
-          <h3 class="text-lg font-semibold text-gray-900 mb-4">Light Mode</h3>
-          <p class="text-gray-600 mb-4">
+          <h3 class="text-lg font-semibold text-text-primary mb-4">Light Mode</h3>
+          <p class="text-text-secondary mb-4">
             Modals with clean backgrounds and proper contrast.
           </p>
           <Button @click="openLightModal">Open Light Modal</Button>
@@ -432,7 +432,7 @@ export const DarkModeShowcase: Story = {
           <Modal :open="lightModal" @close="closeLightModal">
             <template #header>Light Mode Modal</template>
             <div class="space-y-4">
-              <p class="text-gray-600">
+              <p class="text-text-secondary">
                 This modal demonstrates the light theme styling with proper contrast and readability.
               </p>
               <input 
@@ -452,7 +452,7 @@ export const DarkModeShowcase: Story = {
         <div class="dark">
           <div class="p-6 bg-gray-900 rounded-lg border border-gray-700">
             <h3 class="text-lg font-semibold text-white mb-4">Dark Mode</h3>
-            <p class="text-gray-300 mb-4">
+            <p class="text-text-disabled mb-4">
               Modals with dark backgrounds and enhanced shadows.
             </p>
             <Button @click="openDarkModal">Open Dark Modal</Button>
@@ -460,7 +460,7 @@ export const DarkModeShowcase: Story = {
             <Modal :open="darkModal" @close="closeDarkModal">
               <template #header>Dark Mode Modal</template>
               <div class="space-y-4">
-                <p class="text-gray-300">
+                <p class="text-text-disabled">
                   This modal demonstrates the dark theme styling with enhanced contrast and reduced eye strain.
                 </p>
                 <input 
@@ -478,5 +478,5 @@ export const DarkModeShowcase: Story = {
         </div>
       </div>
     `,
-    }),
+  }),
 };

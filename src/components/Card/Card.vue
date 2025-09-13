@@ -6,7 +6,10 @@
       </header>
       
       <div v-if="$slots.default" :class="contentClasses">
-        <slot />
+        <Scrollbar v-if="maxHeight" :width="scrollbarWidth" :style="{ maxHeight }" class="pr-2">
+          <slot />
+        </Scrollbar>
+        <slot v-else />
       </div>
       
       <footer v-if="$slots.footer" :class="footerClasses">
@@ -19,7 +22,10 @@
       </header>
       
       <div v-if="$slots.default" :class="contentClasses">
-        <slot />
+        <Scrollbar v-if="maxHeight" :width="scrollbarWidth" :style="{ maxHeight }" class="pr-2">
+          <slot />
+        </Scrollbar>
+        <slot v-else />
       </div>
       
       <footer v-if="$slots.footer" :class="footerClasses">
@@ -31,6 +37,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import Scrollbar from '../Scrollbar/Scrollbar.vue'
 
 export interface CardProps {
   variant?: 'default' | 'outlined' | 'elevated' | 'filled'
@@ -39,6 +46,8 @@ export interface CardProps {
   hoverable?: boolean
   diagonal?: boolean
   filledHeader?: boolean
+  maxHeight?: string
+  scrollbarWidth?: string
 }
 
 const props = withDefaults(defineProps<CardProps>(), {
@@ -48,6 +57,8 @@ const props = withDefaults(defineProps<CardProps>(), {
   hoverable: false,
   diagonal: false,
   filledHeader: false,
+  maxHeight: undefined,
+  scrollbarWidth: 'md',
 })
 
 const cardClasses = computed(() => {
