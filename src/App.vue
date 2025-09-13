@@ -677,25 +677,6 @@
                   </UiAlert>
                 </div>
               </div>
-
-              <!-- Filled Diagonal Alerts -->
-              <div>
-                <h4 class="text-sm font-medium text-text-secondary mb-3">Filled Diagonal Alerts</h4>
-                <div class="space-y-3">
-                  <UiAlert variant="success" title="Filled Diagonal Success!" diagonal filled>
-                    Filled success alert with diagonal corners and transparent background.
-                  </UiAlert>
-                  <UiAlert variant="warning" title="Filled Diagonal Warning" diagonal filled>
-                    Filled warning alert with diagonal styling for futuristic interfaces.
-                  </UiAlert>
-                  <UiAlert variant="error" title="Filled Diagonal Error" diagonal filled>
-                    Filled error alert with diagonal corners for sci-fi applications.
-                  </UiAlert>
-                  <UiAlert variant="info" diagonal filled>
-                    Filled info alert with diagonal corners - no title for variety.
-                  </UiAlert>
-                </div>
-              </div>
             </div>
           </UiCard>
         </div>

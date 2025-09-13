@@ -191,17 +191,34 @@ const alertClasses = computed(() => {
 
   // Text colors for diagonal variants (override default variant text colors)
   const diagonalTextClasses = props.diagonal ? (() => {
-    switch (props.variant) {
-      case 'success':
-        return ['text-green-800', 'dark:text-green-100']
-      case 'warning':
-        return ['text-orange-800', 'dark:text-orange-100'] 
-      case 'error':
-        return ['text-red-800', 'dark:text-red-100']
-      case 'info':
-        return ['text-blue-800', 'dark:text-blue-100']
-      default:
-        return ['text-blue-800', 'dark:text-blue-100']
+    if (props.filled) {
+      // Diagonal filled: use theme accent dark color for text
+      switch (props.variant) {
+        case 'success':
+          return ['text-[color:var(--color-accent-success-dark)]']
+        case 'warning':
+          return ['text-[color:var(--color-accent-warning-dark)]']
+        case 'error':
+          return ['text-[color:var(--color-accent-error-dark)]']
+        case 'info':
+          return ['text-[color:var(--color-accent-info-dark)]']
+        default:
+          return ['text-[color:var(--color-accent-info-dark)]']
+      }
+    } else {
+      // Diagonal non-filled: keep pastel/dark text
+      switch (props.variant) {
+        case 'success':
+          return ['text-[color:var(--color-accent-success-dark)]']
+        case 'warning':
+          return ['text-[color:var(--color-accent-warning-dark)]']
+        case 'error':
+          return ['text-[color:var(--color-accent-error-dark)]']
+        case 'info':
+          return ['text-[color:var(--color-accent-info-dark)]']
+        default:
+          return ['text-[color:var(--color-accent-info-dark)]']
+      }
     }
   })() : []
 
@@ -234,33 +251,33 @@ const diagonalStyles = computed(() => {
 // Helper to get colors for diagonal effect
 function getAlertDiagonalColors(variant: AlertProps['variant'], filled: boolean) {
   if (!filled) {
-    // Non-filled alerts use standard surface background
+    // Non-filled diagonal: theme accent border, surface background
     return {
       border: `var(--color-accent-${variant}-main)`,
       background: 'var(--color-surface-secondary)',
     }
   }
-  
-  // Use CSS custom properties that match the exact Tailwind colors used by regular alerts
+
+  // Diagonal filled: use theme accent light for border, accent main for background
   const colorMap = {
     success: {
-      border: 'var(--color-accent-success-main)',
-      background: 'rgb(34 197 94 / 0.15)', // green-500/15 - same as bg-green-500/15
+      border: 'var(--color-accent-success-light)',
+      background: 'var(--color-accent-success-main)',
     },
     warning: {
-      border: 'var(--color-accent-warning-main)', 
-      background: 'rgb(245 158 11 / 0.15)', // amber-500/15 - same as bg-amber-500/15
+      border: 'var(--color-accent-warning-light)',
+      background: 'var(--color-accent-warning-main)',
     },
     error: {
-      border: 'var(--color-accent-error-main)',
-      background: 'rgb(239 68 68 / 0.15)', // red-500/15 - same as bg-red-500/15
+      border: 'var(--color-accent-error-light)',
+      background: 'var(--color-accent-error-main)',
     },
     info: {
-      border: 'var(--color-accent-info-main)',
-      background: 'rgb(59 130 246 / 0.15)', // blue-500/15 - same as bg-blue-500/15
+      border: 'var(--color-accent-info-light)',
+      background: 'var(--color-accent-info-main)',
     },
   } as const
-  
+
   return colorMap[variant || 'info']
 }
 </script>
@@ -272,5 +289,13 @@ function getAlertDiagonalColors(variant: AlertProps['variant'], filled: boolean)
   gap: 0.75rem;
   width: 100%;
   height: 100%;
+  /* Make the diagonal border thicker */
+  --diagonal-border-width: 4px;
+}
+
+/* If you have a custom diagonal border implementation, use the variable */
+.ui-diagonal-corners {
+  /* Example: if your diagonal corners use a border, make it thicker */
+  border-width: var(--diagonal-border-width, 2px);
 }
 </style>
