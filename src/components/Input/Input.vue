@@ -14,7 +14,7 @@
           :placeholder="placeholder"
           :disabled="disabled"
           :readonly="readonly"
-          class="diagonal-input ui-focus-ring ui-transition"
+          class="diagonal-input ui-focus-ring-diagonal ui-transition"
           @input="onInput"
           @focus="onFocus"
           @blur="onBlur"

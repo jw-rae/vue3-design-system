@@ -23,14 +23,6 @@ const meta: Meta<typeof Select> = {
       control: { type: 'text' },
       description: 'Placeholder text when no option is selected',
     },
-    multiple: {
-      control: { type: 'boolean' },
-      description: 'Allow multiple selection',
-    },
-    searchable: {
-      control: { type: 'boolean' },
-      description: 'Enable search functionality',
-    },
     disabled: {
       control: { type: 'boolean' },
       description: 'Whether the select is disabled',
@@ -42,6 +34,10 @@ const meta: Meta<typeof Select> = {
     error: {
       control: { type: 'text' },
       description: 'Error message to display',
+    },
+    teleport: {
+      control: { type: 'boolean' },
+      description: 'Whether to teleport the dropdown to body element',
     },
   },
 };
@@ -61,9 +57,8 @@ export const Default: Story = {
   args: {
     options: defaultOptions,
     placeholder: 'Select a fruit...',
-    multiple: false,
-    searchable: false,
     disabled: false,
+    teleport: false,
   },
   render: (args) => ({
     components: { Select },
@@ -124,8 +119,7 @@ export const Searchable: Story = {
         v-model="selected"
         :options="options"
         label="Programming Language"
-        placeholder="Search for a language..."
-        searchable
+        placeholder="Select a language..."
       />
     `,
   }),
@@ -135,7 +129,7 @@ export const Multiple: Story = {
   render: () => ({
     components: { Select },
     setup() {
-      const selected = ref([]);
+      const selected = ref(null);
       const options = [
         { value: 'react', label: 'React' },
         { value: 'vue', label: 'Vue.js' },
@@ -151,8 +145,7 @@ export const Multiple: Story = {
         v-model="selected"
         :options="options"
         label="Frontend Frameworks"
-        placeholder="Select frameworks..."
-        multiple
+        placeholder="Select a framework..."
       />
     `,
   }),
@@ -162,7 +155,7 @@ export const MultipleSearchable: Story = {
   render: () => ({
     components: { Select },
     setup() {
-      const selected = ref([]);
+      const selected = ref(null);
       const options = [
         { value: 'reading', label: 'Reading' },
         { value: 'writing', label: 'Writing' },
@@ -184,9 +177,7 @@ export const MultipleSearchable: Story = {
         v-model="selected"
         :options="options"
         label="Hobbies & Interests"
-        placeholder="Search and select your interests..."
-        multiple
-        searchable
+        placeholder="Select your interests..."
       />
     `,
   }),
@@ -261,7 +252,6 @@ export const LongOptions: Story = {
         :options="options"
         label="Long Options"
         placeholder="Select an option with long text..."
-        searchable
       />
     `,
   }),
@@ -334,9 +324,7 @@ export const FormExample: Story = {
           v-model="formData.skills"
           :options="skills"
           label="Technical Skills"
-          placeholder="Select your skills..."
-          multiple
-          searchable
+          placeholder="Select a skill..."
         />
         
         <Select 
@@ -355,6 +343,45 @@ export const FormExample: Story = {
           </button>
         </div>
       </form>
+    `,
+  }),
+};
+
+export const Teleported: Story = {
+  render: () => ({
+    components: { Select },
+    setup() {
+      const selected = ref(null);
+      const options = [
+        { value: 'option1', label: 'Option 1' },
+        { value: 'option2', label: 'Option 2' },
+        { value: 'option3', label: 'Option 3' },
+        { value: 'option4', label: 'Option 4' },
+        { value: 'option5', label: 'Option 5' },
+      ];
+      return { selected, options };
+    },
+    template: `
+      <div class="space-y-4">
+        <p class="text-sm text-gray-600">This select uses teleport to render the dropdown at the body level, which helps with z-index and overflow issues.</p>
+        <Select 
+          v-model="selected"
+          :options="options"
+          label="Teleported Select"
+          placeholder="Click to see teleported dropdown..."
+          teleport
+        />
+        <div class="border border-gray-300 rounded p-4 overflow-hidden" style="height: 100px;">
+          <p class="text-sm mb-2">This container has overflow:hidden</p>
+          <Select 
+            v-model="selected"
+            :options="options"
+            label="Non-teleported (clipped)"
+            placeholder="This dropdown will be clipped..."
+            :teleport="false"
+          />
+        </div>
+      </div>
     `,
   }),
 };

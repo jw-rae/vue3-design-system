@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue'
+import { ref, watch } from 'vue'
 
 const props = defineProps({
   modelValue: { type: Number, required: true },
@@ -68,61 +68,69 @@ function onInput(e: Event) {
 /* Light, subtle track by default */
 .slider-track {
   width: 100%;
-  accent-color: var(--color-primary-200, #a5b4fc);
-  height: 8px;
-  border-radius: 4px;
-  background: linear-gradient(90deg, var(--color-primary-100, #e0e7ff) 0%, var(--color-primary-200, #a5b4fc) 100%);
-  box-shadow: 0 1px 6px 0 rgba(60,60,60,0.08);
+  accent-color: var(--color-primary-500, #3b82f6);
+  height: 10px;
+  border-radius: 5px;
+  background: var(--color-primary-100, #e0e7ff);
+  box-shadow: none;
   transition: background 0.2s cubic-bezier(.4,1,.7,1);
+}
+
+.slider-track:hover {
+  background: var(--color-primary-200, #c7d2fe);
+}
+
+.slider-track:focus {
+  outline: none;
 }
 
 /* Custom thumb for a modern look */
 .slider-track::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background: var(--color-primary-200, #a5b4fc);
-  border: 3px solid #fff;
-  box-shadow: 0 2px 8px rgba(60,60,60,0.12);
-  transition: background 0.18s, box-shadow 0.18s;
+  background: var(--color-primary-500, #3b82f6);
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(60,60,60,0.08);
+  transition: background 0.2s;
 }
 .slider-track:focus::-webkit-slider-thumb,
 .slider-track:hover::-webkit-slider-thumb,
 .slider-track:active::-webkit-slider-thumb {
-  background: var(--color-primary-400, #60a5fa);
-  box-shadow: 0 4px 12px rgba(60,60,60,0.18);
+  background: var(--color-primary-600, #2563eb);
+  box-shadow: 0 2px 6px rgba(60,60,60,0.12);
 }
 .slider-track::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background: var(--color-primary-200, #a5b4fc);
-  border: 3px solid #fff;
-  box-shadow: 0 2px 8px rgba(60,60,60,0.12);
-  transition: background 0.18s, box-shadow 0.18s;
+  background: var(--color-primary-500, #3b82f6);
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(60,60,60,0.08);
+  transition: background 0.2s;
 }
 .slider-track:focus::-moz-range-thumb,
 .slider-track:hover::-moz-range-thumb,
 .slider-track:active::-moz-range-thumb {
-  background: var(--color-primary-400, #60a5fa);
-  box-shadow: 0 4px 12px rgba(60,60,60,0.18);
+  background: var(--color-primary-600, #2563eb);
+  box-shadow: 0 2px 6px rgba(60,60,60,0.12);
 }
 .slider-track::-ms-thumb {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background: var(--color-primary-200, #a5b4fc);
-  border: 3px solid #fff;
-  box-shadow: 0 2px 8px rgba(60,60,60,0.12);
-  transition: background 0.18s, box-shadow 0.18s;
+  background: var(--color-primary-500, #3b82f6);
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(60,60,60,0.08);
+  transition: background 0.2s;
 }
 .slider-track:focus::-ms-thumb,
 .slider-track:hover::-ms-thumb,
 .slider-track:active::-ms-thumb {
-  background: var(--color-primary-400, #60a5fa);
-  box-shadow: 0 4px 12px rgba(60,60,60,0.18);
+  background: var(--color-primary-600, #2563eb);
+  box-shadow: 0 2px 6px rgba(60,60,60,0.12);
 }
 /* Remove default track styles for cross-browser consistency */
 .slider-track::-webkit-slider-runnable-track {

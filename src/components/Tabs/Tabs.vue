@@ -236,6 +236,12 @@ const getTabClasses = (tab: TabItem, index: number) => {
     'transition-all',
     'duration-200',
     'ease-in-out',
+  ]
+
+  // Focus ring classes - conditional on diagonal mode
+  const focusClasses = props.diagonal ? [
+    'ui-focus-ring-diagonal'
+  ] : [
     'focus:outline-none',
     'focus:ring-2',
     'focus:ring-offset-2',
@@ -318,6 +324,7 @@ const getTabClasses = (tab: TabItem, index: number) => {
 
   return [
     ...baseClasses,
+    ...focusClasses,
     ...sizeClasses[props.size],
     ...(props.diagonal ? [] : variantClasses[props.variant]),
     ...disabledClasses,
@@ -373,13 +380,21 @@ const getTabBadgeClasses = (tab: TabItem) => {
   return [...baseClasses, ...variantClasses]
 }
 
-const tabPanelClasses = computed(() => [
-  'focus:outline-none',
-  'focus:ring-2',
-  'focus:ring-offset-2',
-  'focus:ring-primary-500',
-  'rounded-lg',
-])
+const tabPanelClasses = computed(() => {
+  const focusClasses = props.diagonal ? [
+    'ui-focus-ring-diagonal'
+  ] : [
+    'focus:outline-none',
+    'focus:ring-2',
+    'focus:ring-offset-2',
+    'focus:ring-primary-500',
+  ]
+
+  return [
+    ...focusClasses,
+    'rounded-lg',
+  ]
+})
 
 const indicatorClasses = computed(() => {
   if (props.variant === 'pills' || props.diagonal) return []

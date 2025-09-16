@@ -1,11 +1,10 @@
 <template>
   <button
-    :class="buttonClasses"
+    :class="[buttonClasses, diagonal ? 'ui-focus-ring-diagonal' : 'ui-focus-ring', 'ui-transition']"
     :style="diagonalStyles"
     :disabled="disabled"
     :type="type"
     @click="$emit('click', $event)"
-    class="ui-focus-ring ui-transition"
     :aria-label="ariaLabel"
   >
     <span v-if="diagonal" class="diagonal-content">

@@ -60,6 +60,8 @@ export interface CheckboxProps {
   disabled?: boolean
   label?: string
   indeterminate?: boolean
+  diagonal?: boolean
+  diagonalStyles?: Record<string, any> | string
 }
 
 const props = withDefaults(defineProps<CheckboxProps>(), {
@@ -68,6 +70,8 @@ const props = withDefaults(defineProps<CheckboxProps>(), {
   variant: 'primary',
   disabled: false,
   indeterminate: false,
+  diagonal: false,
+  diagonalStyles: '',
 })
 
 const emit = defineEmits<{

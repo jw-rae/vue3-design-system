@@ -38,10 +38,10 @@
                 <button type="button" class="timepicker-arrow" @click="dec('second')">▼</button>
               </div>
               <button v-if="ampmMode" class="ampm-toggle-popup" type="button" @click="toggleAmPm">
-                {{ ampm }}
+                {{ ampmDisplay }}
               </button>
             </div>
-            <div v-if="mode === 'chronometer'" class="timepicker-chrono-controls">
+            <div v-if="props.mode === 'chronometer'" class="timepicker-chrono-controls">
               <button @click="startChrono" type="button">Start</button>
               <button @click="stopChrono" type="button">Stop</button>
               <button @click="resetChrono" type="button">Reset</button>
@@ -54,11 +54,54 @@
 </template>
 
 <script setup lang="ts">
+import { ref, watch, computed, onMounted, onUnmounted, nextTick } from 'vue'
 
+const props = defineProps({
+  modelValue: { type: String, required: true },
+  min: { type: String, default: '' },
+  max: { type: String, default: '' },
+  label: { type: String, default: '' },
+  disabled: { type: Boolean, default: false },
+  id: { type: String, default: () => `timepicker-${Math.random().toString(36).slice(2, 10)}` },
+  mode: { type: String, default: 'time' }, // 'time' or 'chronometer'
+  twelveHour: { type: Boolean, default: false }, // 12-hour mode if true
+})
 
-// Expose variables to template (must be after all declarations)
-// Place this at the very end of <script setup>
+const emit = defineEmits(['update:modelValue', 'change'])
 
+// Reactive state
+const hour = ref(0)
+const minute = ref(0)
+const second = ref(0)
+const showPopup = ref(false)
+const popupPositionStyle = ref<Record<string, string | number>>({})
+const inputWrapperRef = ref<HTMLElement | null>(null)
+const popupRef = ref<HTMLElement | null>(null)
+
+// Computed properties
+const ampmMode = computed(() => props.twelveHour && props.mode === 'time')
+const hourMax = computed(() => props.mode === 'chronometer' ? 999 : (ampmMode.value ? 12 : 23))
+const ampmDisplay = computed(() => hour.value >= 12 ? 'PM' : 'AM')
+const displayHour = computed(() => {
+  if (!ampmMode.value) return String(hour.value).padStart(2, '0')
+  let h = hour.value % 12
+  if (h === 0) h = 12
+  return String(h).padStart(2, '0')
+})
+
+const displayValue = computed(() => {
+  if (props.mode === 'chronometer') {
+    return `${String(hour.value).padStart(2, '0')}:${String(minute.value).padStart(2, '0')}:${String(second.value).padStart(2, '0')}`
+  } else if (ampmMode.value) {
+    let h = hour.value % 12
+    if (h === 0) h = 12
+    return `${String(h).padStart(2, '0')}:${String(minute.value).padStart(2, '0')} ${ampmDisplay.value}`
+  } else {
+    return `${String(hour.value).padStart(2, '0')}:${String(minute.value).padStart(2, '0')}`
+  }
+})
+
+// Methods
 function inc(type: 'hour' | 'minute' | 'second') {
   if (type === 'hour') {
     if (hour.value < hourMax.value) hour.value++;
@@ -70,7 +113,9 @@ function inc(type: 'hour' | 'minute' | 'second') {
     if (second.value < 59) second.value++;
     else second.value = 0;
   }
+  updateModelValue()
 }
+
 function dec(type: 'hour' | 'minute' | 'second') {
   if (type === 'hour') {
     if (hour.value > 0) hour.value--;
@@ -82,24 +127,14 @@ function dec(type: 'hour' | 'minute' | 'second') {
     if (second.value > 0) second.value--;
     else second.value = 59;
   }
+  updateModelValue()
 }
 
-import { ref, watch, computed, onMounted, onUnmounted, nextTick } from 'vue'
-
-const props = defineProps({
-  modelValue: { type: String, required: true },
-  min: { type: String, default: '' },
-  max: { type: String, default: '' },
-  label: { type: String, default: '' },
-  disabled: { type: Boolean, default: false },
-  id: { type: String, default: () => `timepicker-${Math.random().toString(36).slice(2, 10)}` },
-  mode: { type: String, default: 'time' }, // 'time' or 'chronometer'
-  ampm: { type: Boolean, default: false }, // 12-hour mode if true
-})
-const showPopup = ref(false)
-const popupPositionStyle = ref<Record<string, string | number>>({})
-const inputWrapperRef = ref<HTMLElement | null>(null)
-const popupRef = ref<HTMLElement | null>(null)
+function toggleAmPm() {
+  if (hour.value >= 12) hour.value -= 12
+  else hour.value += 12
+  updateModelValue()
+}
 
 function updatePopupPosition() {
   if (!showPopup.value || !inputWrapperRef.value) return;
@@ -113,18 +148,6 @@ function updatePopupPosition() {
   };
 }
 
-watch(showPopup, (v) => {
-  if (v) nextTick(updatePopupPosition);
-});
-onMounted(() => {
-  window.addEventListener('scroll', updatePopupPosition, true);
-  window.addEventListener('resize', updatePopupPosition);
-});
-onUnmounted(() => {
-  window.removeEventListener('scroll', updatePopupPosition, true);
-  window.removeEventListener('resize', updatePopupPosition);
-});
-
 function onClickOutside(e: MouseEvent) {
   const inputWrapper = inputWrapperRef.value;
   const popup = popupRef.value;
@@ -137,51 +160,6 @@ function onClickOutside(e: MouseEvent) {
     showPopup.value = false;
   }
 }
-onMounted(() => {
-  window.addEventListener('mousedown', onClickOutside)
-})
-onUnmounted(() => {
-  window.removeEventListener('mousedown', onClickOutside)
-})
-
-
-
-
-const emit = defineEmits(['update:modelValue', 'change'])
-const internalValue = ref(props.modelValue)
-const hour = ref(0)
-const minute = ref(0)
-const second = ref(0)
-
-
-
-
-const ampmMode = computed(() => props.ampm && props.mode === 'time')
-const hourMax = computed(() => props.mode === 'chronometer' ? 999 : (ampmMode.value ? 12 : 23))
-const ampm = computed(() => hour.value >= 12 ? 'PM' : 'AM')
-const displayHour = computed(() => {
-  if (!ampmMode.value) return String(hour.value).padStart(2, '0')
-  let h = hour.value % 12
-  if (h === 0) h = 12
-  return String(h).padStart(2, '0')
-})
-function toggleAmPm() {
-  if (hour.value >= 12) hour.value -= 12
-  else hour.value += 12
-  updateModelValue()
-}
-
-const displayValue = computed(() => {
-  if (props.mode === 'chronometer') {
-    return `${String(hour.value).padStart(2, '0')}:${String(minute.value).padStart(2, '0')}:${String(second.value).padStart(2, '0')}`
-  } else if (ampmMode.value) {
-    let h = hour.value % 12
-    if (h === 0) h = 12
-    return `${String(h).padStart(2, '0')}:${String(minute.value).padStart(2, '0')} ${ampm.value}`
-  } else {
-    return `${String(hour.value).padStart(2, '0')}:${String(minute.value).padStart(2, '0')}`
-  }
-})
 
 function onInputText(e: Event) {
   const val = (e.target as HTMLInputElement).value.trim();
@@ -233,16 +211,41 @@ function updateModelValue() {
   } else if (ampmMode.value) {
     let h = hour.value % 12;
     if (h === 0) h = 12;
-    newVal = `${String(h).padStart(2, '0')}:${String(minute.value).padStart(2, '0')} ${ampm.value}`;
+    newVal = `${String(h).padStart(2, '0')}:${String(minute.value).padStart(2, '0')} ${ampmDisplay.value}`;
   } else {
     newVal = `${String(hour.value).padStart(2, '0')}:${String(minute.value).padStart(2, '0')}`;
   }
   emit('update:modelValue', newVal);
 }
 
-function startChrono() {}
-function stopChrono() {}
-function resetChrono() {}
+function startChrono() {
+  // Placeholder for chronometer start functionality
+}
+
+function stopChrono() {
+  // Placeholder for chronometer stop functionality
+}
+
+function resetChrono() {
+  // Placeholder for chronometer reset functionality
+}
+
+// Watchers and lifecycle
+watch(showPopup, (v) => {
+  if (v) nextTick(updatePopupPosition);
+});
+
+onMounted(() => {
+  window.addEventListener('scroll', updatePopupPosition, true);
+  window.addEventListener('resize', updatePopupPosition);
+  window.addEventListener('mousedown', onClickOutside);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', updatePopupPosition, true);
+  window.removeEventListener('resize', updatePopupPosition);
+  window.removeEventListener('mousedown', onClickOutside);
+});
 </script>
 
 <style scoped>

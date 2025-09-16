@@ -2,7 +2,19 @@
   <div class="progress-slider-root">
     <label v-if="label" :for="id" class="progress-slider-label">{{ label }}</label>
     <div class="progress-slider-bar-wrapper">
-      <div class="progress-slider-bar-bg">
+      <div 
+        class="progress-slider-bar-bg" 
+        ref="progressBarRef"
+        @click="handleBarClick"
+        @mousedown="handleMouseDown"
+        @keydown="handleKeyDown"
+        tabindex="0"
+        role="slider"
+        :aria-valuenow="internalValue"
+        :aria-valuemin="min"
+        :aria-valuemax="max"
+        :aria-label="label"
+      >
         <div class="progress-slider-bar-fill" :style="fillStyle"></div>
       </div>
       <input
@@ -42,6 +54,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'change'])
 const internalValue = ref(props.modelValue)
+const progressBarRef = ref<HTMLElement | null>(null)
 
 watch(() => props.modelValue, v => { internalValue.value = v })
 
@@ -49,6 +62,90 @@ function onInput(e: Event) {
   const val = Number((e.target as HTMLInputElement).value)
   internalValue.value = val
   emit('update:modelValue', val)
+}
+
+function updateValue(newValue: number) {
+  const clampedValue = Math.max(props.min, Math.min(props.max, newValue))
+  const steppedValue = Math.round(clampedValue / props.step) * props.step
+  internalValue.value = steppedValue
+  emit('update:modelValue', steppedValue)
+}
+
+function handleBarClick(e: MouseEvent) {
+  if (props.disabled || !progressBarRef.value) return
+  
+  const rect = progressBarRef.value.getBoundingClientRect()
+  const clickX = e.clientX - rect.left
+  const percentage = clickX / rect.width
+  const newValue = props.min + (percentage * (props.max - props.min))
+  
+  updateValue(newValue)
+}
+
+function handleMouseDown(e: MouseEvent) {
+  if (props.disabled || !progressBarRef.value) return
+  
+  e.preventDefault()
+  
+  const rect = progressBarRef.value.getBoundingClientRect()
+  
+  function handleMouseMove(e: MouseEvent) {
+    const clickX = e.clientX - rect.left
+    const percentage = Math.max(0, Math.min(1, clickX / rect.width))
+    const newValue = props.min + (percentage * (props.max - props.min))
+    updateValue(newValue)
+  }
+  
+  function handleMouseUp() {
+    document.removeEventListener('mousemove', handleMouseMove)
+    document.removeEventListener('mouseup', handleMouseUp)
+  }
+  
+  document.addEventListener('mousemove', handleMouseMove)
+  document.addEventListener('mouseup', handleMouseUp)
+  
+  // Set initial value
+  handleBarClick(e)
+}
+
+function handleKeyDown(e: KeyboardEvent) {
+  if (props.disabled) return
+  
+  let newValue = internalValue.value
+  const largeStep = (props.max - props.min) / 10
+  
+  switch (e.key) {
+    case 'ArrowRight':
+    case 'ArrowUp':
+      e.preventDefault()
+      newValue = Math.min(props.max, internalValue.value + props.step)
+      break
+    case 'ArrowLeft':
+    case 'ArrowDown':
+      e.preventDefault()
+      newValue = Math.max(props.min, internalValue.value - props.step)
+      break
+    case 'PageUp':
+      e.preventDefault()
+      newValue = Math.min(props.max, internalValue.value + largeStep)
+      break
+    case 'PageDown':
+      e.preventDefault()
+      newValue = Math.max(props.min, internalValue.value - largeStep)
+      break
+    case 'Home':
+      e.preventDefault()
+      newValue = props.min
+      break
+    case 'End':
+      e.preventDefault()
+      newValue = props.max
+      break
+    default:
+      return
+  }
+  
+  updateValue(newValue)
 }
 
 const fillPercent = computed(() => {
@@ -84,6 +181,8 @@ const fillStyle = computed(() => ({
   background: var(--color-primary-100, #e0e7ff);
   border-radius: 5px;
   overflow: hidden;
+  cursor: pointer;
+  user-select: none;
 }
 .progress-slider-bar-fill {
   position: absolute;
@@ -93,16 +192,15 @@ const fillStyle = computed(() => ({
   background: linear-gradient(90deg, var(--color-primary-500, #3b82f6) 0%, var(--color-primary-400, #60a5fa) 100%);
   border-radius: 5px;
   transition: width 0.2s cubic-bezier(.4,1,.7,1);
+  pointer-events: none;
 }
 .progress-slider-input {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 10px;
+  left: -9999px;
   opacity: 0;
-  cursor: pointer;
-  z-index: 2;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
 }
 .progress-slider-value {
   min-width: 2.5rem;
@@ -110,54 +208,18 @@ const fillStyle = computed(() => ({
   font-size: 0.95rem;
   color: var(--color-text-secondary, #666);
 }
-/* Custom thumb for a minimal look */
-.progress-slider-input::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--color-primary-500, #3b82f6);
-  border: 2px solid #fff;
-  box-shadow: 0 1px 4px rgba(60,60,60,0.08);
-  transition: background 0.2s;
+/* Improve visual feedback on hover and focus */
+.progress-slider-bar-bg:hover {
+  background: var(--color-primary-200, #c7d2fe);
 }
-.progress-slider-input:focus::-webkit-slider-thumb {
-  outline: 2px solid var(--color-primary-600, #2563eb);
+
+.progress-slider-bar-bg:focus-within {
+  outline: 2px solid var(--color-primary-500, #3b82f6);
+  outline-offset: 2px;
 }
-.progress-slider-input::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--color-primary-500, #3b82f6);
-  border: 2px solid #fff;
-  box-shadow: 0 1px 4px rgba(60,60,60,0.08);
-  transition: background 0.2s;
-}
-.progress-slider-input:focus::-moz-range-thumb {
-  outline: 2px solid var(--color-primary-600, #2563eb);
-}
-.progress-slider-input::-ms-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--color-primary-500, #3b82f6);
-  border: 2px solid #fff;
-  box-shadow: 0 1px 4px rgba(60,60,60,0.08);
-  transition: background 0.2s;
-}
-.progress-slider-input:focus::-ms-thumb {
-  outline: 2px solid var(--color-primary-600, #2563eb);
-}
-/* Remove default track styles */
-.progress-slider-input::-webkit-slider-runnable-track {
-  background: transparent;
-}
-.progress-slider-input::-ms-fill-lower,
-.progress-slider-input::-ms-fill-upper {
-  background: transparent;
-}
-.progress-slider-input::-moz-range-track {
-  background: transparent;
+
+.progress-slider-input:focus + .progress-slider-bar-bg {
+  outline: 2px solid var(--color-primary-500, #3b82f6);
+  outline-offset: 2px;
 }
 </style>

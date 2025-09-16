@@ -166,6 +166,53 @@ body {
 
 /* Base component styles */
 @layer components {
+
+    /* Suppress all default focus styles for diagonal components */
+    .ui-focus-ring-diagonal {
+        @apply focus:outline-none;
+        position: relative;
+        outline: none !important;
+    }
+
+    .ui-focus-ring-diagonal:focus,
+    .ui-focus-ring-diagonal:focus-visible,
+    .ui-focus-ring-diagonal:active {
+        outline: none !important;
+        box-shadow: none !important;
+        border-color: inherit !important;
+        background-color: inherit !important;
+    }
+
+    /* Prevent webkit button default styles */
+    .ui-focus-ring-diagonal {
+        -webkit-appearance: none;
+        -webkit-tap-highlight-color: transparent;
+        tap-highlight-color: transparent;
+    }
+
+    .ui-focus-ring-diagonal:focus::after {
+        content: '';
+        position: absolute;
+        inset: -3px;
+        background: transparent;
+        border: 2px solid var(--color-primary-500);
+        clip-path: polygon(10px 0%,
+                calc(100% - 10px) 0%,
+                100% 10px,
+                100% calc(100% - 10px),
+                calc(100% - 10px) 100%,
+                10px 100%,
+                0% calc(100% - 10px),
+                0% 10px);
+        z-index: 100;
+        pointer-events: none;
+        transition: opacity 0.15s ease-in-out;
+    }
+
+    .dark .ui-focus-ring-diagonal:focus::after {
+        border-color: var(--color-primary-400);
+    }
+
     .ui-focus-ring {
         @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800;
     }
@@ -318,8 +365,19 @@ body {
     .diagonal-select .diagonal-content {
         position: relative;
         z-index: 10;
-        background-color: transparent;
+        background-color: transparent !important;
         border: 0;
+    }
+
+    /* Ensure diagonal content doesn't flash */
+    .diagonal-content {
+        background-color: transparent !important;
+    }
+
+    /* Prevent any white background flashes on click/focus */
+    .ui-focus-ring-diagonal .diagonal-content,
+    .ui-focus-ring-diagonal *:not(::before):not(::after) {
+        background-color: inherit !important;
     }
 
     /* Diagonal Dropdown Enhancements */

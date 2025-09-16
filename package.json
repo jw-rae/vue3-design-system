@@ -2,7 +2,7 @@
     "name": "@jwrae/design-system",
     "version": "1.0.0",
     "publishConfig": {
-        "access": "restricted"
+        "access": "public"
     },
     "description": "A responsive Vue 3 design system with Tailwind CSS and Storybook",
     "type": "module",

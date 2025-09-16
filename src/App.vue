@@ -308,6 +308,7 @@
                 label="Country"
                 placeholder="Select your country"
                 hint="Choose your country of residence"
+                teleport
               />
               <p v-if="formData.country" class="text-sm text-text-secondary">
                 Selected: {{ (formData.country as any)?.label }}
@@ -321,23 +322,34 @@
             </template>
             <div class="space-y-4">
               <UiSelect
+                v-model="formData.smallSelect"
                 :options="countryOptions"
                 size="sm"
                 label="Small Select"
                 placeholder="Small size"
+                teleport
               />
               <UiSelect
+                v-model="formData.mediumSelect"
                 :options="countryOptions"
                 size="md"
                 label="Medium Select"
                 placeholder="Medium size"
+                teleport
               />
               <UiSelect
+                v-model="formData.largeSelect"
                 :options="countryOptions"
                 size="lg"
                 label="Large Select"
                 placeholder="Large size"
+                teleport
               />
+              <div class="space-y-2 text-sm text-text-secondary">
+                <p v-if="formData.smallSelect">Small: {{ (formData.smallSelect as any)?.label }}</p>
+                <p v-if="formData.mediumSelect">Medium: {{ (formData.mediumSelect as any)?.label }}</p>
+                <p v-if="formData.largeSelect">Large: {{ (formData.largeSelect as any)?.label }}</p>
+              </div>
             </div>
           </UiCard>
         </div>
@@ -713,6 +725,7 @@
                 label="Technology Platform"
                 placeholder="Select your tech stack..."
                 hint="Choose your preferred technology"
+                teleport
               />
               <p v-if="formData.techChoice" class="text-sm text-text-secondary">
                 Selected: {{ (formData.techChoice as any)?.label }}
@@ -780,6 +793,9 @@ const formData = ref({
   medium: '',
   large: '',
   country: null,
+  smallSelect: null,
+  mediumSelect: null,
+  largeSelect: null,
   dateValue: '2025-09-10',
   timeValue: '12:00',
   // Task manager data

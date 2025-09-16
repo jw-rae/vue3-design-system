@@ -6,15 +6,15 @@ This document provides practical examples of how to use the Vue 3 Design System 
 
 ### 1. Install the package
 ```bash
-npm install @myorg/design-system
+npm install @jwrae/design-system
 ```
 
 ### 2. Setup in your main.js/ts
 ```javascript
 import { createApp } from 'vue'
 import App from './App.vue'
-import DesignSystem from '@myorg/design-system'
-import '@myorg/design-system/style.css'
+import DesignSystem from '@jwrae/design-system'
+import '@jwrae/design-system/style.css'
 
 const app = createApp(App)
 app.use(DesignSystem)

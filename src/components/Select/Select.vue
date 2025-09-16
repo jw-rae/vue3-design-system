@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div class="relative" ref="selectWrapperRef">
     <label v-if="label" :for="selectId" :class="labelClasses">
       {{ label }}
       <span v-if="required" class="      ? [
@@ -14,7 +14,7 @@
       <div class="relative">
         <template v-if="diagonal">
           <div class="diagonal-select" :style="diagonalStyles">
-            <ListboxButton :class="buttonClasses" class="ui-focus-ring ui-transition diagonal-content">
+            <ListboxButton :class="buttonClasses" class="ui-focus-ring-diagonal ui-transition diagonal-content" @click="handleButtonClick">
               <span v-if="selectedValue" class="block truncate text-left">
                 {{ getDisplayValue(selectedValue) }}
               </span>
@@ -29,7 +29,7 @@
         </template>
         
         <template v-else>
-          <ListboxButton :class="buttonClasses" class="ui-focus-ring ui-transition">
+          <ListboxButton :class="buttonClasses" class="ui-focus-ring ui-transition" @click="handleButtonClick">
             <span v-if="selectedValue" class="block truncate text-left">
               {{ getDisplayValue(selectedValue) }}
             </span>
@@ -47,7 +47,45 @@
           leave-from-class="opacity-100"
           leave-to-class="opacity-0"
         >
+          <teleport to="body" v-if="teleport">
+            <ListboxOptions
+              :class="[
+                'z-50 mt-1 max-h-60 overflow-auto bg-surface-elevated dark:bg-surface-elevated py-1 text-base shadow-lg focus:outline-none sm:text-sm',
+                diagonal ? 'ui-diagonal-corners listbox-options' : 'rounded-md ring-1 ring-border-primary dark:ring-border-primary'
+              ]"
+              :style="{ ...dropdownPositionStyle, ...(diagonal ? diagonalDropdownStyles : {}) }"
+            >
+              <ListboxOption
+                v-for="option in options"
+                :key="getOptionKey(option)"
+                v-slot="{ active, selected }"
+                :value="option"
+                as="template"
+              >
+                <li
+                  :class="[
+                    'text-text-primary dark:text-text-primary relative cursor-default select-none py-2 pl-10 pr-4',
+                    diagonal ? 'diagonal-option' : '',
+                    active && diagonal ? 'diagonal-hover-option' : '',
+                    active && !diagonal ? 'bg-primary-100 dark:bg-primary-900/20' : ''
+                  ]"
+                >
+                  <span :class="[selected ? 'font-medium' : 'font-normal', 'block truncate']">
+                    {{ getDisplayValue(option) }}
+                  </span>
+                  <span
+                    v-if="selected"
+                    class="absolute inset-y-0 left-0 flex items-center pl-3 text-primary-600 dark:text-primary-400"
+                  >
+                    <CheckIcon class="h-5 w-5" />
+                  </span>
+                </li>
+              </ListboxOption>
+            </ListboxOptions>
+          </teleport>
+          
           <ListboxOptions
+            v-else
             :class="[
               'absolute z-10 mt-1 max-h-60 w-full overflow-auto bg-surface-elevated dark:bg-surface-elevated py-1 text-base shadow-lg focus:outline-none sm:text-sm',
               diagonal ? 'ui-diagonal-corners listbox-options' : 'rounded-md ring-1 ring-border-primary dark:ring-border-primary'
@@ -96,7 +134,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, nextTick, onMounted, onUnmounted } from 'vue'
 import {
   Listbox,
   ListboxButton,
@@ -122,6 +160,7 @@ export interface SelectProps {
   required?: boolean
   size?: 'sm' | 'md' | 'lg'
   diagonal?: boolean
+  teleport?: boolean
 }
 
 const props = withDefaults(defineProps<SelectProps>(), {
@@ -131,11 +170,96 @@ const props = withDefaults(defineProps<SelectProps>(), {
   size: 'md',
   options: () => [],
   diagonal: false,
+  teleport: false,
 })
 
 const emit = defineEmits<{
   'update:modelValue': [value: any]
 }>()
+
+// Refs for teleport positioning
+const selectWrapperRef = ref<HTMLElement | null>(null)
+const dropdownPositionStyle = ref<Record<string, string | number>>({})
+
+// Dropdown positioning for teleport
+function updateDropdownPosition() {
+  if (!props.teleport || !selectWrapperRef.value) return;
+  
+  nextTick(() => {
+    if (!selectWrapperRef.value) return;
+    const rect = selectWrapperRef.value.getBoundingClientRect();
+    dropdownPositionStyle.value = {
+      position: 'absolute',
+      top: `${rect.bottom + window.scrollY + 4}px`,
+      left: `${rect.left + window.scrollX}px`,
+      width: `${rect.width}px`,
+      zIndex: 1000,
+    };
+  });
+}
+
+// Handle button click for teleported dropdowns
+function handleButtonClick() {
+  if (props.teleport) {
+    updateDropdownPosition();
+  }
+}
+
+// Click outside handler for teleported dropdown
+function onClickOutside(e: MouseEvent) {
+  if (!props.teleport) return;
+  
+  const selectWrapper = selectWrapperRef.value;
+  const target = e.target as Node;
+  
+  // Check if click is outside the select wrapper
+  if (selectWrapper && !selectWrapper.contains(target)) {
+    // Check if the target is a teleported dropdown option
+    const isDropdownElement = target instanceof Element && (
+      target.closest('[role="listbox"]') || 
+      target.closest('[role="option"]') ||
+      target.hasAttribute('data-headlessui-state')
+    );
+    
+    // If click is not in dropdown, let it close naturally
+    if (!isDropdownElement) {
+      // Headless UI will handle the closing automatically
+      return;
+    }
+  }
+}
+
+// Handle scroll to close dropdown (better UX)
+function onScroll() {
+  if (!props.teleport) return;
+  
+  // Close dropdown on scroll by forcing blur on the button
+  const selectWrapper = selectWrapperRef.value;
+  if (selectWrapper) {
+    const button = selectWrapper.querySelector('[role="button"]') as HTMLElement;
+    if (button) {
+      button.blur();
+    }
+  }
+}
+
+// Lifecycle hooks for teleport
+onMounted(() => {
+  if (props.teleport) {
+    updateDropdownPosition();
+    window.addEventListener('resize', updateDropdownPosition);
+    window.addEventListener('mousedown', onClickOutside);
+    window.addEventListener('scroll', onScroll, true); // Close on scroll instead of following
+  }
+});
+
+onUnmounted(() => {
+  if (props.teleport) {
+    window.removeEventListener('resize', updateDropdownPosition);
+    window.removeEventListener('mousedown', onClickOutside);
+    window.removeEventListener('scroll', onScroll, true);
+  }
+});
 
 const selectId = computed(() => `select-${Math.random().toString(36).substr(2, 9)}`)
 

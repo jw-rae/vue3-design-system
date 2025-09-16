@@ -24,7 +24,7 @@ A responsive, accessible design system built with Vue 3, Tailwind CSS, and TypeS
 ## 📦 Installation
 
 ```bash
-npm install @myorg/design-system
+npm install @jwrae/design-system
 ```
 
 ## 🚀 Quick Start
@@ -33,8 +33,8 @@ npm install @myorg/design-system
 
 ```javascript
 import { createApp } from 'vue'
-import DesignSystem from '@myorg/design-system'
-import '@myorg/design-system/style.css'
+import DesignSystem from '@jwrae/design-system'
+import '@jwrae/design-system/style.css'
 
 const app = createApp(App)
 app.use(DesignSystem)
@@ -45,7 +45,7 @@ app.mount('#app')
 
 ```vue
 <script setup>
-import { UiButton, UiCard } from '@myorg/design-system'
+import { UiButton, UiCard } from '@jwrae/design-system'
 </script>
 
 <template>
@@ -159,7 +159,7 @@ The design system uses CSS custom properties for theming. Override these variabl
 Access design tokens programmatically:
 
 ```javascript
-import { tokens } from '@myorg/design-system'
+import { tokens } from '@jwrae/design-system'
 
 console.log(tokens.colors.primary[500]) // #3b82f6
 console.log(tokens.spacing.md) // 1rem

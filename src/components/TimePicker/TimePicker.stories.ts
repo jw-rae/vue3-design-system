@@ -14,7 +14,7 @@ export default {
       control: { type: 'select' },
       options: ['time', 'chronometer', 'timer'],
     },
-    ampm: {
+    twelveHour: {
       control: { type: 'boolean' },
       description: 'Enable 12-hour mode with AM/PM',
     },
@@ -41,14 +41,14 @@ Default.args = {
   label: 'Time',
   disabled: false,
   mode: 'time',
-  ampm: false,
+  twelveHour: false,
 };
 
 export const AMPM = Template.bind({});
 AMPM.args = {
   ...Default.args,
   modelValue: '03:30',
-  ampm: true,
+  twelveHour: true,
   label: '12-hour (AM/PM)',
 };
 
