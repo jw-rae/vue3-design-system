@@ -41,14 +41,33 @@
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue'
 
+/**
+ * Props for ProgressSlider component
+ * @property {number} modelValue - The current slider value
+ * @property {number} min - Minimum allowed value
+ * @property {number} max - Maximum allowed value
+ * @property {number} step - Step size for the slider
+ * @property {string} label - Label for the slider input
+ * @property {boolean} disabled - Whether the slider is disabled
+ * @property {boolean} showValue - Show the current value next to the slider
+ * @property {string} id - Unique id for the slider input
+ */
 const props = defineProps({
+  /** The current slider value */
   modelValue: { type: Number, required: true },
+  /** Minimum allowed value */
   min: { type: Number, default: 0 },
+  /** Maximum allowed value */
   max: { type: Number, default: 100 },
+  /** Step size for the slider */
   step: { type: Number, default: 1 },
+  /** Label for the slider input */
   label: { type: String, default: '' },
+  /** Whether the slider is disabled */
   disabled: { type: Boolean, default: false },
+  /** Show the current value next to the slider */
   showValue: { type: Boolean, default: true },
+  /** Unique id for the slider input */
   id: { type: String, default: () => `progress-slider-${Math.random().toString(36).slice(2, 10)}` },
 })
 

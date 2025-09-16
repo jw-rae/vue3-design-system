@@ -1,9 +1,17 @@
-import { ref } from 'vue';
+import type { Meta, StoryObj } from '@storybook/vue3';
 import InlineTimerPicker from './InlineTimerPicker.vue';
 
-export default {
+const meta: Meta<typeof InlineTimerPicker> = {
     title: 'Components/InlineTimerPicker',
     component: InlineTimerPicker,
+    tags: ['autodocs'],
+    parameters: {
+        docs: {
+            description: {
+                component: 'An inline timer picker component for selecting durations.',
+            },
+        },
+    },
     argTypes: {
         modelValue: { control: { type: 'number' }, description: 'Timer value in seconds' },
         showSeconds: { control: { type: 'boolean' }, description: 'Show seconds field' },
@@ -13,63 +21,101 @@ export default {
     },
 };
 
-const Template = (args, { updateArgs }) => ({
-    components: { InlineTimerPicker },
-    setup() {
-        const value = ref(args.modelValue ?? 0);
-        function onUpdate(val) {
-            value.value = val;
-            updateArgs && updateArgs({ modelValue: val });
-        }
-        return { args, value, onUpdate };
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+    args: {
+        modelValue: 0,
+        showSeconds: true,
+        small: false,
+        maxHours: 23,
     },
-    template: `
-    <div style="padding: 2em; background: #f8f9fa;">
-      <InlineTimerPicker v-bind="args" :model-value="value" @update:modelValue="onUpdate" />
-      <div style="margin-top: 1em; font-size: 0.9em; color: #666;">
-        Value: {{ value }} seconds
-      </div>
-    </div>
-  `,
-});
-
-export const Default = Template.bind({});
-Default.args = {
-    modelValue: 0,
-    showSeconds: true,
-    small: false,
-    maxHours: 23,
+    render: (args, { updateArgs }) => ({
+        components: { InlineTimerPicker },
+        setup() {
+            return { args };
+        },
+        template: `
+            <div style="padding: 2em; background: #f8f9fa;">
+                <InlineTimerPicker v-bind="args" />
+                <div style="margin-top: 1em; font-size: 0.9em; color: #666;">
+                    Value: {{ args.modelValue }} seconds
+                </div>
+            </div>
+        `,
+    }),
 };
 
-export const Small = Template.bind({});
-Small.args = {
-    modelValue: 0,
-    showSeconds: true,
-    small: true,
-    maxHours: 23,
+export const Small: Story = {
+    args: {
+        modelValue: 0,
+        showSeconds: true,
+        small: true,
+        maxHours: 23,
+    },
+    render: (args) => ({
+        components: { InlineTimerPicker },
+        setup() {
+            return { args };
+        },
+        template: `
+            <InlineTimerPicker v-bind="args" />
+        `,
+    }),
 };
 
-export const NoSeconds = Template.bind({});
-NoSeconds.args = {
-    modelValue: 0,
-    showSeconds: false,
-    small: false,
-    maxHours: 23,
+export const NoSeconds: Story = {
+    args: {
+        modelValue: 0,
+        showSeconds: false,
+        small: false,
+        maxHours: 23,
+    },
+    render: (args) => ({
+        components: { InlineTimerPicker },
+        setup() {
+            return { args };
+        },
+        template: `
+            <InlineTimerPicker v-bind="args" />
+        `,
+    }),
 };
 
-export const LongTimer = Template.bind({});
-LongTimer.args = {
-    modelValue: 3661,
-    showSeconds: true,
-    small: false,
-    maxHours: 99,
+export const LongTimer: Story = {
+    args: {
+        modelValue: 3661,
+        showSeconds: true,
+        small: false,
+        maxHours: 99,
+    },
+    render: (args) => ({
+        components: { InlineTimerPicker },
+        setup() {
+            return { args };
+        },
+        template: `
+            <InlineTimerPicker v-bind="args" />
+        `,
+    }),
 };
 
-export const AmPm12Hour = Template.bind({});
-AmPm12Hour.args = {
-    modelValue: 0,
-    showSeconds: true,
-    small: false,
-    maxHours: 12,
-    ampm: true,
+export const AmPm12Hour: Story = {
+    args: {
+        modelValue: 0,
+        showSeconds: true,
+        small: false,
+        maxHours: 12,
+        ampm: true,
+    },
+    render: (args) => ({
+        components: { InlineTimerPicker },
+        setup() {
+            return { args };
+        },
+        template: `
+            <InlineTimerPicker v-bind="args" />
+        `,
+    }),
 };

@@ -126,17 +126,40 @@ onUnmounted(() => {
   window.removeEventListener('resize', updatePopupPosition);
 });
 
+/**
+ * Props for DatePicker component
+ * @property {string} modelValue - The current date value (format: YYYY-MM-DD)
+ * @property {string} min - Minimum allowed date value
+ * @property {string} max - Maximum allowed date value
+ * @property {string} label - Label for the input field
+ * @property {boolean} disabled - Whether the input is disabled
+ * @property {string} id - Unique id for the input field
+ * @property {string} placeholder - Placeholder text for the input
+ * @property {number} yearSpan - How many years to show in the year selector
+ * @property {number|null} yearStart - First year to show (overrides span if set)
+ * @property {number|null} yearEnd - Last year to show (overrides span if set)
+ */
 const props = defineProps({
+  /** The current date value (format: YYYY-MM-DD) */
   modelValue: { type: String, required: true },
+  /** Minimum allowed date value */
   min: { type: String, default: '' },
+  /** Maximum allowed date value */
   max: { type: String, default: '' },
+  /** Label for the input field */
   label: { type: String, default: '' },
+  /** Whether the input is disabled */
   disabled: { type: Boolean, default: false },
+  /** Unique id for the input field */
   id: { type: String, default: () => `datepicker-${Math.random().toString(36).slice(2, 10)}` },
+  /** Placeholder text for the input */
   placeholder: { type: String, default: '' },
-  yearSpan: { type: Number, default: 120 }, // how many years to show
-  yearStart: { type: Number, default: null }, // first year (overrides span if set)
-  yearEnd: { type: Number, default: null }, // last year (overrides span if set)
+  /** How many years to show in the year selector */
+  yearSpan: { type: Number, default: 120 },
+  /** First year to show (overrides span if set) */
+  yearStart: { type: Number, default: null },
+  /** Last year to show (overrides span if set) */
+  yearEnd: { type: Number, default: null },
 })
 
 const showYearSelect = ref(false)

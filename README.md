@@ -1,5 +1,7 @@
 # Vue 3 Design System
 
+[GitHub Repository](https://github.com/jw-rae/vue3-design-system)
+
 A responsive, accessible design system built with Vue 3, Tailwind CSS, and TypeScript. This component library provides a comprehensive set of reusable UI components for building modern web applications.
 
 ## ✨ Features

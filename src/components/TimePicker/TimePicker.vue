@@ -56,15 +56,34 @@
 <script setup lang="ts">
 import { ref, watch, computed, onMounted, onUnmounted, nextTick } from 'vue'
 
+/**
+ * Props for TimePicker component
+ * @property {string} modelValue - The current time value (format: HH:mm or HH:mm:ss)
+ * @property {string} min - Minimum allowed time value
+ * @property {string} max - Maximum allowed time value
+ * @property {string} label - Label for the input field
+ * @property {boolean} disabled - Whether the input is disabled
+ * @property {string} id - Unique id for the input field
+ * @property {string} mode - Picker mode: 'time' or 'chronometer'
+ * @property {boolean} twelveHour - Enable 12-hour mode with AM/PM
+ */
 const props = defineProps({
+  /** The current time value (format: HH:mm or HH:mm:ss) */
   modelValue: { type: String, required: true },
+  /** Minimum allowed time value */
   min: { type: String, default: '' },
+  /** Maximum allowed time value */
   max: { type: String, default: '' },
+  /** Label for the input field */
   label: { type: String, default: '' },
+  /** Whether the input is disabled */
   disabled: { type: Boolean, default: false },
+  /** Unique id for the input field */
   id: { type: String, default: () => `timepicker-${Math.random().toString(36).slice(2, 10)}` },
-  mode: { type: String, default: 'time' }, // 'time' or 'chronometer'
-  twelveHour: { type: Boolean, default: false }, // 12-hour mode if true
+  /** Picker mode: 'time' or 'chronometer' */
+  mode: { type: String, default: 'time' },
+  /** Enable 12-hour mode with AM/PM */
+  twelveHour: { type: Boolean, default: false },
 })
 
 const emit = defineEmits(['update:modelValue', 'change'])

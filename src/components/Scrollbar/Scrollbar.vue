@@ -10,8 +10,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+/**
+ * Props for Scrollbar component
+ * @property {string} width - Scrollbar width variant ('sm', 'md', 'lg')
+ * @property {object} style - Custom style object for the scrollbar
+ */
 const props = defineProps({
-  width: { type: String, default: 'md' }, // sm, md, lg
+  /** Scrollbar width variant ('sm', 'md', 'lg') */
+  width: { type: String, default: 'md' },
+  /** Custom style object for the scrollbar */
   style: { type: Object, default: () => ({}) },
 })
 

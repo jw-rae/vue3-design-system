@@ -72,12 +72,25 @@
   </template><script lang="ts" setup>
 import { computed, defineProps, defineEmits, ref, nextTick } from 'vue';
 
+/**
+ * Props for InlineTimerPicker component
+ * @property {number} modelValue - Timer value in seconds
+ * @property {boolean} showSeconds - Show seconds field
+ * @property {boolean} small - Compact style
+ * @property {number} maxHours - Maximum hours selectable
+ * @property {boolean} ampm - Enable 12-hour AM/PM mode
+ */
 const props = defineProps({
-  modelValue: { type: Number, required: true }, // value in seconds
+  /** Timer value in seconds */
+  modelValue: { type: Number, required: true },
+  /** Show seconds field */
   showSeconds: { type: Boolean, default: true },
+  /** Compact style */
   small: { type: Boolean, default: false },
+  /** Maximum hours selectable */
   maxHours: { type: Number, default: 23 },
-  ampm: { type: Boolean, default: false }, // 12-hour mode
+  /** Enable 12-hour AM/PM mode */
+  ampm: { type: Boolean, default: false },
 });
 const emit = defineEmits(['update:modelValue']);
 
