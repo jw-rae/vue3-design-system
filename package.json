@@ -76,7 +76,7 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/myorg/design-system.git"
+        "url": "git+https://github.com/jw-rae/vue3-design-system.git"
     },
     "license": "MIT"
 }
