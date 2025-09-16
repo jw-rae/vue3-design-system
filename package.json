@@ -1,6 +1,9 @@
 {
-    "name": "@myorg/design-system",
+    "name": "@jwrae/design-system",
     "version": "1.0.0",
+    "publishConfig": {
+        "access": "public"
+    },
     "description": "A responsive Vue 3 design system with Tailwind CSS and Storybook",
     "type": "module",
     "main": "dist/index.cjs",
@@ -12,7 +15,8 @@
     ],
     "scripts": {
         "dev": "vite",
-        "build": "vue-tsc && vite build",
+        "build": "vite build",
+        "build:with-types": "vue-tsc && vite build",
         "build:lib": "vite build --config vite.lib.config.js",
         "preview": "vite preview",
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",

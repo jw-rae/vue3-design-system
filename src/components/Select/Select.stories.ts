@@ -3,93 +3,88 @@ import { ref } from 'vue';
 import Select from './Select.vue';
 
 const meta: Meta<typeof Select> = {
-    title: 'Components/Select',
-    component: Select,
-    parameters: {
-        layout: 'padded',
-        docs: {
-            description: {
-                component: 'Accessible select dropdown component with search, multiple selection, and custom options.',
-            },
-        },
+  title: 'Components/Select',
+  component: Select,
+  parameters: {
+    layout: 'padded',
+    docs: {
+      description: {
+        component: 'Accessible select dropdown component with search, multiple selection, and custom options.',
+      },
     },
-    tags: ['autodocs'],
-    argTypes: {
-        options: {
-            control: { type: 'object' },
-            description: 'Array of option objects with value and label',
-        },
-        placeholder: {
-            control: { type: 'text' },
-            description: 'Placeholder text when no option is selected',
-        },
-        multiple: {
-            control: { type: 'boolean' },
-            description: 'Allow multiple selection',
-        },
-        searchable: {
-            control: { type: 'boolean' },
-            description: 'Enable search functionality',
-        },
-        disabled: {
-            control: { type: 'boolean' },
-            description: 'Whether the select is disabled',
-        },
-        label: {
-            control: { type: 'text' },
-            description: 'Label for the select field',
-        },
-        error: {
-            control: { type: 'text' },
-            description: 'Error message to display',
-        },
+  },
+  tags: ['autodocs'],
+  argTypes: {
+    options: {
+      control: { type: 'object' },
+      description: 'Array of option objects with value and label',
     },
+    placeholder: {
+      control: { type: 'text' },
+      description: 'Placeholder text when no option is selected',
+    },
+    disabled: {
+      control: { type: 'boolean' },
+      description: 'Whether the select is disabled',
+    },
+    label: {
+      control: { type: 'text' },
+      description: 'Label for the select field',
+    },
+    error: {
+      control: { type: 'text' },
+      description: 'Error message to display',
+    },
+    teleport: {
+      control: { type: 'boolean' },
+      description: 'Whether to teleport the dropdown to body element',
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 const defaultOptions = [
-    { value: 'apple', label: 'Apple' },
-    { value: 'banana', label: 'Banana' },
-    { value: 'cherry', label: 'Cherry' },
-    { value: 'date', label: 'Date' },
-    { value: 'elderberry', label: 'Elderberry' },
+  { value: 'apple', label: 'Apple' },
+  { value: 'banana', label: 'Banana' },
+  { value: 'cherry', label: 'Cherry' },
+  { value: 'date', label: 'Date' },
+  { value: 'elderberry', label: 'Elderberry' },
 ];
 
 export const Default: Story = {
-    args: {
-        options: defaultOptions,
-        placeholder: 'Select a fruit...',
-        multiple: false,
-        searchable: false,
-        disabled: false,
+  args: {
+    options: defaultOptions,
+    placeholder: 'Select a fruit...',
+    disabled: false,
+    teleport: false,
+  },
+  render: (args) => ({
+    components: { Select },
+    setup() {
+      const selected = ref(null);
+      return { args, selected };
     },
-    render: (args) => ({
-        components: { Select },
-        setup() {
-            const selected = ref(null);
-            return { args, selected };
-        },
-        template: '<Select v-bind="args" v-model="selected" />',
-    }),
+    template: '<Select v-bind="args" v-model="selected" />',
+  }),
 };
 
 export const WithLabel: Story = {
-    render: () => ({
-        components: { Select },
-        setup() {
-            const selected = ref(null);
-            const options = [
-                { value: 'us', label: 'United States' },
-                { value: 'uk', label: 'United Kingdom' },
-                { value: 'ca', label: 'Canada' },
-                { value: 'au', label: 'Australia' },
-                { value: 'de', label: 'Germany' },
-            ];
-            return { selected, options };
-        },
-        template: `
+  render: () => ({
+    components: { Select },
+    setup() {
+      const selected = ref(null);
+      const options = [
+        { value: 'us', label: 'United States' },
+        { value: 'uk', label: 'United Kingdom' },
+        { value: 'ca', label: 'Canada' },
+        { value: 'au', label: 'Australia' },
+        { value: 'de', label: 'Germany' },
+      ];
+      return { selected, options };
+    },
+    template: `
       <Select 
         v-model="selected"
         :options="options"
@@ -97,115 +92,111 @@ export const WithLabel: Story = {
         placeholder="Select your country..."
       />
     `,
-    }),
+  }),
 };
 
 export const Searchable: Story = {
-    render: () => ({
-        components: { Select },
-        setup() {
-            const selected = ref(null);
-            const options = [
-                { value: 'js', label: 'JavaScript' },
-                { value: 'ts', label: 'TypeScript' },
-                { value: 'py', label: 'Python' },
-                { value: 'java', label: 'Java' },
-                { value: 'cpp', label: 'C++' },
-                { value: 'rust', label: 'Rust' },
-                { value: 'go', label: 'Go' },
-                { value: 'php', label: 'PHP' },
-                { value: 'ruby', label: 'Ruby' },
-                { value: 'swift', label: 'Swift' },
-            ];
-            return { selected, options };
-        },
-        template: `
+  render: () => ({
+    components: { Select },
+    setup() {
+      const selected = ref(null);
+      const options = [
+        { value: 'js', label: 'JavaScript' },
+        { value: 'ts', label: 'TypeScript' },
+        { value: 'py', label: 'Python' },
+        { value: 'java', label: 'Java' },
+        { value: 'cpp', label: 'C++' },
+        { value: 'rust', label: 'Rust' },
+        { value: 'go', label: 'Go' },
+        { value: 'php', label: 'PHP' },
+        { value: 'ruby', label: 'Ruby' },
+        { value: 'swift', label: 'Swift' },
+      ];
+      return { selected, options };
+    },
+    template: `
       <Select 
         v-model="selected"
         :options="options"
         label="Programming Language"
-        placeholder="Search for a language..."
-        searchable
+        placeholder="Select a language..."
       />
     `,
-    }),
+  }),
 };
 
 export const Multiple: Story = {
-    render: () => ({
-        components: { Select },
-        setup() {
-            const selected = ref([]);
-            const options = [
-                { value: 'react', label: 'React' },
-                { value: 'vue', label: 'Vue.js' },
-                { value: 'angular', label: 'Angular' },
-                { value: 'svelte', label: 'Svelte' },
-                { value: 'alpine', label: 'Alpine.js' },
-                { value: 'lit', label: 'Lit' },
-            ];
-            return { selected, options };
-        },
-        template: `
+  render: () => ({
+    components: { Select },
+    setup() {
+      const selected = ref(null);
+      const options = [
+        { value: 'react', label: 'React' },
+        { value: 'vue', label: 'Vue.js' },
+        { value: 'angular', label: 'Angular' },
+        { value: 'svelte', label: 'Svelte' },
+        { value: 'alpine', label: 'Alpine.js' },
+        { value: 'lit', label: 'Lit' },
+      ];
+      return { selected, options };
+    },
+    template: `
       <Select 
         v-model="selected"
         :options="options"
         label="Frontend Frameworks"
-        placeholder="Select frameworks..."
-        multiple
+        placeholder="Select a framework..."
       />
     `,
-    }),
+  }),
 };
 
 export const MultipleSearchable: Story = {
-    render: () => ({
-        components: { Select },
-        setup() {
-            const selected = ref([]);
-            const options = [
-                { value: 'reading', label: 'Reading' },
-                { value: 'writing', label: 'Writing' },
-                { value: 'cooking', label: 'Cooking' },
-                { value: 'gaming', label: 'Gaming' },
-                { value: 'sports', label: 'Sports' },
-                { value: 'music', label: 'Music' },
-                { value: 'travel', label: 'Travel' },
-                { value: 'photography', label: 'Photography' },
-                { value: 'gardening', label: 'Gardening' },
-                { value: 'hiking', label: 'Hiking' },
-                { value: 'cycling', label: 'Cycling' },
-                { value: 'swimming', label: 'Swimming' },
-            ];
-            return { selected, options };
-        },
-        template: `
+  render: () => ({
+    components: { Select },
+    setup() {
+      const selected = ref(null);
+      const options = [
+        { value: 'reading', label: 'Reading' },
+        { value: 'writing', label: 'Writing' },
+        { value: 'cooking', label: 'Cooking' },
+        { value: 'gaming', label: 'Gaming' },
+        { value: 'sports', label: 'Sports' },
+        { value: 'music', label: 'Music' },
+        { value: 'travel', label: 'Travel' },
+        { value: 'photography', label: 'Photography' },
+        { value: 'gardening', label: 'Gardening' },
+        { value: 'hiking', label: 'Hiking' },
+        { value: 'cycling', label: 'Cycling' },
+        { value: 'swimming', label: 'Swimming' },
+      ];
+      return { selected, options };
+    },
+    template: `
       <Select 
         v-model="selected"
         :options="options"
         label="Hobbies & Interests"
-        placeholder="Search and select your interests..."
-        multiple
-        searchable
+        placeholder="Select your interests..."
       />
     `,
-    }),
+  }),
 };
 
 export const WithError: Story = {
-    render: () => ({
-        components: { Select },
-        setup() {
-            const selected = ref(null);
-            const options = [
-                { value: 'small', label: 'Small (1-10 employees)' },
-                { value: 'medium', label: 'Medium (11-50 employees)' },
-                { value: 'large', label: 'Large (51-200 employees)' },
-                { value: 'enterprise', label: 'Enterprise (200+ employees)' },
-            ];
-            return { selected, options };
-        },
-        template: `
+  render: () => ({
+    components: { Select },
+    setup() {
+      const selected = ref(null);
+      const options = [
+        { value: 'small', label: 'Small (1-10 employees)' },
+        { value: 'medium', label: 'Medium (11-50 employees)' },
+        { value: 'large', label: 'Large (51-200 employees)' },
+        { value: 'enterprise', label: 'Enterprise (200+ employees)' },
+      ];
+      return { selected, options };
+    },
+    template: `
       <Select 
         v-model="selected"
         :options="options"
@@ -214,22 +205,22 @@ export const WithError: Story = {
         error="Please select your company size to continue"
       />
     `,
-    }),
+  }),
 };
 
 export const Disabled: Story = {
-    render: () => ({
-        components: { Select },
-        setup() {
-            const selected = ref({ value: 'disabled', label: 'Pre-selected Option' });
-            const options = [
-                { value: 'option1', label: 'Option 1' },
-                { value: 'option2', label: 'Option 2' },
-                { value: 'disabled', label: 'Pre-selected Option' },
-            ];
-            return { selected, options };
-        },
-        template: `
+  render: () => ({
+    components: { Select },
+    setup() {
+      const selected = ref({ value: 'disabled', label: 'Pre-selected Option' });
+      const options = [
+        { value: 'option1', label: 'Option 1' },
+        { value: 'option2', label: 'Option 2' },
+        { value: 'disabled', label: 'Pre-selected Option' },
+      ];
+      return { selected, options };
+    },
+    template: `
       <Select 
         v-model="selected"
         :options="options"
@@ -238,81 +229,80 @@ export const Disabled: Story = {
         disabled
       />
     `,
-    }),
+  }),
 };
 
 export const LongOptions: Story = {
-    render: () => ({
-        components: { Select },
-        setup() {
-            const selected = ref(null);
-            const options = [
-                { value: 'option1', label: 'This is a very long option text that might overflow in some designs' },
-                { value: 'option2', label: 'Another extremely long option that demonstrates text wrapping' },
-                { value: 'option3', label: 'Short option' },
-                { value: 'option4', label: 'Medium length option text' },
-                { value: 'option5', label: 'Yet another very long option text that could potentially cause layout issues if not handled properly' },
-            ];
-            return { selected, options };
-        },
-        template: `
+  render: () => ({
+    components: { Select },
+    setup() {
+      const selected = ref(null);
+      const options = [
+        { value: 'option1', label: 'This is a very long option text that might overflow in some designs' },
+        { value: 'option2', label: 'Another extremely long option that demonstrates text wrapping' },
+        { value: 'option3', label: 'Short option' },
+        { value: 'option4', label: 'Medium length option text' },
+        { value: 'option5', label: 'Yet another very long option text that could potentially cause layout issues if not handled properly' },
+      ];
+      return { selected, options };
+    },
+    template: `
       <Select 
         v-model="selected"
         :options="options"
         label="Long Options"
         placeholder="Select an option with long text..."
-        searchable
       />
     `,
-    }),
+  }),
 };
 
 export const FormExample: Story = {
-    render: () => ({
-        components: { Select },
-        setup() {
-            const formData = ref({
-                country: null,
-                state: null,
-                skills: [],
-                experience: null,
-            });
+  render: () => ({
+    components: { Select },
+    setup() {
+      const formData = ref({
+        country: null,
+        state: null,
+        skills: [],
+        experience: null,
+      });
 
-            const countries = [
-                { value: 'us', label: 'United States' },
-                { value: 'uk', label: 'United Kingdom' },
-                { value: 'ca', label: 'Canada' },
-                { value: 'au', label: 'Australia' },
-            ];
+      const countries = [
+        { value: 'us', label: 'United States' },
+        { value: 'uk', label: 'United Kingdom' },
+        { value: 'ca', label: 'Canada' },
+        { value: 'au', label: 'Australia' },
+      ];
 
-            const states = [
-                { value: 'ca', label: 'California' },
-                { value: 'ny', label: 'New York' },
-                { value: 'tx', label: 'Texas' },
-                { value: 'fl', label: 'Florida' },
-            ];
+      const states = [
+        { value: 'ca', label: 'California' },
+        { value: 'ny', label: 'New York' },
+        { value: 'tx', label: 'Texas' },
+        { value: 'fl', label: 'Florida' },
+      ];
 
-            const skills = [
-                { value: 'js', label: 'JavaScript' },
-                { value: 'vue', label: 'Vue.js' },
-                { value: 'react', label: 'React' },
-                { value: 'node', label: 'Node.js' },
-                { value: 'python', label: 'Python' },
-                { value: 'sql', label: 'SQL' },
-            ];
+      const skills = [
+        { value: 'js', label: 'JavaScript' },
+        { value: 'vue', label: 'Vue.js' },
+        { value: 'react', label: 'React' },
+        { value: 'node', label: 'Node.js' },
+        { value: 'python', label: 'Python' },
+        { value: 'sql', label: 'SQL' },
+      ];
 
-            const experienceLevels = [
-                { value: 'junior', label: 'Junior (0-2 years)' },
-                { value: 'mid', label: 'Mid-level (2-5 years)' },
-                { value: 'senior', label: 'Senior (5-10 years)' },
-                { value: 'lead', label: 'Lead (10+ years)' },
-            ];
+      const experienceLevels = [
+        { value: 'junior', label: 'Junior (0-2 years)' },
+        { value: 'mid', label: 'Mid-level (2-5 years)' },
+        { value: 'senior', label: 'Senior (5-10 years)' },
+        { value: 'lead', label: 'Lead (10+ years)' },
+      ];
 
-            return { formData, countries, states, skills, experienceLevels };
-        },
-        template: `
+      return { formData, countries, states, skills, experienceLevels };
+    },
+    template: `
       <form class="space-y-6 max-w-md">
-        <h3 class="text-lg font-semibold text-gray-900">Developer Profile</h3>
+        <h3 class="text-lg font-semibold text-text-primary">Developer Profile</h3>
         
         <div class="grid grid-cols-2 gap-4">
           <Select 
@@ -334,9 +324,7 @@ export const FormExample: Story = {
           v-model="formData.skills"
           :options="skills"
           label="Technical Skills"
-          placeholder="Select your skills..."
-          multiple
-          searchable
+          placeholder="Select a skill..."
         />
         
         <Select 
@@ -356,98 +344,44 @@ export const FormExample: Story = {
         </div>
       </form>
     `,
-    }),
+  }),
 };
 
-export const DarkModeShowcase: Story = {
-    render: () => ({
-        components: { Select },
-        setup() {
-            const lightCountry = ref(null);
-            const darkCountry = ref(null);
-            const lightSkills = ref([]);
-            const darkSkills = ref([]);
-
-            const countries = [
-                { value: 'us', label: 'United States' },
-                { value: 'uk', label: 'United Kingdom' },
-                { value: 'ca', label: 'Canada' },
-                { value: 'au', label: 'Australia' },
-            ];
-
-            const skills = [
-                { value: 'js', label: 'JavaScript' },
-                { value: 'vue', label: 'Vue.js' },
-                { value: 'react', label: 'React' },
-                { value: 'node', label: 'Node.js' },
-            ];
-
-            return { lightCountry, darkCountry, lightSkills, darkSkills, countries, skills };
-        },
-        template: `
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <!-- Light Mode -->
-        <div class="p-6 bg-white rounded-lg border">
-          <h3 class="text-lg font-semibold text-gray-900 mb-4">Light Mode</h3>
-          <div class="space-y-4">
-            <Select 
-              v-model="lightCountry"
-              :options="countries"
-              label="Country"
-              placeholder="Select your country..."
-            />
-            <Select 
-              v-model="lightSkills"
-              :options="skills"
-              label="Skills"
-              placeholder="Select skills..."
-              multiple
-              searchable
-            />
-            <Select 
-              :options="countries"
-              label="Disabled Select"
-              placeholder="This is disabled"
-              disabled
-            />
-            <p class="text-sm text-gray-600">
-              Clean dropdowns with proper spacing and readability.
-            </p>
-          </div>
-        </div>
-
-        <!-- Dark Mode -->
-        <div class="dark">
-          <div class="p-6 bg-gray-900 rounded-lg border border-gray-700">
-            <h3 class="text-lg font-semibold text-white mb-4">Dark Mode</h3>
-            <div class="space-y-4">
-              <Select 
-                v-model="darkCountry"
-                :options="countries"
-                label="Country"
-                placeholder="Select your country..."
-              />
-              <Select 
-                v-model="darkSkills"
-                :options="skills"
-                label="Skills"
-                placeholder="Select skills..."
-                multiple
-                searchable
-              />
-              <Select 
-                :options="countries"
-                label="Disabled Select"
-                placeholder="This is disabled"
-                disabled
-              />
-              <p class="text-sm text-gray-300">
-                Dark dropdowns with enhanced contrast and proper option highlighting.
-              </p>
-            </div>
-          </div>
+export const Teleported: Story = {
+  render: () => ({
+    components: { Select },
+    setup() {
+      const selected = ref(null);
+      const options = [
+        { value: 'option1', label: 'Option 1' },
+        { value: 'option2', label: 'Option 2' },
+        { value: 'option3', label: 'Option 3' },
+        { value: 'option4', label: 'Option 4' },
+        { value: 'option5', label: 'Option 5' },
+      ];
+      return { selected, options };
+    },
+    template: `
+      <div class="space-y-4">
+        <p class="text-sm text-gray-600">This select uses teleport to render the dropdown at the body level, which helps with z-index and overflow issues.</p>
+        <Select 
+          v-model="selected"
+          :options="options"
+          label="Teleported Select"
+          placeholder="Click to see teleported dropdown..."
+          teleport
+        />
+        <div class="border border-gray-300 rounded p-4 overflow-hidden" style="height: 100px;">
+          <p class="text-sm mb-2">This container has overflow:hidden</p>
+          <Select 
+            v-model="selected"
+            :options="options"
+            label="Non-teleported (clipped)"
+            placeholder="This dropdown will be clipped..."
+            :teleport="false"
+          />
         </div>
       </div>
     `,
-    }),
+  }),
 };

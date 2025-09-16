@@ -2,11 +2,26 @@
   <div class="relative">
     <label v-if="label" :for="inputId" :class="labelClasses">
       {{ label }}
-      <span v-if="required" class="text-error-500 ml-1">*</span>
+      <span v-if="required" class="text-primary-700 ml-1">*</span>
     </label>
     
     <div class="relative">
+      <div v-if="diagonal" :class="inputClasses" :style="diagonalStyles">
+        <input
+          :id="inputId"
+          :type="type"
+          :value="modelValue"
+          :placeholder="placeholder"
+          :disabled="disabled"
+          :readonly="readonly"
+          class="diagonal-input ui-focus-ring-diagonal ui-transition"
+          @input="onInput"
+          @focus="onFocus"
+          @blur="onBlur"
+        />
+      </div>
       <input
+        v-else
         :id="inputId"
         :type="type"
         :value="modelValue"
@@ -29,11 +44,11 @@
       </div>
     </div>
     
-    <p v-if="error" class="mt-1 text-sm text-error-500 dark:text-error-400">
+    <p v-if="error" class="mt-1 text-sm text-primary-700 dark:text-primary-400">
       {{ error }}
     </p>
     
-    <p v-else-if="hint" class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+    <p v-else-if="hint" class="mt-1 text-sm text-text-tertiary dark:text-text-tertiary">
       {{ hint }}
     </p>
   </div>
@@ -54,6 +69,7 @@ export interface InputProps {
   readonly?: boolean
   required?: boolean
   size?: 'sm' | 'md' | 'lg'
+  diagonal?: boolean
 }
 
 const props = withDefaults(defineProps<InputProps>(), {
@@ -62,6 +78,7 @@ const props = withDefaults(defineProps<InputProps>(), {
   readonly: false,
   required: false,
   size: 'md',
+  diagonal: false,
 })
 
 const emit = defineEmits<{
@@ -78,8 +95,8 @@ const labelClasses = computed(() => [
   'block',
   'text-sm',
   'font-medium',
-  'text-gray-700',
-  'dark:text-gray-300',
+  'text-primary-700',
+  'dark:text-primary-300',
   'mb-1',
 ])
 
@@ -88,18 +105,18 @@ const inputClasses = computed(() => {
     'block',
     'w-full',
     'border',
-    'rounded-md',
+    ...(props.diagonal ? ['ui-diagonal-corners'] : ['rounded-md']),
     'shadow-sm',
-    'placeholder-gray-400',
-    'dark:placeholder-gray-500',
-    'bg-white',
-    'dark:bg-gray-800',
-    'text-gray-900',
-    'dark:text-white',
+    'placeholder-text-tertiary',
+    'dark:placeholder-text-tertiary',
+    'bg-surface-primary',
+    'dark:bg-surface-primary',
+    'text-text-primary',
+    'dark:text-text-primary',
     'disabled:opacity-50',
     'disabled:cursor-not-allowed',
-    'disabled:bg-gray-50',
-    'dark:disabled:bg-gray-700',
+    'disabled:bg-surface-secondary',
+    'dark:disabled:bg-surface-secondary',
     'ui-transition',
   ]
 
@@ -110,19 +127,19 @@ const inputClasses = computed(() => {
     lg: ['px-4', 'py-3', 'text-lg'],
   }
 
-  // State classes
+  // State classes - monochromatic
   const stateClasses = props.error
     ? [
-        'border-error-300', 
-        'dark:border-error-500',
-        'focus:border-error-500', 
-        'focus:ring-error-500'
+        'border-primary-700/50', 
+        'dark:border-primary-300/50',
+        'focus:border-primary-700', 
+        'focus:ring-primary-700/20'
       ]
     : [
-        'border-gray-300', 
-        'dark:border-gray-600',
+        'border-primary-300', 
+        'dark:border-primary-600',
         'focus:border-primary-500', 
-        'focus:ring-primary-500'
+        'focus:ring-primary-500/20'
       ]
 
   // Prefix/suffix padding
@@ -136,6 +153,18 @@ const inputClasses = computed(() => {
     ...prefixClasses,
     ...suffixClasses,
   ]
+})
+
+// Diagonal styles for sci-fi effect
+const diagonalStyles = computed(() => {
+  if (!props.diagonal) return {}
+  
+  return {
+    '--diagonal-border-color': props.error 
+      ? 'var(--color-primary-700)' 
+      : 'var(--color-primary-300)',
+    '--diagonal-bg-color': 'var(--color-surface-primary)',
+  }
 })
 
 const onInput = (event: Event) => {
@@ -154,3 +183,19 @@ const onBlur = (event: FocusEvent) => {
   emit('blur', event)
 }
 </script>
+
+<style scoped>
+.diagonal-input {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  background: transparent !important;
+  border: none !important;
+  outline: none;
+  padding: 0.625rem 1rem;
+}
+
+.diagonal-input:focus {
+  outline: none;
+}
+</style>

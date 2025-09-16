@@ -3,6 +3,7 @@ import type { App } from 'vue'
 
 // Components
 import Button from './components/Button/Button.vue'
+import IconButton from './components/IconButton/IconButton.vue'
 import Card from './components/Card/Card.vue'
 import Modal from './components/Modal/Modal.vue'
 import Input from './components/Input/Input.vue'
@@ -11,6 +12,16 @@ import Alert from './components/Alert/Alert.vue'
 import Select from './components/Select/Select.vue'
 import Spinner from './components/Spinner/Spinner.vue'
 import ThemeToggle from './components/ThemeToggle/ThemeToggle.vue'
+import Toggle from './components/Toggle/Toggle.vue'
+import Checkbox from './components/Checkbox/Checkbox.vue'
+import Tabs from './components/Tabs/Tabs.vue'
+import RadioButton from './components/RadioButton/RadioButton.vue'
+import Slider from './components/Slider/Slider.vue'
+import ProgressSlider from './components/Slider/ProgressSlider.vue'
+import DatePicker from './components/DatePicker/DatePicker.vue'
+import TimePicker from './components/TimePicker/TimePicker.vue'
+import InlineTimerPicker from './components/InlineTimerPicker.vue'
+import { AccentColorsDemo, AccentColorCard } from './components/AccentColorsDemo'
 
 // Composables
 export { useTheme } from './composables/useTheme'
@@ -19,10 +30,11 @@ export { useTheme } from './composables/useTheme'
 import './assets/styles/main.css'
 
 // Export individual components
-export { Button, Card, Modal, Input, Badge, Alert, Select, Spinner, ThemeToggle }
+export { Button, IconButton, Card, Modal, Input, Badge, Alert, Select, Spinner, ThemeToggle, Toggle, Checkbox, Tabs, RadioButton, Slider, ProgressSlider, DatePicker, TimePicker, InlineTimerPicker, AccentColorsDemo, AccentColorCard }
 
 // Export types
 export type { ButtonProps } from './components/Button/Button.vue'
+export type { IconButtonProps } from './components/IconButton/IconButton.vue'
 export type { CardProps } from './components/Card/Card.vue'
 export type { ModalProps } from './components/Modal/Modal.vue'
 export type { InputProps } from './components/Input/Input.vue'
@@ -30,14 +42,20 @@ export type { BadgeProps } from './components/Badge/Badge.vue'
 export type { AlertProps } from './components/Alert/Alert.vue'
 export type { SelectProps, SelectOption } from './components/Select/Select.vue'
 export type { SpinnerProps } from './components/Spinner/Spinner.vue'
+export type { ToggleProps } from './components/Toggle/Toggle.vue'
+export type { CheckboxProps } from './components/Checkbox/Checkbox.vue'
+export type { TabsProps, TabItem } from './components/Tabs/Tabs.vue'
+export type { RadioButtonProps } from './components/RadioButton/RadioButton.vue'
 
-// Export design tokens
-export { tokens } from './theme/tokens'
+// Import and export design tokens from JS file
+import tokensDefault from './theme/tokens.js'
+export const tokens = tokensDefault
 
 // Plugin installation function
 export const DesignSystem = {
     install(app: App) {
         app.component('UiButton', Button)
+        app.component('UiIconButton', IconButton)
         app.component('UiCard', Card)
         app.component('UiModal', Modal)
         app.component('UiInput', Input)
@@ -46,6 +64,15 @@ export const DesignSystem = {
         app.component('UiSelect', Select)
         app.component('UiSpinner', Spinner)
         app.component('UiThemeToggle', ThemeToggle)
+        app.component('UiToggle', Toggle)
+        app.component('UiCheckbox', Checkbox)
+        app.component('UiTabs', Tabs)
+        app.component('UiRadioButton', RadioButton)
+        app.component('UiSlider', Slider)
+        app.component('UiProgressSlider', ProgressSlider)
+        app.component('UiDatePicker', DatePicker)
+        app.component('UiTimePicker', TimePicker)
+        app.component('UiInlineTimerPicker', InlineTimerPicker)
     },
 }
 

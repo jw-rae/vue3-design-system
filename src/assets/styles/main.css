@@ -2,8 +2,127 @@
 @tailwind components;
 @tailwind utilities;
 
-/* CSS Custom Properties for theming */
+/* Ensure full height layout */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Storybook reset - remove default margins from story containers */
+.diagonal-hover-option>* {
+    position: relative;
+    z-index: 1;
+}
+
+/* Diagonal alert filled backgrounds - match regular filled alerts exactly */
+.diagonal-alert-success-filled {
+    background: rgb(34 197 94 / 0.15);
+    /* green-500/15 */
+}
+
+.dark .diagonal-alert-success-filled {
+    background: rgb(74 222 128 / 0.15);
+    /* green-400/15 */
+}
+
+.diagonal-alert-warning-filled {
+    background: rgb(245 158 11 / 0.15);
+    /* amber-500/15 */
+}
+
+.dark .diagonal-alert-warning-filled {
+    background: rgb(251 191 36 / 0.15);
+    /* amber-400/15 */
+}
+
+.diagonal-alert-error-filled {
+    background: rgb(239 68 68 / 0.15);
+    /* red-500/15 */
+}
+
+.dark .diagonal-alert-error-filled {
+    background: rgb(248 113 113 / 0.15);
+    /* red-400/15 */
+}
+
+.diagonal-alert-info-filled {
+    background: rgb(59 130 246 / 0.15);
+    /* blue-500/15 */
+}
+
+.dark .diagonal-alert-info-filled {
+    background: rgb(96 165 250 / 0.15);
+    /* blue-400/15 */
+}
+
+.storybook-root {
+    margin: 0 !important;
+}
+
+.sb-main-padded {
+    padding: 0 !important;
+}
+
+/* Default theme CSS custom properties - will be overridden by theme system */
 :root {
+    /* Primary color scale (default blue theme) */
+    --color-primary-50: #eff6ff;
+    --color-primary-100: #dbeafe;
+    --color-primary-200: #bfdbfe;
+    --color-primary-300: #93c5fd;
+    --color-primary-400: #60a5fa;
+    --color-primary-500: #3b82f6;
+    --color-primary-600: #2563eb;
+    --color-primary-700: #1d4ed8;
+    --color-primary-800: #1e40af;
+    --color-primary-900: #1e3a8a;
+    --color-primary-950: #172554;
+
+    /* Light mode colors */
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f8fafc;
+    --color-background-tertiary: #f1f5f9;
+    --color-background-inverse: #0f172a;
+
+    --color-surface-primary: #ffffff;
+    --color-surface-secondary: #f8fafc;
+    --color-surface-elevated: #ffffff;
+    --color-surface-overlay: rgba(0, 0, 0, 0.5);
+
+    --color-text-primary: #0f172a;
+    --color-text-secondary: #475569;
+    --color-text-tertiary: #64748b;
+    --color-text-inverse: #f8fafc;
+    --color-text-disabled: #94a3b8;
+
+    --color-border-primary: #e2e8f0;
+    --color-border-secondary: #cbd5e1;
+    --color-border-focus: #3b82f6;
+    --color-border-error: #ef4444;
+
+    /* Default accent colors */
+    --color-accent-success-light: #86efac;
+    --color-accent-success-main: #22c55e;
+    --color-accent-success-dark: #15803d;
+    --color-accent-warning-light: #fde047;
+    --color-accent-warning-main: #eab308;
+    --color-accent-warning-dark: #a16207;
+    --color-accent-error-light: #fca5a5;
+    --color-accent-error-main: #ef4444;
+    --color-accent-error-dark: #dc2626;
+    --color-accent-info-light: #7dd3fc;
+    --color-accent-info-main: #0ea5e9;
+    --color-accent-info-dark: #0284c7;
+
+    /* Legacy properties for backwards compatibility */
     --color-primary: #3b82f6;
     --color-primary-hover: #2563eb;
     --color-primary-focus: #1d4ed8;
@@ -21,26 +140,79 @@
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
-/* Dark theme support */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --color-surface: #111827;
-        --color-surface-variant: #1f2937;
-        --color-on-surface: #f9fafb;
-        --color-on-surface-variant: #d1d5db;
-    }
-}
-
-/* Class-based dark mode */
+/* Dark mode overrides - fallback for when theme system doesn't load properly */
 .dark {
-    --color-surface: #111827;
-    --color-surface-variant: #1f2937;
-    --color-on-surface: #f9fafb;
-    --color-on-surface-variant: #d1d5db;
+    --color-background-primary: #0f172a;
+    --color-background-secondary: #1e293b;
+    --color-background-tertiary: #334155;
+    --color-background-inverse: #ffffff;
+
+    --color-surface-primary: #1e293b;
+    --color-surface-secondary: #334155;
+    --color-surface-elevated: #475569;
+    --color-surface-overlay: rgba(0, 0, 0, 0.8);
+
+    --color-text-primary: #f8fafc;
+    --color-text-secondary: #cbd5e1;
+    --color-text-tertiary: #94a3b8;
+    --color-text-inverse: #0f172a;
+    --color-text-disabled: #64748b;
+
+    --color-border-primary: #334155;
+    --color-border-secondary: #475569;
+    --color-border-focus: #60a5fa;
+    --color-border-error: #f87171;
 }
 
 /* Base component styles */
 @layer components {
+
+    /* Suppress all default focus styles for diagonal components */
+    .ui-focus-ring-diagonal {
+        @apply focus:outline-none;
+        position: relative;
+        outline: none !important;
+    }
+
+    .ui-focus-ring-diagonal:focus,
+    .ui-focus-ring-diagonal:focus-visible,
+    .ui-focus-ring-diagonal:active {
+        outline: none !important;
+        box-shadow: none !important;
+        border-color: inherit !important;
+        background-color: inherit !important;
+    }
+
+    /* Prevent webkit button default styles */
+    .ui-focus-ring-diagonal {
+        -webkit-appearance: none;
+        -webkit-tap-highlight-color: transparent;
+        tap-highlight-color: transparent;
+    }
+
+    .ui-focus-ring-diagonal:focus::after {
+        content: '';
+        position: absolute;
+        inset: -3px;
+        background: transparent;
+        border: 2px solid var(--color-primary-500);
+        clip-path: polygon(10px 0%,
+                calc(100% - 10px) 0%,
+                100% 10px,
+                100% calc(100% - 10px),
+                calc(100% - 10px) 100%,
+                10px 100%,
+                0% calc(100% - 10px),
+                0% 10px);
+        z-index: 100;
+        pointer-events: none;
+        transition: opacity 0.15s ease-in-out;
+    }
+
+    .dark .ui-focus-ring-diagonal:focus::after {
+        border-color: var(--color-primary-400);
+    }
+
     .ui-focus-ring {
         @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800;
     }
@@ -48,4 +220,229 @@
     .ui-transition {
         @apply transition-all duration-200 ease-in-out;
     }
+
+    /* Sci-fi diagonal corners using layered approach for proper borders */
+    .ui-diagonal-corners-sm {
+        position: relative;
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+    }
+
+    .ui-diagonal-corners-sm::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--diagonal-border-color, currentColor);
+        clip-path: polygon(6px 0%,
+                calc(100% - 6px) 0%,
+                100% 6px,
+                100% calc(100% - 6px),
+                calc(100% - 6px) 100%,
+                6px 100%,
+                0% calc(100% - 6px),
+                0% 6px);
+        z-index: 0;
+    }
+
+    .ui-diagonal-corners-sm::after {
+        content: '';
+        position: absolute;
+        inset: 1px;
+        background: var(--diagonal-bg-color, transparent);
+        clip-path: polygon(5px 0%,
+                calc(100% - 5px) 0%,
+                100% 5px,
+                100% calc(100% - 5px),
+                calc(100% - 5px) 100%,
+                5px 100%,
+                0% calc(100% - 5px),
+                0% 5px);
+        z-index: 1;
+    }
+
+    .ui-diagonal-corners-sm>* {
+        position: relative;
+        z-index: 2;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .ui-diagonal-corners {
+        position: relative;
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+    }
+
+    .ui-diagonal-corners::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--diagonal-border-color, currentColor);
+        clip-path: polygon(8px 0%,
+                calc(100% - 8px) 0%,
+                100% 8px,
+                100% calc(100% - 8px),
+                calc(100% - 8px) 100%,
+                8px 100%,
+                0% calc(100% - 8px),
+                0% 8px);
+        z-index: 0;
+    }
+
+    .ui-diagonal-corners::after {
+        content: '';
+        position: absolute;
+        inset: 1px;
+        background: var(--diagonal-bg-color, transparent);
+        clip-path: polygon(7px 0%,
+                calc(100% - 7px) 0%,
+                100% 7px,
+                100% calc(100% - 7px),
+                calc(100% - 7px) 100%,
+                7px 100%,
+                0% calc(100% - 7px),
+                0% 7px);
+        z-index: 1;
+    }
+
+    .ui-diagonal-corners>* {
+        position: relative;
+        z-index: 2;
+        padding: 1rem 1.5rem;
+    }
+
+    .ui-diagonal-corners-lg {
+        position: relative;
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+    }
+
+    .ui-diagonal-corners-lg::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--diagonal-border-color, currentColor);
+        clip-path: polygon(12px 0%,
+                calc(100% - 12px) 0%,
+                100% 12px,
+                100% calc(100% - 12px),
+                calc(100% - 12px) 100%,
+                12px 100%,
+                0% calc(100% - 12px),
+                0% 12px);
+        z-index: 0;
+    }
+
+    .ui-diagonal-corners-lg::after {
+        content: '';
+        position: absolute;
+        inset: 1px;
+        background: var(--diagonal-bg-color, transparent);
+        clip-path: polygon(11px 0%,
+                calc(100% - 11px) 0%,
+                100% 11px,
+                100% calc(100% - 11px),
+                calc(100% - 11px) 100%,
+                11px 100%,
+                0% calc(100% - 11px),
+                0% 11px);
+        z-index: 1;
+    }
+
+    .ui-diagonal-corners-lg>* {
+        position: relative;
+        z-index: 2;
+        padding: 1.5rem 2rem;
+    }
+
+    /* Diagonal Select Component */
+    .diagonal-select {
+        position: relative;
+    }
+
+    .diagonal-select .diagonal-content {
+        position: relative;
+        z-index: 10;
+        background-color: transparent !important;
+        border: 0;
+    }
+
+    /* Ensure diagonal content doesn't flash */
+    .diagonal-content {
+        background-color: transparent !important;
+    }
+
+    /* Prevent any white background flashes on click/focus */
+    .ui-focus-ring-diagonal .diagonal-content,
+    .ui-focus-ring-diagonal *:not(::before):not(::after) {
+        background-color: inherit !important;
+    }
+
+    /* Diagonal Dropdown Enhancements */
+    .ui-diagonal-corners.listbox-options {
+        border: none !important;
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    }
+
+    /* Spacing for all diagonal dropdown items */
+    .ui-diagonal-corners .diagonal-option {
+        margin: 0 6px;
+    }
+
+    .ui-diagonal-corners .diagonal-option:first-child {
+        margin-top: 4px;
+    }
+
+    .ui-diagonal-corners .diagonal-option:last-child {
+        margin-bottom: 4px;
+    }
+
+    /* Diagonal hover effect for dropdown options */
+    .diagonal-hover-option {
+        position: relative;
+        --hover-bg-color: rgb(219 234 254 / 1);
+    }
+
+    .dark .diagonal-hover-option {
+        --hover-bg-color: rgb(30 58 138 / 0.2);
+    }
+
+    .diagonal-hover-option::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--hover-bg-color);
+        clip-path: polygon(4px 0%,
+                calc(100% - 4px) 0%,
+                100% 4px,
+                100% calc(100% - 4px),
+                calc(100% - 4px) 100%,
+                4px 100%,
+                0% calc(100% - 4px),
+                0% 4px);
+        opacity: 1;
+        z-index: 0;
+    }
+
+    .diagonal-hover-option>* {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+/* Base styles for body, p, and a using theme variables */
+body {
+    color: var(--color-text-primary);
+    background: var(--color-background-primary);
+}
+
+p {
+    color: var(--color-text-secondary);
+}
+
+a {
+    color: var(--color-primary-600);
+    text-underline-offset: 2px;
 }

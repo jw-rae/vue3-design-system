@@ -1,5 +1,5 @@
 <template>
-  <TransitionRoot appear :show="isOpen" as="template">
+  <TransitionRoot :show="isOpen" as="template">
     <Dialog as="div" @close="closeModal" class="relative z-50">
       <TransitionChild
         as="template"
@@ -26,13 +26,13 @@
           >
             <DialogPanel :class="modalClasses">
               <div v-if="$slots.header" class="flex items-center justify-between mb-4">
-                <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
+                <DialogTitle as="h3" class="text-lg font-medium leading-6 text-primary-900 dark:text-primary-100">
                   <slot name="header" />
                 </DialogTitle>
                 <button
                   v-if="showCloseButton"
                   @click="closeModal"
-                  class="rounded-md text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  class="rounded-md text-primary-400 hover:text-primary-600 dark:text-primary-500 dark:hover:text-primary-300 focus:outline-none focus:ring-2 focus:ring-primary-500"
                 >
                   <XMarkIcon class="h-6 w-6" />
                 </button>
@@ -87,13 +87,13 @@ const modalClasses = computed(() => {
     'transform',
     'overflow-hidden',
     'rounded-2xl',
-    'bg-white',
-    'dark:bg-gray-800',
+    'bg-surface-elevated',
+    'dark:bg-surface-elevated',
     'p-6',
     'text-left',
     'align-middle',
     'shadow-xl',
-    'dark:shadow-gray-900/50',
+    'dark:shadow-primary-900/50',
     'transition-all',
   ]
 

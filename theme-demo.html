@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Theme Demo</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        /* Default theme */
+        :root[data-theme="default"] {
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --bg: #ffffff;
+            --text: #0f172a;
+        }
+
+        /* Pink theme */
+        :root[data-theme="pink"] {
+            --primary: #ec4899;
+            --primary-hover: #db2777;
+            --bg: #fdf2f8;
+            --text: #500724;
+        }
+
+        /* Green theme */
+        :root[data-theme="green"] {
+            --primary: #22c55e;
+            --primary-hover: #16a34a;
+            --bg: #f0fdf4;
+            --text: #052e16;
+        }
+
+        /* Blue theme */
+        :root[data-theme="blue"] {
+            --primary: #0ea5e9;
+            --primary-hover: #0284c7;
+            --bg: #f0f9ff;
+            --text: #082f49;
+        }
+
+        /* Dark mode adjustments */
+        .dark {
+            --bg: #0f172a;
+            --text: #f8fafc;
+        }
+
+        .dark[data-theme="pink"] {
+            --bg: #500724;
+            --text: #fdf2f8;
+        }
+
+        .dark[data-theme="green"] {
+            --bg: #052e16;
+            --text: #f0fdf4;
+        }
+
+        .dark[data-theme="blue"] {
+            --bg: #082f49;
+            --text: #f0f9ff;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+        }
+
+        .button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .theme-selector {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+        }
+
+        .demo-section {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .dark .demo-section {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        select,
+        button {
+            font-size: 16px;
+            padding: 8px 16px;
+            margin: 8px;
+            border-radius: 6px;
+            border: 1px solid var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="theme-selector">
+        <h1>🎨 Multi-Theme Design System Demo</h1>
+        <p>Test the theme variations - notice how colors adapt while maintaining consistency!</p>
+
+        <div>
+            <label>Theme: </label>
+            <select id="themeSelect">
+                <option value="default">🔵 Default Blue</option>
+                <option value="pink">🌸 Elegant Pink</option>
+                <option value="green">🌿 Nature Green</option>
+                <option value="blue">🌌 Corporate Blue</option>
+            </select>
+
+            <button id="darkToggle">🌙 Toggle Dark Mode</button>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <h2>Interactive Elements</h2>
+        <button class="button">Primary Action</button>
+        <button class="button">Secondary Action</button>
+        <button class="button">Call to Action</button>
+    </div>
+
+    <div class="demo-section">
+        <h2>Theme Characteristics</h2>
+        <div id="themeInfo">
+            <p><strong>Current Theme:</strong> <span id="currentTheme">Default Blue</span></p>
+            <p><strong>Personality:</strong> <span id="personality">Modern, versatile, friendly</span></p>
+            <p><strong>Best For:</strong> <span id="bestFor">SaaS, general apps, versatile applications</span></p>
+        </div>
+    </div>
+
+    <script>
+        const themeSelect = document.getElementById('themeSelect');
+        const darkToggle = document.getElementById('darkToggle');
+        const currentTheme = document.getElementById('currentTheme');
+        const personality = document.getElementById('personality');
+        const bestFor = document.getElementById('bestFor');
+
+        const themeData = {
+            default: {
+                name: 'Default Blue',
+                personality: 'Modern, versatile, friendly',
+                bestFor: 'SaaS, general apps, versatile applications'
+            },
+            pink: {
+                name: 'Elegant Pink',
+                personality: 'Elegant, soft, sophisticated, feminine',
+                bestFor: 'Beauty, wellness, creative, lifestyle brands'
+            },
+            green: {
+                name: 'Nature Green',
+                personality: 'Calming, natural, trustworthy, growth-oriented',
+                bestFor: 'Health, sustainability, outdoor, eco-friendly brands'
+            },
+            blue: {
+                name: 'Corporate Blue',
+                personality: 'Trustworthy, professional, stable, authoritative',
+                bestFor: 'Corporate, finance, technology, professional services'
+            }
+        };
+
+        let isDark = false;
+
+        function updateTheme() {
+            const theme = themeSelect.value;
+            document.documentElement.setAttribute('data-theme', theme);
+
+            const data = themeData[theme];
+            currentTheme.textContent = data.name;
+            personality.textContent = data.personality;
+            bestFor.textContent = data.bestFor;
+
+            // Save to localStorage
+            localStorage.setItem('demo-theme', theme);
+        }
+
+        function toggleDark() {
+            isDark = !isDark;
+            document.documentElement.classList.toggle('dark', isDark);
+            darkToggle.textContent = isDark ? '☀️ Toggle Light Mode' : '🌙 Toggle Dark Mode';
+
+            // Save to localStorage
+            localStorage.setItem('demo-dark', isDark);
+        }
+
+        // Load saved preferences
+        const savedTheme = localStorage.getItem('demo-theme');
+        const savedDark = localStorage.getItem('demo-dark');
+
+        if (savedTheme && themeData[savedTheme]) {
+            themeSelect.value = savedTheme;
+        }
+
+        if (savedDark === 'true') {
+            isDark = true;
+            toggleDark();
+        }
+
+        // Initialize
+        updateTheme();
+
+        // Event listeners
+        themeSelect.addEventListener('change', updateTheme);
+        darkToggle.addEventListener('click', toggleDark);
+    </script>
+</body>
+
+</html>
